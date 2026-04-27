@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Asset Hub - Data Governance Policy</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .policy-toc-item {
+      display: block;
+      padding: 8px 16px;
+      border-left: 3px solid transparent;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      transition: var(--transition);
+    }
+    .policy-toc-item:hover, .policy-toc-item.active {
+      border-left-color: var(--sb-green);
+      color: var(--sb-green);
+      background: rgba(0,112,74,0.03);
+    }
+  </style>
+</head>
+<body>
+  <div id="nav-placeholder"></div>
+
+  <div class="page-wrapper">
+    <div class="page-container">
+
+      <!-- Breadcrumb & Actions -->
+      <div class="page-header">
+        <div class="breadcrumb">
+          <a href="index.html">Home</a> <span>/</span>
+          <a href="shelf.html">Data Assets</a> <span>/</span>
+          Data Governance Policy
+        </div>
+        <div style="display:flex; gap:10px; margin-left:auto;">
+          <button class="btn btn-secondary" onclick="history.back()">← Back</button>
+          <a class="btn btn-primary" href="reference/星巴克中国数据治理政策（数据中台-数据产品权限获取与数据安全分类）- 征求意见终稿.pdf" target="_blank">↓ Download PDF</a>
+        </div>
+      </div>
+
+      <!-- Detail Hero -->
+      <div class="detail-hero">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px;">
+          <h1 style="margin:0;">星巴克中国数据治理政策</h1>
+          <span class="tag tag-brown" style="font-size:0.85rem;">Reference Document</span>
+        </div>
+        <p style="opacity:0.9; font-size:0.95rem; margin-bottom:12px;">Starbucks China Data Governance Policy — Data Platform Product Access & Data Security Classification</p>
+        <div class="detail-meta">
+          <span>📂 Domain: <strong>Public</strong></span>
+          <span>🔒 Security: <strong>L1 - Public</strong></span>
+          <span>👤 Owner: <strong>Data Office</strong></span>
+          <span>📅 Published: <strong>2026-03-01</strong></span>
+          <span>📄 Version: <strong>Final Draft</strong></span>
+        </div>
+      </div>
+
+      <!-- Two column layout: TOC + Content -->
+      <div style="display:grid; grid-template-columns:220px 1fr; gap:24px;">
+
+        <!-- Table of Contents -->
+        <div class="card" style="align-self:start; position:sticky; top:84px;">
+          <h4 style="font-size:0.9rem; color:var(--sb-dark-green); margin-bottom:12px;">Table of Contents</h4>
+          <nav>
+            <a class="policy-toc-item active" href="#overview">1. Policy Overview</a>
+            <a class="policy-toc-item" href="#scope">2. Scope & Applicability</a>
+            <a class="policy-toc-item" href="#classification">3. Data Security Classification</a>
+            <a class="policy-toc-item" href="#access">4. Data Access & Authorization</a>
+            <a class="policy-toc-item" href="#lifecycle">5. Data Product Lifecycle</a>
+            <a class="policy-toc-item" href="#responsibilities">6. Roles & Responsibilities</a>
+            <a class="policy-toc-item" href="#download">7. Download Full Document</a>
+          </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div>
+
+          <!-- Policy Overview -->
+          <div class="detail-section" id="overview">
+            <h2>1. Policy Overview</h2>
+            <p style="color:var(--text-secondary); line-height:1.8; margin-bottom:16px;">
+              本政策旨在规范星巴克中国数据中台的数据产品权限获取流程及数据安全分类标准，确保企业数据资产在安全、合规的前提下高效流通与利用。
+            </p>
+            <p style="color:var(--text-secondary); line-height:1.8; margin-bottom:16px;">
+              This policy establishes the framework for data product access authorization and data security classification within the Starbucks China Data Platform. It ensures that enterprise data assets are utilized efficiently while maintaining security and compliance standards.
+            </p>
+            <div class="detail-row">
+              <div class="detail-label">Policy Owner</div>
+              <div class="detail-value">Data Office, Starbucks China</div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Effective Date</div>
+              <div class="detail-value">2026-03-01</div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Review Cycle</div>
+              <div class="detail-value">Annual Review</div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Status</div>
+              <div class="detail-value"><span class="tag status-approved">Approved — Final Draft</span></div>
+            </div>
+          </div>
+
+          <!-- Scope -->
+          <div class="detail-section" id="scope">
+            <h2>2. Scope & Applicability</h2>
+            <p style="color:var(--text-secondary); line-height:1.8; margin-bottom:16px;">
+              本政策适用于所有通过星巴克中国数据中台获取、使用、分发数据产品的内部员工及合作伙伴。
+            </p>
+            <div style="display:flex; flex-direction:column; gap:12px;">
+              <div style="padding:14px 18px; background:rgba(0,112,74,0.03); border-left:4px solid var(--sb-green); border-radius:0 8px 8px 0;">
+                <strong style="color:var(--sb-green);">All Internal Employees</strong>
+                <p style="color:var(--text-secondary); margin-top:4px; font-size:0.9rem;">全体星巴克中国内部员工在使用数据平台时需遵守本政策。</p>
+              </div>
+              <div style="padding:14px 18px; background:rgba(203,162,88,0.03); border-left:4px solid var(--sb-gold); border-radius:0 8px 8px 0;">
+                <strong style="color:var(--sb-gold);">External Partners & Vendors</strong>
+                <p style="color:var(--text-secondary); margin-top:4px; font-size:0.9rem;">涉及数据交换的外部合作伙伴须按本政策执行数据安全分级与审批流程。</p>
+              </div>
+              <div style="padding:14px 18px; background:rgba(107,66,38,0.03); border-left:4px solid var(--sb-brown); border-radius:0 8px 8px 0;">
+                <strong style="color:var(--sb-brown);">All Data Products on the Platform</strong>
+                <p style="color:var(--text-secondary); margin-top:4px; font-size:0.9rem;">数据中台上的所有数据产品（报表、多维模型、原始数据）均纳入本政策管辖范围。</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Data Security Classification -->
+          <div class="detail-section" id="classification">
+            <h2>3. Data Security Classification</h2>
+            <p style="color:var(--text-secondary); line-height:1.8; margin-bottom:20px;">
+              所有数据资产须按以下四级安全分类进行标注，分类结果直接决定数据的访问权限与分发方式。
+            </p>
+            <table class="data-table" style="margin-bottom:20px;">
+              <thead>
+                <tr>
+                  <th>Level</th>
+                  <th>Classification</th>
+                  <th>中文</th>
+                  <th>Description</th>
+                  <th>Access Rule</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="tag tag-l1" style="font-weight:600;">L1</span></td>
+                  <td><strong>Public</strong></td>
+                  <td>公开数据</td>
+                  <td>Can be shared both internally and externally without restriction</td>
+                  <td>Open access, no approval needed</td>
+                </tr>
+                <tr>
+                  <td><span class="tag tag-l2" style="font-weight:600;">L2</span></td>
+                  <td><strong>Internal</strong></td>
+                  <td>内部数据</td>
+                  <td>For internal use only; default for most employees, especially Data Dictionaries</td>
+                  <td>Auto-granted to all internal users</td>
+                </tr>
+                <tr>
+                  <td><span class="tag tag-l3" style="font-weight:600;">L3</span></td>
+                  <td><strong>Confidential</strong></td>
+                  <td>内部保密数据</td>
+                  <td>Restricted business data; access requires explicit approval</td>
+                  <td>Data Owner approval required</td>
+                </tr>
+                <tr style="background:rgba(211,47,47,0.03);">
+                  <td><span class="tag tag-red" style="font-weight:600;">L4</span></td>
+                  <td><strong>Private</strong></td>
+                  <td>极高敏感数据</td>
+                  <td>Personally identifiable information (PII) — ID numbers, phone numbers, addresses</td>
+                  <td style="color:var(--sb-error); font-weight:600;">🚫 Prohibited on this platform</td>
+                </tr>
+              </tbody>
+            </table>
+            <div style="padding:14px 18px; background:rgba(211,47,47,0.05); border:1px solid rgba(211,47,47,0.2); border-radius:8px;">
+              <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+                <span style="font-size:1.1rem;">🚫</span>
+                <strong style="color:var(--sb-error);">L4 Prohibition Notice</strong>
+              </div>
+              <div style="font-size:0.88rem; color:var(--text-secondary);">
+                L4级数据（如个人身份证号、手机号、家庭住址等）严禁在本平台上传、存储或分发。违反者将按公司信息安全政策追责。
+              </div>
+            </div>
+          </div>
+
+          <!-- Data Access & Authorization -->
+          <div class="detail-section" id="access">
+            <h2>4. Data Access & Authorization</h2>
+            <p style="color:var(--text-secondary); line-height:1.8; margin-bottom:20px;">
+              数据权限申请遵循分级审批制度，审批流程因申请人职级和数据安全等级而异。
+            </p>
+
+            <h3 style="font-size:1rem; color:var(--sb-dark-green); margin:16px 0 12px;">4.1 Standard Approval Flow</h3>
+            <div class="timeline" style="margin-bottom:24px;">
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                  <div class="tl-header">
+                    <span class="tl-name">Step 1: Submit Application</span>
+                  </div>
+                  <div class="tl-role">Employee submits data access request via the platform</div>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                  <div class="tl-header">
+                    <span class="tl-name">Step 2: Line Manager Review</span>
+                    <span class="tag tag-gold" style="font-size:0.75rem;">Skip for M4+</span>
+                  </div>
+                  <div class="tl-role">Direct manager verifies business need and appropriateness</div>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                  <div class="tl-header">
+                    <span class="tl-name">Step 3: Data Owner / Data Office Review</span>
+                  </div>
+                  <div class="tl-role">Data Owner or Data Office verifies security compliance and scope</div>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                  <div class="tl-header">
+                    <span class="tl-name">Step 4: System Provisioning</span>
+                    <span class="tag status-approved" style="font-size:0.75rem;">Auto</span>
+                  </div>
+                  <div class="tl-role">Access is automatically granted upon final approval</div>
+                </div>
+              </div>
+            </div>
+
+            <h3 style="font-size:1rem; color:var(--sb-dark-green); margin:16px 0 12px;">4.2 Special Approval Rules</h3>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Applicant Type</th>
+                  <th>Approval Flow</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>General Employee (below M4)</td>
+                  <td>Line Manager → Data Office Review → System Provisioning</td>
+                </tr>
+                <tr>
+                  <td>Senior Employee (M4 and above)</td>
+                  <td>Skip Line Manager → Data Office Review → System Provisioning</td>
+                </tr>
+                <tr>
+                  <td>Data Office Member</td>
+                  <td>Self-approval → Auto Publish / Grant</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Data Product Lifecycle -->
+          <div class="detail-section" id="lifecycle">
+            <h2>5. Data Product Lifecycle</h2>
+            <p style="color:var(--text-secondary); line-height:1.8; margin-bottom:16px;">
+              数据资产遵循标准化的生命周期管理流程，确保数据质量和时效性。
+            </p>
+            <div style="display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:wrap; padding:24px 0;">
+              <div style="padding:14px 20px; background:var(--sb-light-green); border-radius:8px; font-weight:600; color:var(--sb-green); text-align:center;">
+                📝 Draft<br><small style="font-weight:400;">Created / Submitted</small>
+              </div>
+              <span style="font-size:1.4rem; color:var(--sb-green);">→</span>
+              <div style="padding:14px 20px; background:#FFF3DC; border-radius:8px; font-weight:600; color:var(--sb-gold); text-align:center;">
+                🔍 Under Review<br><small style="font-weight:400;">Manager + DO</small>
+              </div>
+              <span style="font-size:1.4rem; color:var(--sb-green);">→</span>
+              <div style="padding:14px 20px; background:var(--sb-green); border-radius:8px; font-weight:600; color:#fff; text-align:center;">
+                ✅ Published<br><small style="font-weight:400;">Live on Platform</small>
+              </div>
+              <span style="font-size:1.4rem; color:var(--sb-green);">→</span>
+              <div style="padding:14px 20px; background:#E3F2FD; border-radius:8px; font-weight:600; color:#1565C0; text-align:center;">
+                ✏️ Updated<br><small style="font-weight:400;">Version Increment</small>
+              </div>
+              <span style="font-size:1.4rem; color:var(--text-muted);">→</span>
+              <div style="padding:14px 20px; background:#F5F5F5; border-radius:8px; font-weight:600; color:var(--text-muted); text-align:center;">
+                📦 Archived<br><small style="font-weight:400;">End of Life</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- Roles & Responsibilities -->
+          <div class="detail-section" id="responsibilities">
+            <h2>6. Roles & Responsibilities</h2>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Role</th>
+                  <th>中文</th>
+                  <th>Responsibilities</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Data Office</strong></td>
+                  <td>数据治理组</td>
+                  <td>Policy governance, platform management, content review, access audit</td>
+                </tr>
+                <tr>
+                  <td><strong>Data Owner</strong></td>
+                  <td>数据所有者</td>
+                  <td>Defines data classification, approves L3 access requests, ensures data quality</td>
+                </tr>
+                <tr>
+                  <td><strong>Data Steward</strong></td>
+                  <td>数据管理员</td>
+                  <td>Maintains data documentation, monitors data quality metrics</td>
+                </tr>
+                <tr>
+                  <td><strong>Line Manager</strong></td>
+                  <td>直线经理</td>
+                  <td>Reviews and approves team member data requests based on business need</td>
+                </tr>
+                <tr>
+                  <td><strong>End User</strong></td>
+                  <td>最终用户</td>
+                  <td>Requests access, uses data responsibly, reports data quality issues</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Download -->
+          <div class="detail-section" id="download">
+            <h2>7. Download Full Document</h2>
+            <div style="display:flex; align-items:center; gap:20px; padding:20px; background:var(--bg-primary); border-radius:8px;">
+              <div style="font-size:3rem;">📕</div>
+              <div style="flex:1;">
+                <div style="font-weight:600; font-size:1.05rem; color:var(--sb-dark-green); margin-bottom:4px;">
+                  星巴克中国数据治理政策（数据中台-数据产品权限获取与数据安全分类）
+                </div>
+                <div style="font-size:0.85rem; color:var(--text-secondary);">
+                  Starbucks China Data Governance Policy — Final Draft &nbsp;|&nbsp; PDF &nbsp;|&nbsp; ~1.2 MB
+                </div>
+              </div>
+              <a class="btn btn-primary btn-lg" href="reference/星巴克中国数据治理政策（数据中台-数据产品权限获取与数据安全分类）- 征求意见终稿.pdf" target="_blank">
+                ↓ Download PDF
+              </a>
+            </div>
+          </div>
+
+          <!-- Additional Info -->
+          <div class="detail-section">
+            <h2>Document Information</h2>
+            <div class="detail-row">
+              <div class="detail-label">Document Title</div>
+              <div class="detail-value">星巴克中国数据治理政策（数据中台-数据产品权限获取与数据安全分类）- 征求意见终稿</div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Category</div>
+              <div class="detail-value"><span class="tag tag-brown">Reference Document</span></div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Domain</div>
+              <div class="detail-value">Public</div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Security Level</div>
+              <div class="detail-value"><span class="tag tag-l1">L1 - Public</span></div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Owner</div>
+              <div class="detail-value">Data Office, Starbucks China</div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Last Updated</div>
+              <div class="detail-value">2026-03-01</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script>initNav('shelf');</script>
+</body>
+</html>

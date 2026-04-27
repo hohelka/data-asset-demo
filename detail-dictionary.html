@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Asset Hub - Data Dictionary Detail</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .conn-check {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 4px 12px; border-radius: 12px;
+      font-size: 0.82rem; font-weight: 500;
+    }
+    .conn-check.pass { background: var(--sb-light-green); color: var(--sb-success); }
+    .conn-check.fail { background: #FFEBEE; color: var(--sb-error); }
+  </style>
+</head>
+<body>
+  <div id="nav-placeholder"></div>
+
+  <div class="page-wrapper">
+    <div class="page-container">
+
+      <!-- Breadcrumb & Actions -->
+      <div class="page-header">
+        <div class="breadcrumb">
+          <a href="index.html">Home</a> <span>/</span>
+          <a href="shelf.html">Data Assets</a> <span>/</span>
+          Data Dictionary Detail
+        </div>
+        <div style="display:flex; gap:10px; margin-left:auto;">
+          <button class="btn btn-secondary" onclick="history.back()">← Back</button>
+          <button class="btn btn-secondary" onclick="showToast('Added to bookmarks')">☆ Bookmark</button>
+          <a href="apply-data.html?type=midplatform&table=dwd_order_detail&domain=Sales" class="btn btn-secondary">🔑 Apply Data Access</a>
+          <button class="btn btn-primary" onclick="showToast('Download started')">↓ Download</button>
+        </div>
+      </div>
+
+      <!-- Detail Hero -->
+      <div class="detail-hero">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px;">
+          <h1 style="margin:0;">DWD_Order_Detail</h1>
+          <span class="tag tag-blue" style="font-size:0.85rem;">Data Dictionary</span>
+          <span class="conn-check pass">✔ Connection Test Passed</span>
+        </div>
+        <div class="detail-meta">
+          <span>📂 Subject Area: <strong>Sales</strong></span>
+          <span>🔒 Security: <strong>L2 - Internal</strong></span>
+          <span>👤 Owner: <strong>James Li</strong></span>
+          <span>📅 Last Sync: <strong>2026-04-22</strong></span>
+          <span>📊 Rows: <strong>~12.8M</strong></span>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="tabs">
+        <div class="tab-item active" data-tab="tab-schema">Schema / Fields</div>
+        <div class="tab-item" data-tab="tab-overview">Overview</div>
+        <div class="tab-item" data-tab="tab-related">Related Assets</div>
+      </div>
+
+      <!-- Tab: Schema -->
+      <div id="tab-schema" class="tab-content active">
+        <div class="detail-section">
+          <h2>Table Schema — DWD_Order_Detail</h2>
+          <div style="overflow-x:auto;">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Field Name</th>
+                  <th>Data Type</th>
+                  <th>Description (EN)</th>
+                  <th>Description (CN)</th>
+                  <th>Nullable</th>
+                  <th>Last Updated</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td><code style="background:#f0f0f0; padding:2px 6px; border-radius:3px;">order_id</code></td>
+                  <td>VARCHAR(32)</td>
+                  <td>Unique order identifier</td>
+                  <td>订单唯一标识</td>
+                  <td>NOT NULL</td>
+                  <td>2026-04-22</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td><code style="background:#f0f0f0; padding:2px 6px; border-radius:3px;">store_id</code></td>
+                  <td>VARCHAR(16)</td>
+                  <td>Store identifier</td>
+                  <td>门店编号</td>
+                  <td>NOT NULL</td>
+                  <td>2026-04-22</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td><code style="background:#f0f0f0; padding:2px 6px; border-radius:3px;">transaction_date</code></td>
+                  <td>DATE</td>
+                  <td>Date of transaction</td>
+                  <td>交易日期</td>
+                  <td>NOT NULL</td>
+                  <td>2026-04-22</td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td><code style="background:#f0f0f0; padding:2px 6px; border-radius:3px;">transaction_time</code></td>
+                  <td>TIMESTAMP</td>
+                  <td>Exact time of transaction</td>
+                  <td>交易时间戳</td>
+                  <td>NOT NULL</td>
+                  <td>2026-04-22</td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td><code style="background:#f0f0f0; padding:2px 6px; border-radius:3px;">product_id</code></td>
+                  <td>VARCHAR(16)</td>
+                  <td>Product SKU identifier</td>
+                  <td>产品SKU编号</td>
+                  <td>NOT NULL</td>
+                  <td>2026-04-22</td>
+                </tr>
+                <tr>
+                  <td>6</td>
+                  <td><code style="background:#f0f0f0; padding:2px 6px; border-radius:3px;">product_category</code></td>
+                  <td>VARCHAR(32)</td>
+                  <td>Product category (Beverage/Food/Merch)</td>
+                  <td>产品类别（饮料/食品/商品）</td>
+                  <td>NOT NULL</td>
+                  <td>2026-04-22</td>
+                </tr>
+                <tr>
+                  <td>7</td>
+                  <td><code style="background:#f0f0f0; padding:2px 6px; border-radius:3px;">quantity</code></td>
+                  <td>INT</td>
+                  <td>Quantity of items ordered</td>
+                  <td>商品数量</td>
+                  <td>NOT NULL</td>
+                  <td>2026-04-22</td>
+                </tr>
+                <tr>
+                  <td>8</td>
+                  <td><code style="background:#f0f0f0; padding:2px 6px; border-radius:3px;">gross_revenue</code></td>
+                  <td>DECIMAL(12,2)</td>
+                  <td>Revenue before discounts</td>
+                  <td>折扣前收入</td>
+                  <td>NOT NULL</td>
+                  <td>2026-04-22</td>
+                </tr>
+                <tr>
+                  <td>9</td>
+                  <td><code style="background:#f0f0f0; padding:2px 6px; border-radius:3px;">discount_amount</code></td>
+                  <td>DECIMAL(12,2)</td>
+                  <td>Total discount applied</td>
+                  <td>折扣金额</td>
+                  <td>NULLABLE</td>
+                  <td>2026-04-22</td>
+                </tr>
+                <tr>
+                  <td>10</td>
+                  <td><code style="background:#f0f0f0; padding:2px 6px; border-radius:3px;">net_revenue</code></td>
+                  <td>DECIMAL(12,2)</td>
+                  <td>Revenue after discounts and returns</td>
+                  <td>净收入</td>
+                  <td>NOT NULL</td>
+                  <td>2026-04-22</td>
+                </tr>
+                <tr>
+                  <td>11</td>
+                  <td><code style="background:#f0f0f0; padding:2px 6px; border-radius:3px;">payment_method</code></td>
+                  <td>VARCHAR(16)</td>
+                  <td>Payment method (Cash/Card/App)</td>
+                  <td>支付方式</td>
+                  <td>NOT NULL</td>
+                  <td>2026-04-22</td>
+                </tr>
+                <tr>
+                  <td>12</td>
+                  <td><code style="background:#f0f0f0; padding:2px 6px; border-radius:3px;">order_status</code></td>
+                  <td>VARCHAR(16)</td>
+                  <td>Order status (completed/cancelled/refunded)</td>
+                  <td>订单状态</td>
+                  <td>NOT NULL</td>
+                  <td>2026-04-22</td>
+                </tr>
+                <tr>
+                  <td>13</td>
+                  <td><code style="background:#f0f0f0; padding:2px 6px; border-radius:3px;">customer_id</code></td>
+                  <td>VARCHAR(32)</td>
+                  <td>Hashed customer identifier</td>
+                  <td>客户标识（哈希）</td>
+                  <td>NULLABLE</td>
+                  <td>2026-04-22</td>
+                </tr>
+                <tr>
+                  <td>14</td>
+                  <td><code style="background:#f0f0f0; padding:2px 6px; border-radius:3px;">etl_load_time</code></td>
+                  <td>TIMESTAMP</td>
+                  <td>ETL pipeline load timestamp</td>
+                  <td>ETL加载时间</td>
+                  <td>NOT NULL</td>
+                  <td>2026-04-22</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: Overview -->
+      <div id="tab-overview" class="tab-content">
+        <div class="detail-section">
+          <h2>Table Information</h2>
+          <div class="detail-row">
+            <div class="detail-label">Database</div>
+            <div class="detail-value">data_warehouse</div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-label">Schema</div>
+            <div class="detail-value">dwd</div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-label">Table Name</div>
+            <div class="detail-value">dwd_order_detail</div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-label">Table Type</div>
+            <div class="detail-value">Partitioned Table (by transaction_date)</div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-label">Storage Format</div>
+            <div class="detail-value">Parquet</div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-label">Approximate Rows</div>
+            <div class="detail-value">~12,800,000</div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-label">Data Retention</div>
+            <div class="detail-value">3 Years Rolling</div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-label">Refresh Frequency</div>
+            <div class="detail-value">Daily (T+1), 06:00 AM CST</div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-label">Primary Key</div>
+            <div class="detail-value">order_id</div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-label">Connection Status</div>
+            <div class="detail-value"><span class="conn-check pass">✔ Test Passed</span> Last checked: 2026-04-22 09:15</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: Related Assets -->
+      <div id="tab-related" class="tab-content">
+        <div class="detail-section">
+          <h2>Related Assets</h2>
+          <div class="grid-3">
+            <div class="asset-card" onclick="location.href='detail-glossary.html'">
+              <div class="ac-title">Net Revenue</div>
+              <div class="ac-tags" style="margin-top:8px;">
+                <span class="tag tag-green">Glossary</span>
+                <span class="tag tag-l1">L1</span>
+              </div>
+              <div class="ac-desc" style="margin-top:8px;">Derived from this table</div>
+            </div>
+            <div class="asset-card" onclick="location.href='detail-dictionary.html'">
+              <div class="ac-title">DIM_Store_Master</div>
+              <div class="ac-tags" style="margin-top:8px;">
+                <span class="tag tag-blue">Dictionary</span>
+                <span class="tag tag-l3">L3</span>
+              </div>
+              <div class="ac-desc" style="margin-top:8px;">Joined via store_id</div>
+            </div>
+            <div class="asset-card" onclick="location.href='detail-document.html'">
+              <div class="ac-title">Order Data Integration Guide</div>
+              <div class="ac-tags" style="margin-top:8px;">
+                <span class="tag tag-brown">Ref Doc</span>
+                <span class="tag tag-l2">L2</span>
+              </div>
+              <div class="ac-desc" style="margin-top:8px;">ETL pipeline documentation</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script>initNav('shelf');</script>
+</body>
+</html>

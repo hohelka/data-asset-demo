@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Asset Hub - Glossary Collection</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .glossary-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--bg-white);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+    }
+    .glossary-table thead tr {
+      background: var(--sb-dark-green);
+      color: #fff;
+    }
+    .glossary-table th {
+      padding: 12px 14px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-align: left;
+      letter-spacing: 0.3px;
+      white-space: nowrap;
+    }
+    .glossary-table td {
+      padding: 12px 14px;
+      font-size: 0.88rem;
+      border-bottom: 1px solid var(--border-color);
+      vertical-align: top;
+    }
+    .glossary-table tbody tr:last-child td { border-bottom: none; }
+    .glossary-table tbody tr:hover td { background: rgba(0,112,74,0.03); }
+    .term-name-en { font-weight: 600; color: var(--text-primary); }
+    .term-name-cn { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
+    .term-def { color: var(--text-secondary); font-size: 0.84rem; line-height: 1.5; max-width: 260px; }
+    .owner-mini { display: flex; align-items: center; gap: 5px; font-size: 0.82rem; color: var(--text-secondary); }
+    .av-mini {
+      width: 24px; height: 24px; border-radius: 50%;
+      background: var(--sb-light-green); color: var(--sb-dark-green);
+      display: inline-flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 0.68rem; flex-shrink: 0;
+    }
+    .btn-more {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 5px 12px; border-radius: 6px;
+      background: var(--bg-primary); border: 1px solid var(--border-color);
+      font-size: 0.82rem; color: var(--sb-green); cursor: pointer;
+      transition: var(--transition); white-space: nowrap;
+    }
+    .btn-more:hover { background: var(--sb-light-green); border-color: var(--sb-green); }
+    .filter-bar {
+      display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 16px;
+    }
+    .filter-chip {
+      padding: 5px 12px; border-radius: 16px; font-size: 0.82rem;
+      border: 1px solid var(--border-color); cursor: pointer;
+      background: var(--bg-white); color: var(--text-secondary);
+      transition: var(--transition);
+    }
+    .filter-chip.active { background: var(--sb-green); color: #fff; border-color: var(--sb-green); }
+  </style>
+</head>
+<body>
+  <div id="nav-placeholder"></div>
+
+  <div class="page-wrapper">
+    <div class="page-container wide">
+
+      <!-- Breadcrumb & Actions -->
+      <div class="page-header">
+        <div class="breadcrumb">
+          <a href="index.html">Home</a> <span>/</span>
+          <a href="shelf.html">Data Assets</a> <span>/</span>
+          Sales Metrics Glossary
+        </div>
+        <div style="display:flex; gap:10px; margin-left:auto;">
+          <button class="btn btn-secondary" onclick="history.back()">← Back</button>
+          <button class="btn btn-secondary" onclick="showToast('Added to bookmarks')">☆ Bookmark</button>
+          <button class="btn btn-primary" onclick="showToast('Download started')">↓ Download</button>
+        </div>
+      </div>
+
+      <!-- Collection Hero -->
+      <div class="detail-hero">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px;">
+          <h1 style="margin:0;">Sales Metrics Glossary</h1>
+          <span class="tag tag-green" style="font-size:0.85rem;">Glossary</span>
+          <span class="tag" style="background:rgba(255,255,255,0.2); color:#fff;">18 Metrics</span>
+        </div>
+        <div class="detail-meta">
+          <span>📂 Subject Area: <strong>Sales</strong></span>
+          <span>🔒 Security: <strong>L3 - Confidential</strong></span>
+          <span>👤 Business Owner: <strong>Sarah Chen</strong></span>
+          <span>🔧 Tech Owner: <strong>James Li</strong></span>
+          <span>📅 Published: <strong>2026-04-20</strong></span>
+          <span>🔖 Version: <strong>v2.1</strong></span>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="tabs">
+        <div class="tab-item active" data-tab="tab-terms">Metrics</div>
+        <div class="tab-item" data-tab="tab-related">Related Assets</div>
+      </div>
+
+      <!-- Tab: Metrics -->
+      <div id="tab-terms" class="tab-content active">
+
+        <!-- Search bar only -->
+        <div class="filter-bar">
+          <div class="search-bar" style="flex:1; max-width:320px;">
+            <input type="text" id="termSearch" placeholder="Search metrics..." oninput="searchTerms(this.value)">
+            <button onclick="searchTerms(document.getElementById('termSearch').value)">Search</button>
+          </div>
+        </div>
+
+        <!-- Metrics Table -->
+        <div style="overflow-x:auto;">
+          <table class="glossary-table" id="termsTable">
+            <thead>
+              <tr>
+                <th style="width:200px;">Metric Name</th>
+                <th style="width:260px;">Business Definition</th>
+                <th style="width:220px;">Calculation Logic</th>
+                <th style="width:110px;">Business Owner</th>
+                <th style="width:100px;">Security</th>
+                <th style="width:70px; text-align:center;">More</th>
+              </tr>
+            </thead>
+            <tbody id="termsBody">
+              <tr>
+                <td><div class="term-name-en">Net Revenue</div><div class="term-name-cn">净收入</div></td>
+                <td><div class="term-def">Total revenue after deducting discounts, returns and allowances. Key quarterly earnings metric.</div></td>
+                <td><div class="term-def" style="font-family:monospace; font-size:0.82rem;">Gross Revenue − Discount − Return − Allowance</div></td>
+                <td><div class="owner-mini"><span class="av-mini">SC</span> Sarah Chen</div></td>
+                <td><span class="tag tag-l3" style="font-size:0.78rem;">L3</span></td>
+                <td style="text-align:center;"><button class="btn-more" onclick="location.href='detail-glossary-item.html?term=net-revenue'">More ›</button></td>
+              </tr>
+              <tr>
+                <td><div class="term-name-en">Comparable Store Sales Growth</div><div class="term-name-cn">可比门店销售增长</div></td>
+                <td><div class="term-def">Year-over-year revenue growth for stores open at least 13 months. Reported in quarterly earnings calls.</div></td>
+                <td><div class="term-def" style="font-family:monospace; font-size:0.82rem;">(Current Period Net Revenue − Prior Period Net Revenue) ÷ Prior Period Net Revenue</div></td>
+                <td><div class="owner-mini"><span class="av-mini">SC</span> Sarah Chen</div></td>
+                <td><span class="tag tag-l3" style="font-size:0.78rem;">L3</span></td>
+                <td style="text-align:center;"><button class="btn-more" onclick="location.href='detail-glossary-item.html?term=comp-growth'">More ›</button></td>
+              </tr>
+              <tr>
+                <td><div class="term-name-en">Average Ticket Size</div><div class="term-name-cn">客单价</div></td>
+                <td><div class="term-def">Average revenue per completed transaction.</div></td>
+                <td><div class="term-def" style="font-family:monospace; font-size:0.82rem;">Net Revenue ÷ Transaction Count</div></td>
+                <td><div class="owner-mini"><span class="av-mini">SC</span> Sarah Chen</div></td>
+                <td><span class="tag tag-l3" style="font-size:0.78rem;">L3</span></td>
+                <td style="text-align:center;"><button class="btn-more" onclick="location.href='detail-glossary-item.html?term=avg-ticket'">More ›</button></td>
+              </tr>
+              <tr>
+                <td><div class="term-name-en">Transaction Count</div><div class="term-name-cn">交易笔数</div></td>
+                <td><div class="term-def">Total completed customer transactions within a period. Excludes voided and pending orders.</div></td>
+                <td><div class="term-def" style="font-family:monospace; font-size:0.82rem;">COUNT(order_id) WHERE order_status = 'completed'</div></td>
+                <td><div class="owner-mini"><span class="av-mini">SC</span> Sarah Chen</div></td>
+                <td><span class="tag tag-l3" style="font-size:0.78rem;">L3</span></td>
+                <td style="text-align:center;"><button class="btn-more" onclick="location.href='detail-glossary-item.html?term=txn-count'">More ›</button></td>
+              </tr>
+              <tr>
+                <td><div class="term-name-en">Gross Revenue</div><div class="term-name-cn">毛收入</div></td>
+                <td><div class="term-def">Total revenue before deductions. Includes beverages, food, merchandise and license revenue.</div></td>
+                <td><div class="term-def" style="font-family:monospace; font-size:0.82rem;">SUM(gross_revenue) WHERE order_status = 'completed'</div></td>
+                <td><div class="owner-mini"><span class="av-mini">SC</span> Sarah Chen</div></td>
+                <td><span class="tag tag-l3" style="font-size:0.78rem;">L3</span></td>
+                <td style="text-align:center;"><button class="btn-more" onclick="location.href='detail-glossary-item.html?term=gross-revenue'">More ›</button></td>
+              </tr>
+              <tr>
+                <td><div class="term-name-en">Discount Amount</div><div class="term-name-cn">折扣金额</div></td>
+                <td><div class="term-def">Total monetary value of discounts applied, including promotional coupons and member benefits.</div></td>
+                <td><div class="term-def" style="font-family:monospace; font-size:0.82rem;">SUM(discount_amount)</div></td>
+                <td><div class="owner-mini"><span class="av-mini">SC</span> Sarah Chen</div></td>
+                <td><span class="tag tag-l3" style="font-size:0.78rem;">L3</span></td>
+                <td style="text-align:center;"><button class="btn-more" onclick="location.href='detail-glossary-item.html?term=discount'">More ›</button></td>
+              </tr>
+              <tr>
+                <td><div class="term-name-en">Return Amount</div><div class="term-name-cn">退货金额</div></td>
+                <td><div class="term-def">Total monetary value of product returns approved and processed within the period.</div></td>
+                <td><div class="term-def" style="font-family:monospace; font-size:0.82rem;">SUM(return_amount) WHERE order_status = 'refunded'</div></td>
+                <td><div class="owner-mini"><span class="av-mini">SC</span> Sarah Chen</div></td>
+                <td><span class="tag tag-l3" style="font-size:0.78rem;">L3</span></td>
+                <td style="text-align:center;"><button class="btn-more" onclick="location.href='detail-glossary-item.html?term=return'">More ›</button></td>
+              </tr>
+              <tr>
+                <td><div class="term-name-en">Store Revenue Contribution</div><div class="term-name-cn">门店收入贡献率</div></td>
+                <td><div class="term-def">Percentage of total net revenue contributed by a single store or store group.</div></td>
+                <td><div class="term-def" style="font-family:monospace; font-size:0.82rem;">Store Net Revenue ÷ Total Net Revenue × 100%</div></td>
+                <td><div class="owner-mini"><span class="av-mini">SC</span> Sarah Chen</div></td>
+                <td><span class="tag tag-l3" style="font-size:0.78rem;">L3</span></td>
+                <td style="text-align:center;"><button class="btn-more" onclick="location.href='detail-glossary-item.html?term=store-contribution'">More ›</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="margin-top:12px; font-size:0.85rem; color:var(--text-muted);">Showing 8 of 18 metrics. <a href="#" onclick="showToast('Loading all metrics...');return false;" style="color:var(--sb-green);">View all →</a></div>
+      </div>
+
+      <!-- Tab: Related Assets -->
+      <div id="tab-related" class="tab-content">
+        <div class="detail-section">
+          <h2>Related Assets</h2>
+          <div class="grid-3">
+            <div class="asset-card" onclick="location.href='detail-dictionary.html'">
+              <div class="ac-title">DWD_Order_Detail</div>
+              <div class="ac-tags" style="margin-top:8px;">
+                <span class="tag tag-blue">Dictionary</span>
+                <span class="tag tag-l2">L2</span>
+              </div>
+              <div class="ac-desc" style="margin-top:8px;">Source table for revenue and transaction calculations</div>
+            </div>
+            <div class="asset-card" onclick="location.href='detail-dictionary.html'">
+              <div class="ac-title">DIM_Store_Master</div>
+              <div class="ac-tags" style="margin-top:8px;">
+                <span class="tag tag-blue">Dictionary</span>
+                <span class="tag tag-l3">L3</span>
+              </div>
+              <div class="ac-desc" style="margin-top:8px;">Store dimension for store-level revenue analysis</div>
+            </div>
+            <div class="asset-card" onclick="location.href='detail-document.html'">
+              <div class="ac-title">Customer Segmentation Guide</div>
+              <div class="ac-tags" style="margin-top:8px;">
+                <span class="tag tag-brown">Ref Doc</span>
+                <span class="tag tag-l2">L2</span>
+              </div>
+              <div class="ac-desc" style="margin-top:8px;">Uses Average Ticket Size as an input metric</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script>
+    initNav('shelf');
+
+    function searchTerms(val) {
+      const q = val.toLowerCase();
+      document.querySelectorAll('#termsBody tr').forEach(row => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(q) ? '' : 'none';
+      });
+    }
+  </script>
+</body>
+</html>

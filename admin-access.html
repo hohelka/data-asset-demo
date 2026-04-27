@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Asset Hub - Access Records</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .admin-tabs {
+      display: flex; gap: 4px; background: var(--bg-white); padding: 4px;
+      border-radius: 8px; box-shadow: var(--shadow-card); margin-bottom: 24px;
+    }
+    .admin-tab {
+      padding: 10px 18px; border-radius: 6px; cursor: pointer; font-size: 0.88rem;
+      color: var(--text-secondary); transition: var(--transition); text-align: center;
+    }
+    .admin-tab:hover { background: var(--bg-primary); }
+    .admin-tab.active { background: var(--sb-green); color: #fff; font-weight: 500; }
+    .heat-bar {
+      height: 8px; border-radius: 4px; background: var(--border-color);
+      overflow: hidden; width: 120px;
+    }
+    .heat-bar-fill {
+      height: 100%; border-radius: 4px;
+      transition: width 0.5s ease;
+    }
+    .chart-placeholder {
+      background: linear-gradient(135deg, #f8f8f8, #f0f0f0);
+      border: 2px dashed var(--border-color);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      color: var(--text-muted);
+      padding: 40px;
+      min-height: 200px;
+    }
+  </style>
+</head>
+<body>
+  <div id="nav-placeholder"></div>
+
+  <div class="page-wrapper">
+    <div class="page-container wide">
+
+      <div class="page-header">
+        <div class="breadcrumb"><a href="index.html">Home</a> <span>/</span> <a href="admin-list.html">Admin</a> <span>/</span> Access Records</div>
+        <h1>Data Asset Access Records</h1>
+        <div style="margin-left:auto;">
+          <button class="btn btn-secondary" onclick="showToast('Exported report')">↓ Export Report</button>
+        </div>
+      </div>
+
+      <div class="admin-tabs">
+        <a class="admin-tab" href="admin-list.html">Asset List</a>
+        <a class="admin-tab" href="admin-edit.html">Edit Asset</a>
+        <a class="admin-tab" href="admin-history.html">Change History</a>
+        <a class="admin-tab" href="admin-config.html">Homepage Config</a>
+        <a class="admin-tab active" href="admin-access.html">Access Records</a>
+      </div>
+
+      <!-- Date Range Filter -->
+      <div class="flex-between mb-20" style="flex-wrap:wrap; gap:12px;">
+        <div class="flex gap-8">
+          <select class="form-control" style="width:auto; padding:8px 32px 8px 12px;">
+            <option>Last 7 days</option>
+            <option selected>Last 30 days</option>
+            <option>Last 90 days</option>
+            <option>This Year</option>
+          </select>
+          <select class="form-control" style="width:auto; padding:8px 32px 8px 12px;">
+            <option>All Categories</option>
+            <option>Glossary</option>
+            <option>Dictionary</option>
+            <option>Reference Doc</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Summary Stats -->
+      <div class="grid-4 mb-24">
+        <div class="stat-card">
+          <div class="stat-number" style="color:var(--sb-green);">8,432</div>
+          <div class="stat-label">Total Views (30d)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" style="color:var(--sb-dark-green);">612</div>
+          <div class="stat-label">Unique Visitors</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" style="color:var(--sb-gold);">1,284</div>
+          <div class="stat-label">Downloads</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" style="color:var(--sb-brown);">3.8</div>
+          <div class="stat-label">Avg. Pages/Session</div>
+        </div>
+      </div>
+
+      <div class="grid-2 mb-24">
+
+        <!-- Trend Chart Placeholder -->
+        <div class="card">
+          <div class="card-header">
+            <h3>Access Trend</h3>
+          </div>
+          <div class="chart-placeholder">
+            <div style="font-size:2.5rem; margin-bottom:8px;">📈</div>
+            <div>Daily Access Trend Chart</div>
+            <div style="font-size:0.82rem; margin-top:4px;">Integrate with chart library (ECharts/Chart.js) for live data</div>
+          </div>
+        </div>
+
+        <!-- User Distribution -->
+        <div class="card">
+          <div class="card-header">
+            <h3>Visitor Distribution by Department</h3>
+          </div>
+          <div class="chart-placeholder">
+            <div style="font-size:2.5rem; margin-bottom:8px;">🍩</div>
+            <div>Department Distribution Donut Chart</div>
+            <div style="font-size:0.82rem; margin-top:4px;">Sales 32% | Finance 24% | Marketing 18% | Other 26%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Top Accessed Assets -->
+      <div class="card mb-24">
+        <div class="card-header">
+          <h3>Top Accessed Assets (Last 30 Days)</h3>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Asset Name</th>
+              <th>Category</th>
+              <th>Views</th>
+              <th>Unique Users</th>
+              <th>Downloads</th>
+              <th>Heat</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong style="color:var(--sb-gold);">🥇 1</strong></td>
+              <td><a href="detail-glossary.html"><strong>Net Revenue</strong></a></td>
+              <td><span class="tag tag-green">Glossary</span></td>
+              <td>1,284</td>
+              <td>342</td>
+              <td>89</td>
+              <td>
+                <div class="heat-bar"><div class="heat-bar-fill" style="width:100%; background:var(--sb-green);"></div></div>
+              </td>
+            </tr>
+            <tr>
+              <td><strong style="color:var(--sb-gold);">🥈 2</strong></td>
+              <td><a href="detail-dictionary.html"><strong>DWD_Order_Detail</strong></a></td>
+              <td><span class="tag tag-blue">Dictionary</span></td>
+              <td>978</td>
+              <td>256</td>
+              <td>134</td>
+              <td>
+                <div class="heat-bar"><div class="heat-bar-fill" style="width:76%; background:var(--sb-green);"></div></div>
+              </td>
+            </tr>
+            <tr>
+              <td><strong style="color:var(--sb-gold);">🥉 3</strong></td>
+              <td><a href="detail-document.html"><strong>Customer Segmentation Guide</strong></a></td>
+              <td><span class="tag tag-brown">Ref Doc</span></td>
+              <td>845</td>
+              <td>198</td>
+              <td>201</td>
+              <td>
+                <div class="heat-bar"><div class="heat-bar-fill" style="width:66%; background:var(--sb-gold);"></div></div>
+              </td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td><strong>Comparable Store Sales Growth</strong></td>
+              <td><span class="tag tag-green">Glossary</span></td>
+              <td>723</td>
+              <td>189</td>
+              <td>52</td>
+              <td>
+                <div class="heat-bar"><div class="heat-bar-fill" style="width:56%; background:var(--sb-gold);"></div></div>
+              </td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td><strong>DIM_Store_Master</strong></td>
+              <td><span class="tag tag-blue">Dictionary</span></td>
+              <td>612</td>
+              <td>145</td>
+              <td>78</td>
+              <td>
+                <div class="heat-bar"><div class="heat-bar-fill" style="width:48%; background:var(--sb-brown);"></div></div>
+              </td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td><strong>Average Ticket Size</strong></td>
+              <td><span class="tag tag-green">Glossary</span></td>
+              <td>534</td>
+              <td>132</td>
+              <td>41</td>
+              <td>
+                <div class="heat-bar"><div class="heat-bar-fill" style="width:42%; background:var(--sb-brown);"></div></div>
+              </td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td><strong>Supply Chain Cost Breakdown</strong></td>
+              <td><span class="tag tag-brown">Ref Doc</span></td>
+              <td>389</td>
+              <td>87</td>
+              <td>56</td>
+              <td>
+                <div class="heat-bar"><div class="heat-bar-fill" style="width:30%; background:var(--text-muted);"></div></div>
+              </td>
+            </tr>
+            <tr>
+              <td>8</td>
+              <td><strong>Employee Satisfaction Index</strong></td>
+              <td><span class="tag tag-green">Glossary</span></td>
+              <td>156</td>
+              <td>43</td>
+              <td>12</td>
+              <td>
+                <div class="heat-bar"><div class="heat-bar-fill" style="width:12%; background:var(--text-muted);"></div></div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Recent Access Log -->
+      <div class="card">
+        <div class="card-header">
+          <h3>Recent Access Log</h3>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Timestamp</th>
+              <th>User</th>
+              <th>Department</th>
+              <th>Asset Accessed</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="white-space:nowrap;">2026-04-23 09:45</td>
+              <td>Alex Wang</td>
+              <td>Data & Analytics</td>
+              <td>Net Revenue</td>
+              <td><span class="tag tag-green">View</span></td>
+            </tr>
+            <tr>
+              <td style="white-space:nowrap;">2026-04-23 09:32</td>
+              <td>Lisa He</td>
+              <td>Marketing</td>
+              <td>Customer Segmentation Guide</td>
+              <td><span class="tag tag-blue">Download</span></td>
+            </tr>
+            <tr>
+              <td style="white-space:nowrap;">2026-04-23 09:18</td>
+              <td>Kevin Wu</td>
+              <td>Marketing</td>
+              <td>Average Ticket Size</td>
+              <td><span class="tag tag-green">View</span></td>
+            </tr>
+            <tr>
+              <td style="white-space:nowrap;">2026-04-23 08:55</td>
+              <td>Sarah Chen</td>
+              <td>Finance</td>
+              <td>DWD_Order_Detail</td>
+              <td><span class="tag tag-green">View</span></td>
+            </tr>
+            <tr>
+              <td style="white-space:nowrap;">2026-04-23 08:40</td>
+              <td>James Li</td>
+              <td>IT / Data Engineering</td>
+              <td>DIM_Store_Master</td>
+              <td><span class="tag tag-blue">Download</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="pagination" style="margin-top:16px;">
+          <a href="#">‹</a>
+          <span class="active">1</span>
+          <a href="#">2</a>
+          <a href="#">3</a>
+          <span>...</span>
+          <a href="#">50</a>
+          <a href="#">›</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script>initNav('admin');</script>
+</body>
+</html>

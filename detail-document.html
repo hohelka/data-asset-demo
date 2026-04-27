@@ -1,0 +1,604 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Segmentation Guide - Data Asset Hub</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* ===== Page layout ===== */
+    .doc-outer { display: grid; grid-template-columns: 220px 1fr; gap: 24px; }
+    @media (max-width: 800px) { .doc-outer { grid-template-columns: 1fr; } }
+
+    /* ===== Sidebar ===== */
+    .doc-sidebar { align-self: start; position: sticky; top: 80px; }
+    .doc-sidebar .card { padding: 16px; }
+    .doc-meta-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--border-color); font-size: 0.84rem; }
+    .doc-meta-row:last-child { border-bottom: none; }
+    .doc-meta-label { color: var(--text-muted); }
+    .doc-meta-value { color: var(--text-primary); font-weight: 500; text-align: right; }
+    .toc-link { display: block; padding: 5px 10px 5px 14px; border-left: 3px solid transparent; color: var(--text-secondary); font-size: 0.84rem; text-decoration: none; border-radius: 0 4px 4px 0; transition: var(--transition); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .toc-link:hover, .toc-link.active { border-left-color: var(--sb-green); color: var(--sb-green); background: rgba(0,112,74,0.04); }
+
+    /* ===== Attachment items ===== */
+    .att-item { display: flex; align-items: center; gap: 8px; padding: 7px 10px; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.83rem; margin-bottom: 6px; }
+    .att-item a { color: var(--sb-green); font-weight: 500; text-decoration: none; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .att-item a:hover { text-decoration: underline; }
+    .att-size { color: var(--text-muted); font-size: 0.78rem; flex-shrink: 0; }
+    .att-del { background: none; border: none; cursor: pointer; color: #ccc; font-size: 0.85rem; padding: 0 2px; flex-shrink: 0; display: none; }
+    .att-del:hover { color: var(--sb-cancel-pink); }
+    body.edit-mode .att-del { display: inline; }
+
+    /* ===== Editor toolbar ===== */
+    .editor-bar {
+      display: none; position: sticky; top: 64px; z-index: 300;
+      background: var(--bg-white); border: 1px solid var(--border-color);
+      border-radius: 8px; padding: 7px 14px; flex-wrap: wrap; gap: 3px;
+      align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 14px;
+    }
+    .editor-bar.visible { display: flex; }
+    .tb { padding: 4px 8px; border: 1px solid transparent; border-radius: 4px; background: none; cursor: pointer; font-size: 0.84rem; color: var(--text-secondary); transition: var(--transition); line-height: 1.2; }
+    .tb:hover { background: var(--bg-primary); border-color: var(--border-color); }
+    .tb-sep { width: 1px; height: 18px; background: var(--border-color); margin: 0 3px; }
+
+    /* ===== Editable main body ===== */
+    .doc-body {
+      min-height: 500px;
+      outline: none;
+      font-size: 0.95rem;
+      line-height: 1.85;
+      color: var(--text-primary);
+    }
+    body.edit-mode .doc-body {
+      border: 1px dashed var(--border-color);
+      border-radius: 4px;
+      padding: 4px;
+      background: rgba(0,112,74,0.015);
+    }
+    body.edit-mode .doc-body:focus {
+      border-color: var(--sb-green);
+      background: transparent;
+      box-shadow: 0 0 0 3px rgba(0,112,74,0.07);
+    }
+    .doc-body h2 { font-size: 1.15rem; color: var(--sb-dark-green); margin: 24px 0 10px; padding-bottom: 6px; border-bottom: 1px solid var(--border-color); }
+    .doc-body h3 { font-size: 1rem; color: var(--sb-dark-green); margin: 18px 0 8px; }
+    .doc-body p { margin: 0 0 12px; color: var(--text-secondary); }
+    .doc-body ul, .doc-body ol { padding-left: 22px; margin: 0 0 12px; color: var(--text-secondary); }
+    .doc-body li { margin-bottom: 4px; }
+    .doc-body table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: 0.88rem; }
+    .doc-body table th { background: var(--bg-primary); font-weight: 600; }
+    .doc-body table th, .doc-body table td { border: 1px solid var(--border-color); padding: 8px 12px; }
+    .doc-body blockquote { border-left: 4px solid var(--sb-green); margin: 12px 0; padding: 10px 14px; background: rgba(0,112,74,0.04); color: var(--text-secondary); border-radius: 0 6px 6px 0; }
+    .doc-body code { background: #f0f0f0; padding: 2px 6px; border-radius: 3px; font-size: 0.88em; }
+    .doc-body img { max-width: 100%; border-radius: 6px; border: 1px solid var(--border-color); margin: 8px 0; display: block; }
+
+    /* Inline dict card */
+    .dict-card { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: var(--bg-primary); border: 1px solid var(--border-color); border-left: 4px solid var(--sb-green); border-radius: 6px; margin: 10px 0; font-size: 0.86rem; }
+    .dict-card .dc-name { font-weight: 600; font-size: 0.9rem; }
+    .dict-card .dc-meta { margin-top: 2px; color: var(--text-muted); font-size: 0.79rem; }
+    .dict-card a { color: var(--sb-green); text-decoration: none; }
+    .dict-card a:hover { text-decoration: underline; }
+
+    /* tier cards */
+    .tier-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin: 12px 0; }
+    @media(max-width:700px){ .tier-grid { grid-template-columns: repeat(2,1fr); } }
+    .tier-card { border-radius: 8px; padding: 14px; text-align: center; color: #fff; }
+    .tier-card .tier-icon { font-size: 1.4rem; margin-bottom: 4px; }
+    .tier-card .tier-name { font-weight: 600; }
+    .tier-card .tier-score { font-size: 0.78rem; opacity: 0.85; margin-top: 3px; }
+    .scenario-block { padding: 14px 16px; border-left: 4px solid; border-radius: 0 8px 8px 0; margin-bottom: 12px; }
+
+    /* Draft badge */
+    .draft-badge { display: none; padding: 3px 10px; border-radius: 20px; font-size: 0.76rem; font-weight: 600; background: #FFF3CD; color: #856404; margin-left: 8px; }
+
+    /* Dict picker modal */
+    .dp-overlay { display: none; position: fixed; inset: 0; background: rgba(30,57,50,0.45); z-index: 3000; align-items: center; justify-content: center; }
+    .dp-overlay.show { display: flex; }
+    .dp-modal { background: #fff; border-radius: 12px; width: 540px; max-width: 95vw; max-height: 80vh; display: flex; flex-direction: column; box-shadow: 0 8px 40px rgba(0,0,0,0.18); }
+    .dp-head { padding: 18px 20px 14px; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between; }
+    .dp-body { padding: 14px 18px; overflow-y: auto; flex: 1; }
+    .dp-foot { padding: 12px 18px; border-top: 1px solid var(--border-color); display: flex; gap: 10px; justify-content: flex-end; }
+    .dp-row { display: flex; align-items: center; gap: 12px; padding: 11px 13px; border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 8px; cursor: pointer; transition: var(--transition); }
+    .dp-row:hover { border-color: var(--sb-green); background: rgba(0,112,74,0.03); }
+    .dp-row.sel { border-color: var(--sb-green); background: rgba(0,112,74,0.06); }
+
+    /* Publish confirm */
+    .pub-overlay { display: none; position: fixed; inset: 0; background: rgba(30,57,50,0.45); z-index: 3100; align-items: center; justify-content: center; }
+    .pub-overlay.show { display: flex; }
+    .pub-box { background: #fff; border-radius: 12px; padding: 26px 26px 20px; width: 380px; box-shadow: 0 8px 40px rgba(0,0,0,0.18); }
+  </style>
+</head>
+<body>
+  <div id="nav-placeholder"></div>
+
+  <div class="page-wrapper">
+    <div class="page-container">
+
+      <!-- Page header -->
+      <div class="page-header" style="flex-wrap:wrap; row-gap:8px;">
+        <div class="breadcrumb">
+          <a href="index.html">Home</a> <span>/</span>
+          <a href="shelf.html">Data Assets</a> <span>/</span>
+          Customer Segmentation Guide
+        </div>
+        <div style="display:flex; gap:8px; align-items:center; margin-left:auto; flex-wrap:wrap;">
+          <!-- Demo role switcher -->
+          <select id="role-select" class="form-control" style="width:auto; padding:6px 24px 6px 10px; font-size:0.82rem;" onchange="applyRole(this.value)">
+            <option value="viewer">Viewer</option>
+            <option value="owner" selected>Asset Owner</option>
+            <option value="office">Data Office</option>
+          </select>
+          <button class="btn btn-secondary" onclick="history.back()">&#8592; Back</button>
+          <button class="btn btn-secondary" id="btn-bookmark" onclick="showToast('Added to bookmarks')">&#9734; Bookmark</button>
+          <button class="btn btn-secondary" id="btn-download" onclick="showToast('Download started')">&#8595; Download</button>
+          <button class="btn btn-secondary" id="btn-edit" onclick="enterEdit()">&#9998; Edit</button>
+          <button class="btn btn-secondary" id="btn-cancel" style="display:none;" onclick="cancelEdit()">&#10005; Cancel</button>
+          <button class="btn btn-secondary" id="btn-draft" style="display:none;" onclick="saveDraft()">&#128190; Save Draft</button>
+          <button class="btn btn-primary"   id="btn-publish" style="display:none;" onclick="openPub()">&#128640; Publish</button>
+        </div>
+      </div>
+
+      <!-- Document hero / title bar -->
+      <div class="detail-hero">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px; flex-wrap:wrap;">
+          <h1 style="margin:0;">Customer Segmentation Guide</h1>
+          <span class="tag tag-brown" style="font-size:0.85rem; background:rgba(255,255,255,0.2); color:#fff; border:none;">Reference Document</span>
+          <span class="tag tag-l2" style="font-size:0.85rem; background:rgba(255,255,255,0.2); color:#fff; border:none;">L2 Internal</span>
+          <span id="draft-badge" class="draft-badge">&#9679; Draft</span>
+        </div>
+        <div class="detail-meta">
+          <span>&#128194; Subject Area: <strong>Customer</strong></span>
+          <span>&#128100; Owner: <strong>Ming Zhang</strong></span>
+          <span>&#128197; Published: <strong id="pub-date">2026-04-18</strong></span>
+          <span>&#128196; Version: <strong id="doc-ver">v3.0</strong></span>
+          <span id="role-badge"></span>
+        </div>
+      </div>
+
+      <!-- Edit mode info bar -->
+      <div id="edit-bar" style="display:none; padding:8px 14px; background:rgba(245,166,35,0.08); border:1px solid var(--sb-gold); border-radius:8px; font-size:0.84rem; color:var(--sb-brown); margin-bottom:12px;">
+        <strong>Editing Mode</strong> &#8212; Click the document body to type. Use the toolbar to format text, insert images, data dictionaries, or attach files.
+      </div>
+
+      <!-- Toolbar -->
+      <div class="editor-bar" id="toolbar">
+        <button class="tb" onclick="fmt('bold')"><strong>B</strong></button>
+        <button class="tb" onclick="fmt('italic')"><em>I</em></button>
+        <button class="tb" onclick="fmt('underline')"><u>U</u></button>
+        <div class="tb-sep"></div>
+        <button class="tb" onclick="fmtBlock('h2')">H2</button>
+        <button class="tb" onclick="fmtBlock('h3')">H3</button>
+        <button class="tb" onclick="fmtBlock('p')">Para</button>
+        <button class="tb" onclick="fmtBlock('blockquote')">&#10077; Quote</button>
+        <div class="tb-sep"></div>
+        <button class="tb" onclick="fmt('insertUnorderedList')">&#8226; List</button>
+        <button class="tb" onclick="fmt('insertOrderedList')">1. List</button>
+        <div class="tb-sep"></div>
+        <button class="tb" onclick="document.getElementById('img-inp').click()">Image</button>
+        <button class="tb" onclick="openDictPicker()">Data Dict</button>
+        <button class="tb" onclick="document.getElementById('att-inp').click()">Attach</button>
+        <div class="tb-sep"></div>
+        <button class="tb" onclick="fmt('removeFormat')">Clear</button>
+        <input type="file" id="img-inp" accept="image/*" style="display:none;" onchange="doInsertImage(this)">
+        <input type="file" id="att-inp" style="display:none;" onchange="doAttach(this)">
+      </div>
+
+      <!-- Two-column: sidebar + document body -->
+      <div class="doc-outer">
+
+        <!-- Sidebar -->
+        <aside class="doc-sidebar">
+          <!-- Document metadata -->
+          <div class="card" style="margin-bottom:16px;">
+            <div style="font-size:0.84rem; font-weight:700; color:var(--sb-dark-green); margin-bottom:10px;">Document Info</div>
+            <div class="doc-meta-row"><span class="doc-meta-label">Owner</span><span class="doc-meta-value">Ming Zhang</span></div>
+            <div class="doc-meta-row"><span class="doc-meta-label">Reviewers</span><span class="doc-meta-value">Lisa He, Kevin Wu</span></div>
+            <div class="doc-meta-row"><span class="doc-meta-label">Domain</span><span class="doc-meta-value">Customer</span></div>
+            <div class="doc-meta-row"><span class="doc-meta-label">Security</span><span class="doc-meta-value"><span class="tag tag-l2" style="font-size:0.76rem;">L2 Internal</span></span></div>
+            <div class="doc-meta-row"><span class="doc-meta-label">Published</span><span class="doc-meta-value" id="sb-pub-date">2026-04-18</span></div>
+            <div class="doc-meta-row"><span class="doc-meta-label">Version</span><span class="doc-meta-value" id="sb-ver">v3.0</span></div>
+          </div>
+
+          <!-- Outline (auto-built from h2/h3 in doc body) -->
+          <div class="card" style="margin-bottom:16px;">
+            <div style="font-size:0.84rem; font-weight:700; color:var(--sb-dark-green); margin-bottom:10px;">Outline</div>
+            <nav id="outline-nav" style="display:flex; flex-direction:column; gap:2px;">
+              <!-- built by JS -->
+            </nav>
+          </div>
+
+          <!-- Attachments -->
+          <div class="card">
+            <div style="font-size:0.84rem; font-weight:700; color:var(--sb-dark-green); margin-bottom:10px;">Attachments</div>
+            <div id="att-list">
+              <div class="att-item" data-id="att-1">
+                <span style="font-size:1rem;">&#128202;</span>
+                <a href="#" onclick="fakeDownload(event,'RFM_Model_Methodology_v2.xlsx')">RFM_Model_Methodology_v2.xlsx</a>
+                <span class="att-size">48 KB</span>
+                <button class="att-del" onclick="delAtt('att-1')" title="Remove">&#10005;</button>
+              </div>
+              <div class="att-item" data-id="att-2">
+                <span style="font-size:1rem;">&#128196;</span>
+                <a href="#" onclick="fakeDownload(event,'Customer_Tier_Definitions_2026.pdf')">Customer_Tier_Definitions_2026.pdf</a>
+                <span class="att-size">1.2 MB</span>
+                <button class="att-del" onclick="delAtt('att-2')" title="Remove">&#10005;</button>
+              </div>
+            </div>
+            <div id="att-add-btn" style="display:none; margin-top:8px;">
+              <button class="btn btn-secondary" style="width:100%; font-size:0.82rem; padding:6px 10px;" onclick="document.getElementById('att-inp').click()">+ Attach File</button>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Document main body -->
+        <div style="background:var(--bg-white); border-radius:var(--border-radius); box-shadow:var(--shadow-card); padding:28px 32px;">
+          <div id="doc-body" class="doc-body" contenteditable="false" spellcheck="false" oninput="rebuildOutline()">
+
+            <h2 id="sec-bg">Background</h2>
+            <p>Customer segmentation is a foundational capability for personalized marketing, loyalty program optimization, and strategic planning. This guide consolidates the customer segmentation methodology used across all business units at Starbucks China.</p>
+            <p>The primary goal is to provide a unified framework for understanding customer behavior, value distribution, and lifecycle stages, enabling cross-functional teams to leverage consistent segments in reporting, campaign targeting, and product development.</p>
+
+            <table>
+              <thead><tr><th>Attribute</th><th>Value</th></tr></thead>
+              <tbody>
+                <tr><td>Scope</td><td>All Starbucks China retail customers with registered Rewards accounts</td></tr>
+                <tr><td>Data Sources</td><td>CRM System, POS Transaction Data, Mobile App Events</td></tr>
+                <tr><td>Refresh Cycle</td><td>Monthly (1st business day)</td></tr>
+              </tbody>
+            </table>
+
+            <h2 id="sec-method">Segmentation Methodology</h2>
+            <p>The model uses an enhanced <strong>RFM (Recency, Frequency, Monetary)</strong> framework:</p>
+            <table>
+              <thead><tr><th>Dimension</th><th>Definition</th><th>Score Range</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Recency</strong></td><td>Days since last purchase</td><td>1&#8211;5 (5 = most recent)</td></tr>
+                <tr><td><strong>Frequency</strong></td><td>Transactions in last 90 days</td><td>1&#8211;5 (5 = most frequent)</td></tr>
+                <tr><td><strong>Monetary</strong></td><td>Total spend in last 90 days</td><td>1&#8211;5 (5 = highest spend)</td></tr>
+              </tbody>
+            </table>
+
+            <h3>Loyalty Tier Mapping</h3>
+            <div class="tier-grid" contenteditable="false">
+              <div class="tier-card" style="background:var(--sb-dark-green);">
+                <div class="tier-icon">&#128142;</div>
+                <div class="tier-name">Diamond</div>
+                <div class="tier-score">RFM &#8805; 12</div>
+              </div>
+              <div class="tier-card" style="background:var(--sb-gold);">
+                <div class="tier-icon">&#11088;</div>
+                <div class="tier-name">Gold</div>
+                <div class="tier-score">RFM 9&#8211;11</div>
+              </div>
+              <div class="tier-card" style="background:var(--sb-green);">
+                <div class="tier-icon">&#127775;</div>
+                <div class="tier-name">Green</div>
+                <div class="tier-score">RFM 5&#8211;8</div>
+              </div>
+              <div class="tier-card" style="background:#9e9e9e;">
+                <div class="tier-icon">&#9749;</div>
+                <div class="tier-name">Welcome</div>
+                <div class="tier-score">RFM 3&#8211;4</div>
+              </div>
+            </div>
+
+            <h2 id="sec-scenarios">Application Scenarios</h2>
+            <div class="scenario-block" style="border-left-color:var(--sb-green); background:rgba(0,112,74,0.04);">
+              <strong style="color:var(--sb-green);">Scenario 1: Targeted Campaign</strong>
+              <p style="margin:6px 0 0;">Use Diamond/Gold segments for premium product launches and exclusive offers. Green tier for re-engagement campaigns.</p>
+            </div>
+            <div class="scenario-block" style="border-left-color:var(--sb-gold); background:rgba(203,162,88,0.05);">
+              <strong style="color:var(--sb-gold);">Scenario 2: Loyalty Tier Review</strong>
+              <p style="margin:6px 0 0;">Quarterly review of tier migration patterns. Identify at-risk Diamond customers with declining frequency.</p>
+            </div>
+            <div class="scenario-block" style="border-left-color:var(--sb-brown); background:rgba(107,66,38,0.04);">
+              <strong style="color:var(--sb-brown);">Scenario 3: Store Planning</strong>
+              <p style="margin:6px 0 0;">Analyze customer segment distribution by geography to optimize store format decisions (Reserve vs. Standard).</p>
+            </div>
+
+            <h2 id="sec-ops">System Operation</h2>
+            <ol>
+              <li>Log in to the Starbucks Analytics Portal &#8594; Navigate to <strong>Customer Insights</strong> module.</li>
+              <li>Select <strong>Segmentation</strong> tab &#8594; choose time period and region filter.</li>
+              <li>Click <strong>Generate Report</strong> to view segment distribution. Export in CSV or PDF.</li>
+              <li>For API access, use endpoint <code>/api/v2/customer/segments</code> with your data token.</li>
+            </ol>
+
+            <h2 id="sec-change">Change History</h2>
+            <ul id="change-list">
+              <li>v3.0 (2026-04-18): Added loyalty tier mapping section</li>
+              <li>v2.1 (2025-12-01): Updated RFM scoring thresholds</li>
+              <li>v1.0 (2025-06-15): Initial release</li>
+            </ul>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Data Dict Picker -->
+  <div class="dp-overlay" id="dpModal" onclick="if(event.target===this)closeDictPicker()">
+    <div class="dp-modal">
+      <div class="dp-head">
+        <div>
+          <div style="font-size:1rem; font-weight:700; color:var(--sb-dark-green);">Insert Data Dictionary Reference</div>
+          <div style="font-size:0.82rem; color:var(--text-muted); margin-top:2px;">Select an approved asset to embed as an inline card</div>
+        </div>
+        <button onclick="closeDictPicker()" style="background:none; border:none; font-size:1.2rem; cursor:pointer; color:var(--text-muted);">&#10005;</button>
+      </div>
+      <div class="dp-body">
+        <div class="dp-row" id="dopt-1" onclick="selDict('dopt-1')">
+          <span style="font-size:1.2rem; flex-shrink:0;">&#128218;</span>
+          <div style="flex:1;">
+            <div style="font-weight:600; font-size:0.9rem;">DWD_Order_Detail</div>
+            <div style="margin-top:3px;">
+              <span class="tag tag-blue" style="font-size:0.74rem;">Dictionary</span>
+              <span class="tag tag-l2" style="font-size:0.74rem; margin-left:4px;">L2</span>
+              <span class="tag tag-brown" style="font-size:0.74rem; margin-left:4px;">Sales</span>
+            </div>
+            <div style="font-size:0.79rem; color:var(--text-muted); margin-top:2px;">Order detail table &#8212; Owner: James Li</div>
+          </div>
+          <span style="font-size:0.78rem; color:var(--sb-green); font-weight:600; flex-shrink:0;">&#10004; Approved</span>
+        </div>
+        <div class="dp-row" id="dopt-2" onclick="selDict('dopt-2')">
+          <span style="font-size:1.2rem; flex-shrink:0;">&#128218;</span>
+          <div style="flex:1;">
+            <div style="font-weight:600; font-size:0.9rem;">DIM_Store_Master</div>
+            <div style="margin-top:3px;">
+              <span class="tag tag-blue" style="font-size:0.74rem;">Dictionary</span>
+              <span class="tag tag-l3" style="font-size:0.74rem; margin-left:4px;">L3</span>
+              <span class="tag tag-green" style="font-size:0.74rem; margin-left:4px;">Supply Chain</span>
+            </div>
+            <div style="font-size:0.79rem; color:var(--text-muted); margin-top:2px;">Store dimension table &#8212; Owner: David Liu</div>
+          </div>
+          <span style="font-size:0.78rem; color:var(--sb-green); font-weight:600; flex-shrink:0;">&#10004; Approved</span>
+        </div>
+        <div class="dp-row" id="dopt-3" onclick="selDict('dopt-3')">
+          <span style="font-size:1.2rem; flex-shrink:0;">&#128218;</span>
+          <div style="flex:1;">
+            <div style="font-weight:600; font-size:0.9rem;">&#22825;&#27668;&#20449;&#24687;&#25968;&#25454;</div>
+            <div style="margin-top:3px;">
+              <span class="tag tag-blue" style="font-size:0.74rem;">Dictionary</span>
+              <span class="tag tag-l2" style="font-size:0.74rem; margin-left:4px;">L2</span>
+              <span class="tag tag-gold" style="font-size:0.74rem; margin-left:4px;">External Data</span>
+            </div>
+            <div style="font-size:0.79rem; color:var(--text-muted); margin-top:2px;">Weather data by city &#8212; Owner: Tony Zhang</div>
+          </div>
+          <span style="font-size:0.78rem; color:var(--sb-green); font-weight:600; flex-shrink:0;">&#10004; Approved</span>
+        </div>
+        <div class="dp-row" id="dopt-4" onclick="selDict('dopt-4')">
+          <span style="font-size:1.2rem; flex-shrink:0;">&#128216;</span>
+          <div style="flex:1;">
+            <div style="font-weight:600; font-size:0.9rem;">Sales Metrics Glossary</div>
+            <div style="margin-top:3px;">
+              <span class="tag tag-green" style="font-size:0.74rem;">Glossary</span>
+              <span class="tag tag-l3" style="font-size:0.74rem; margin-left:4px;">L3</span>
+              <span class="tag tag-brown" style="font-size:0.74rem; margin-left:4px;">Sales</span>
+            </div>
+            <div style="font-size:0.79rem; color:var(--text-muted); margin-top:2px;">18 sales KPI definitions &#8212; Owner: Sarah Chen</div>
+          </div>
+          <span style="font-size:0.78rem; color:var(--sb-green); font-weight:600; flex-shrink:0;">&#10004; Approved</span>
+        </div>
+        <div class="dp-row" id="dopt-5" onclick="selDict('dopt-5')">
+          <span style="font-size:1.2rem; flex-shrink:0;">&#128216;</span>
+          <div style="flex:1;">
+            <div style="font-weight:600; font-size:0.9rem;">Finance Metrics Glossary</div>
+            <div style="margin-top:3px;">
+              <span class="tag tag-green" style="font-size:0.74rem;">Glossary</span>
+              <span class="tag tag-l3" style="font-size:0.74rem; margin-left:4px;">L3</span>
+              <span class="tag tag-gold" style="font-size:0.74rem; margin-left:4px;">Finance</span>
+            </div>
+            <div style="font-size:0.79rem; color:var(--text-muted); margin-top:2px;">Finance KPI definitions &#8212; Owner: Lily Wang</div>
+          </div>
+          <span style="font-size:0.78rem; color:var(--sb-green); font-weight:600; flex-shrink:0;">&#10004; Approved</span>
+        </div>
+      </div>
+      <div class="dp-foot">
+        <button class="btn btn-cancel" onclick="closeDictPicker()">Cancel</button>
+        <button class="btn btn-primary" onclick="confirmInsertDict()">Insert</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Publish confirm -->
+  <div class="pub-overlay" id="pubModal" onclick="if(event.target===this)closePub()">
+    <div class="pub-box">
+      <h3 style="margin:0 0 8px; color:var(--sb-dark-green);">Publish Document?</h3>
+      <p style="color:var(--text-secondary); font-size:0.88rem; margin-bottom:14px;">This will create a new version and notify stakeholders.</p>
+      <div class="form-group" style="margin-bottom:14px;">
+        <label style="font-size:0.84rem; font-weight:600; display:block; margin-bottom:4px;">Version Notes</label>
+        <textarea class="form-control" id="ver-notes" rows="3" placeholder="What changed in this version?"></textarea>
+      </div>
+      <div style="display:flex; gap:10px; justify-content:flex-end;">
+        <button class="btn btn-cancel" onclick="closePub()">Cancel</button>
+        <button class="btn btn-primary" onclick="confirmPublish()">Confirm Publish</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script>
+    initNav('shelf');
+
+    let savedSnap = null;
+    let selDictId = null;
+    let savedRange = null;
+    let attCnt = 10;
+
+    /* ===== Role ===== */
+    function applyRole(r) {
+      const canEdit = (r === 'owner' || r === 'office');
+      document.getElementById('btn-edit').style.display = canEdit ? '' : 'none';
+      if (!canEdit && document.body.classList.contains('edit-mode')) cancelEdit();
+      const b = document.getElementById('role-badge');
+      if (r === 'owner') b.innerHTML = '<span style="padding:2px 10px; border-radius:20px; font-size:0.78rem; font-weight:600; background:rgba(255,255,255,0.25); color:#fff;">Asset Owner</span>';
+      else if (r === 'office') b.innerHTML = '<span style="padding:2px 10px; border-radius:20px; font-size:0.78rem; font-weight:600; background:rgba(255,255,255,0.25); color:#fff;">Data Office</span>';
+      else b.innerHTML = '<span style="padding:2px 10px; border-radius:20px; font-size:0.78rem; font-weight:600; background:rgba(255,255,255,0.15); color:rgba(255,255,255,0.8);">Viewer</span>';
+    }
+    applyRole('owner');
+
+    /* ===== Edit mode ===== */
+    function enterEdit() {
+      savedSnap = document.getElementById('doc-body').innerHTML;
+      const body = document.getElementById('doc-body');
+      body.setAttribute('contenteditable', 'true');
+      body.focus();
+      document.getElementById('toolbar').classList.add('visible');
+      document.getElementById('edit-bar').style.display = '';
+      document.getElementById('att-add-btn').style.display = '';
+      document.getElementById('btn-edit').style.display = 'none';
+      document.getElementById('btn-cancel').style.display = '';
+      document.getElementById('btn-draft').style.display = '';
+      document.getElementById('btn-publish').style.display = '';
+      document.getElementById('btn-download').style.display = 'none';
+      document.body.classList.add('edit-mode');
+    }
+
+    function cancelEdit() {
+      document.getElementById('doc-body').innerHTML = savedSnap;
+      exitEditUI();
+      document.getElementById('draft-badge').style.display = 'none';
+      rebuildOutline();
+    }
+
+    function exitEditUI() {
+      document.getElementById('doc-body').setAttribute('contenteditable', 'false');
+      document.getElementById('toolbar').classList.remove('visible');
+      document.getElementById('edit-bar').style.display = 'none';
+      document.getElementById('att-add-btn').style.display = 'none';
+      document.getElementById('btn-edit').style.display = '';
+      document.getElementById('btn-cancel').style.display = 'none';
+      document.getElementById('btn-draft').style.display = 'none';
+      document.getElementById('btn-publish').style.display = 'none';
+      document.getElementById('btn-download').style.display = '';
+      document.body.classList.remove('edit-mode');
+    }
+
+    function saveDraft() {
+      document.getElementById('draft-badge').style.display = '';
+      showToast('Draft saved');
+    }
+
+    /* ===== Publish ===== */
+    function openPub() { document.getElementById('pubModal').classList.add('show'); }
+    function closePub() { document.getElementById('pubModal').classList.remove('show'); }
+    function confirmPublish() {
+      const notes = document.getElementById('ver-notes').value.trim() || 'Minor update';
+      const verEl = document.getElementById('doc-ver');
+      const sbVer = document.getElementById('sb-ver');
+      const cur = verEl.textContent;
+      const m = cur.match(/v(\d+)\.(\d+)/);
+      const nv = m ? `v${m[1]}.${parseInt(m[2])+1}` : cur;
+      verEl.textContent = nv;
+      sbVer.textContent = nv;
+      const today = new Date().toISOString().slice(0,10);
+      document.getElementById('pub-date').textContent = today;
+      document.getElementById('sb-pub-date').textContent = today;
+      const cl = document.getElementById('change-list');
+      if (cl) { const li = document.createElement('li'); li.textContent = `${nv} (${today}): ${notes}`; cl.insertBefore(li, cl.firstChild); }
+      closePub();
+      exitEditUI();
+      document.getElementById('draft-badge').style.display = 'none';
+      showToast(`Published as ${nv}`);
+    }
+
+    /* ===== Formatting ===== */
+    function fmt(cmd) { document.execCommand(cmd, false, null); }
+    function fmtBlock(tag) { document.execCommand('formatBlock', false, tag); }
+
+    /* ===== Insert image ===== */
+    function doInsertImage(inp) {
+      const f = inp.files[0]; if (!f) return;
+      const reader = new FileReader();
+      reader.onload = e => {
+        const img = `<img src="${e.target.result}" alt="${f.name}" style="max-width:100%; border-radius:6px; border:1px solid var(--border-color); margin:8px 0;">`;
+        document.execCommand('insertHTML', false, img);
+        showToast('Image inserted');
+      };
+      reader.readAsDataURL(f);
+      inp.value = '';
+    }
+
+    /* ===== Dict picker ===== */
+    const DICTS = {
+      'dopt-1': { name:'DWD_Order_Detail',       type:'Dictionary', lv:'L2', tc:'tag-l2', ty:'tag-blue', domain:'Sales',        owner:'James Li',   href:'detail-dictionary.html' },
+      'dopt-2': { name:'DIM_Store_Master',        type:'Dictionary', lv:'L3', tc:'tag-l3', ty:'tag-blue', domain:'Supply Chain',  owner:'David Liu',  href:'detail-dictionary.html' },
+      'dopt-3': { name:'\u5929\u6c14\u4fe1\u606f\u6570\u636e',        type:'Dictionary', lv:'L2', tc:'tag-l2', ty:'tag-blue', domain:'External Data',owner:'Tony Zhang', href:'detail-dictionary.html' },
+      'dopt-4': { name:'Sales Metrics Glossary', type:'Glossary',   lv:'L3', tc:'tag-l3', ty:'tag-green',domain:'Sales',        owner:'Sarah Chen', href:'detail-glossary.html' },
+      'dopt-5': { name:'Finance Metrics Glossary',type:'Glossary',  lv:'L3', tc:'tag-l3', ty:'tag-green',domain:'Finance',      owner:'Lily Wang',  href:'detail-glossary.html' },
+    };
+
+    function openDictPicker() {
+      const sel = window.getSelection();
+      savedRange = (sel && sel.rangeCount > 0) ? sel.getRangeAt(0).cloneRange() : null;
+      selDictId = null;
+      document.querySelectorAll('.dp-row').forEach(r => r.classList.remove('sel'));
+      document.getElementById('dpModal').classList.add('show');
+    }
+    function closeDictPicker() { document.getElementById('dpModal').classList.remove('show'); }
+    function selDict(id) {
+      document.querySelectorAll('.dp-row').forEach(r => r.classList.remove('sel'));
+      document.getElementById(id).classList.add('sel');
+      selDictId = id;
+    }
+    function confirmInsertDict() {
+      if (!selDictId) { showToast('Please select an asset first'); return; }
+      const d = DICTS[selDictId];
+      const card = `<div class="dict-card" contenteditable="false"><span style="font-size:1.1rem;">&#128218;</span><div><div class="dc-name"><a href="${d.href}">${d.name}</a></div><div class="dc-meta"><span class="tag ${d.ty}" style="font-size:0.74rem;">${d.type}</span> <span class="tag ${d.tc}" style="font-size:0.74rem;">${d.lv}</span> &nbsp;${d.domain} &nbsp;${d.owner}</div></div><span style="margin-left:auto; font-size:0.78rem; color:var(--sb-green); font-weight:600; flex-shrink:0;">&#10004; Approved</span></div>`;
+      if (savedRange) {
+        const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(savedRange);
+        document.execCommand('insertHTML', false, card);
+      } else {
+        document.getElementById('doc-body').insertAdjacentHTML('beforeend', card);
+      }
+      closeDictPicker();
+      showToast(`Inserted: ${d.name}`);
+    }
+
+    /* ===== Attachments ===== */
+    function doAttach(inp) {
+      const f = inp.files[0]; if (!f) return;
+      const reader = new FileReader();
+      reader.onload = e => {
+        const id = `att-${attCnt++}`;
+        const ext = f.name.split('.').pop().toUpperCase();
+        const icons = {PDF:'&#128196;',XLSX:'&#128202;',XLS:'&#128202;',DOC:'&#128196;',DOCX:'&#128196;',PNG:'&#128247;',JPG:'&#128247;',JPEG:'&#128247;',ZIP:'&#128230;'};
+        const icon = icons[ext] || '&#128206;';
+        const sz = f.size > 1048576 ? (f.size/1048576).toFixed(1)+' MB' : Math.round(f.size/1024)+' KB';
+        const div = document.createElement('div');
+        div.className = 'att-item'; div.setAttribute('data-id', id);
+        div.innerHTML = `<span style="font-size:1rem;">${icon}</span><a href="${e.target.result}" download="${f.name}">${f.name}</a><span class="att-size">${sz}</span><button class="att-del" onclick="delAtt('${id}')" title="Remove">&#10005;</button>`;
+        document.getElementById('att-list').appendChild(div);
+        showToast(`Attached: ${f.name}`);
+      };
+      reader.readAsDataURL(f);
+      inp.value = '';
+    }
+    function delAtt(id) {
+      const el = document.querySelector(`[data-id="${id}"]`);
+      if (el) { el.remove(); showToast('Attachment removed'); }
+    }
+    function fakeDownload(e, name) { e.preventDefault(); showToast(`Downloading: ${name}`); }
+
+    /* ===== Outline builder ===== */
+    function rebuildOutline() {
+      const nav = document.getElementById('outline-nav');
+      const headings = document.querySelectorAll('#doc-body h2, #doc-body h3');
+      nav.innerHTML = '';
+      headings.forEach((h, i) => {
+        if (!h.id) h.id = 'hs-' + i;
+        const a = document.createElement('a');
+        a.className = 'toc-link';
+        a.href = '#' + h.id;
+        a.style.paddingLeft = h.tagName === 'H3' ? '22px' : '14px';
+        a.textContent = h.textContent;
+        a.onclick = e => { e.preventDefault(); h.scrollIntoView({behavior:'smooth'}); };
+        nav.appendChild(a);
+      });
+    }
+    rebuildOutline();
+  </script>
+</body>
+</html>

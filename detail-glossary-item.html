@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Asset Hub - Term Detail</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .attr-section {
+      background: var(--bg-white);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-card);
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    .attr-section-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border-color);
+      font-weight: 600;
+      font-size: 1rem;
+    }
+    .attr-section-header .icon {
+      width: 28px; height: 28px; border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem;
+    }
+    .attr-section-header.biz .icon { background: var(--sb-light-green); }
+    .attr-section-header.mgmt .icon { background: #FFF3DC; }
+    .attr-section-header.tech .icon { background: #E3F2FD; }
+    .attr-table { width: 100%; border-collapse: collapse; }
+    .attr-table tr { border-bottom: 1px solid var(--border-color); }
+    .attr-table tr:last-child { border-bottom: none; }
+    .attr-table td { padding: 11px 20px; vertical-align: top; font-size: 0.88rem; }
+    .attr-table td:first-child {
+      width: 180px; font-weight: 500; color: var(--text-secondary);
+      background: var(--bg-primary); white-space: nowrap;
+    }
+    .code-block {
+      background: var(--bg-primary);
+      border-radius: 6px;
+      padding: 14px 16px;
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 0.85rem;
+      line-height: 1.8;
+      overflow-x: auto;
+    }
+    .code-keyword { color: var(--sb-green); font-weight: 600; }
+    .code-comment { color: var(--text-muted); }
+    .code-schema { color: #1565C0; }
+    .field-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      margin-top: 6px;
+    }
+    .field-table th {
+      background: var(--bg-primary);
+      padding: 7px 12px;
+      text-align: left;
+      font-weight: 600;
+      color: var(--text-secondary);
+      border-bottom: 1px solid var(--border-color);
+    }
+    .field-table td {
+      padding: 7px 12px;
+      border-bottom: 1px solid var(--border-color);
+      background: var(--bg-white);
+    }
+    .field-table tr:last-child td { border-bottom: none; }
+    .owner-card {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 12px; border-radius: 6px;
+      background: var(--bg-primary); border: 1px solid var(--border-color);
+    }
+    .av-lg {
+      width: 32px; height: 32px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 0.78rem;
+    }
+  </style>
+</head>
+<body>
+  <div id="nav-placeholder"></div>
+
+  <div class="page-wrapper">
+    <div class="page-container">
+
+      <!-- Breadcrumb & Actions -->
+      <div class="page-header">
+        <div class="breadcrumb">
+          <a href="index.html">Home</a> <span>/</span>
+          <a href="shelf.html">Data Assets</a> <span>/</span>
+          <a href="detail-glossary.html">Sales Metrics Glossary</a> <span>/</span>
+          Net Revenue
+        </div>
+        <div style="display:flex; gap:10px; margin-left:auto;">
+          <button class="btn btn-secondary" onclick="history.back()">← Back</button>
+          <button class="btn btn-secondary" onclick="showToast('Added to bookmarks')">☆ Bookmark</button>
+          <button class="btn btn-primary" onclick="showToast('Download started')">↓ Download</button>
+        </div>
+      </div>
+
+      <!-- Hero -->
+      <div class="detail-hero">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px; flex-wrap:wrap;">
+          <h1 style="margin:0;">Net Revenue</h1>
+          <span class="tag tag-green" style="font-size:0.85rem;">KPI</span>
+          <span class="tag" style="background:rgba(255,255,255,0.2); color:#fff;">净收入</span>
+          <span class="tag" style="background:rgba(255,255,255,0.15); color:#fff;">L1 Public</span>
+        </div>
+        <div class="detail-meta">
+          <span>📂 Glossary: <strong>Sales Metrics</strong></span>
+          <span>👤 Business Owner: <strong>Sarah Chen</strong></span>
+          <span>🔧 Tech Owner: <strong>James Li</strong></span>
+          <span>📅 Last Updated: <strong>2026-04-20</strong></span>
+          <span>🔖 Version: <strong>v2.1</strong></span>
+        </div>
+      </div>
+
+      <!-- Attribute Sections -->
+
+      <!-- 1. Business Attributes -->
+      <div class="attr-section">
+        <div class="attr-section-header biz">
+          <div class="icon">📋</div>
+          Business Attributes
+        </div>
+        <table class="attr-table">
+          <tr>
+            <td>English Name</td>
+            <td>Net Revenue</td>
+          </tr>
+          <tr>
+            <td>Chinese Name</td>
+            <td>净收入</td>
+          </tr>
+          <tr>
+            <td>Definition (EN)</td>
+            <td>Total revenue generated from sales of beverages, food, and merchandise, after deducting discounts, promotional allowances, and product returns. This metric reflects the actual income received by the company from customer transactions.</td>
+          </tr>
+          <tr>
+            <td>Definition (CN)</td>
+            <td>饮料、食品和商品销售产生的总收入，扣除折扣、促销津贴和退货后的净额。该指标反映了公司从客户交易中获得的实际收入。</td>
+          </tr>
+          <tr>
+            <td>Type</td>
+            <td><span class="tag tag-green">KPI — Financial Metric</span></td>
+          </tr>
+          <tr>
+            <td>Subject Area</td>
+            <td>Sales</td>
+          </tr>
+          <tr>
+            <td>Is KPI</td>
+            <td><span style="color:var(--sb-green); font-weight:600;">✔ Yes</span> — Reported in quarterly earnings calls and annual reports</td>
+          </tr>
+          <tr>
+            <td>Business Formula</td>
+            <td>
+              <div class="code-block">
+                <span class="code-keyword">Net Revenue</span> = Gross Revenue − Discount Amount − Return Amount − Allowance Amount
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Unit</td>
+            <td>CNY (Chinese Yuan, 元)</td>
+          </tr>
+          <tr>
+            <td>Related KPIs</td>
+            <td>
+              <span class="tag tag-green" style="cursor:pointer;" onclick="showToast('Navigating...')">Gross Revenue</span>
+              <span class="tag tag-green" style="cursor:pointer; margin-left:4px;" onclick="showToast('Navigating...')">Comp Store Sales Growth</span>
+              <span class="tag tag-green" style="cursor:pointer; margin-left:4px;" onclick="showToast('Navigating...')">Average Ticket Size</span>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- 2. Management Attributes -->
+      <div class="attr-section">
+        <div class="attr-section-header mgmt">
+          <div class="icon">🗂️</div>
+          Management Attributes
+        </div>
+        <table class="attr-table">
+          <tr>
+            <td>Security Level</td>
+            <td><span class="tag tag-l1">L1 - Public</span> — Can be shared internally and externally</td>
+          </tr>
+          <tr>
+            <td>Business Owner</td>
+            <td>
+              <div class="owner-card">
+                <div class="av-lg" style="background:var(--sb-light-green); color:var(--sb-dark-green);">SC</div>
+                <div>
+                  <div style="font-weight:600; font-size:0.88rem;">Sarah Chen</div>
+                  <div style="font-size:0.8rem; color:var(--text-muted);">Finance Dept. · Senior Data Analyst</div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Data Steward</td>
+            <td>
+              <div class="owner-card">
+                <div class="av-lg" style="background:var(--sb-light-green); color:var(--sb-dark-green);">AW</div>
+                <div>
+                  <div style="font-weight:600; font-size:0.88rem;">Alex Wang</div>
+                  <div style="font-size:0.8rem; color:var(--text-muted);">Data Office · Data Governance Lead</div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Status</td>
+            <td><span style="color:var(--sb-success); font-weight:600;">✔ Approved</span></td>
+          </tr>
+          <tr>
+            <td>Version</td>
+            <td>v2.1 (last major update: 2026-01-15)</td>
+          </tr>
+          <tr>
+            <td>Published Date</td>
+            <td>2024-03-01</td>
+          </tr>
+          <tr>
+            <td>Last Updated</td>
+            <td>2026-04-20</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- 3. Technical Attributes -->
+      <div class="attr-section">
+        <div class="attr-section-header tech">
+          <div class="icon">⚙️</div>
+          Technical Attributes
+        </div>
+        <table class="attr-table">
+          <tr>
+            <td>Tech Owner</td>
+            <td>
+              <div class="owner-card">
+                <div class="av-lg" style="background:#E3F2FD; color:#1565C0;">JL</div>
+                <div>
+                  <div style="font-weight:600; font-size:0.88rem;">James Li</div>
+                  <div style="font-size:0.8rem; color:var(--text-muted);">Data Engineering · Senior Data Engineer</div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Source System</td>
+            <td>POS Transaction System → ODS Layer → DWD Layer (sbux_cdm)</td>
+          </tr>
+          <tr>
+            <td>Underlying Table</td>
+            <td>
+              <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+                <code style="background:var(--bg-primary); padding:3px 8px; border-radius:4px; font-size:0.88rem; color:#1565C0;">sbux_cdm.dwd_order_detail</code>
+                <span style="font-size:0.82rem; color:var(--text-muted);">(Data Middle Platform · DWD Layer)</span>
+                <a href="apply-data.html?type=midplatform&table=sbux_cdm.dwd_order_detail&domain=Sales" class="btn btn-secondary" style="padding:5px 14px; font-size:0.82rem;">&#x1F511; Apply Data Access</a>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Columns Used</td>
+            <td>
+              <table class="field-table">
+                <thead>
+                  <tr>
+                    <th>Column Name</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Role in Formula</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>gross_revenue</code></td>
+                    <td>DECIMAL(18,2)</td>
+                    <td>Pre-deduction revenue per order line</td>
+                    <td>Gross Revenue</td>
+                  </tr>
+                  <tr>
+                    <td><code>discount_amount</code></td>
+                    <td>DECIMAL(18,2)</td>
+                    <td>Discount applied (coupon / member benefit)</td>
+                    <td>Discount Amount</td>
+                  </tr>
+                  <tr>
+                    <td><code>return_amount</code></td>
+                    <td>DECIMAL(18,2)</td>
+                    <td>Monetary value of returned items</td>
+                    <td>Return Amount</td>
+                  </tr>
+                  <tr>
+                    <td><code>allowance_amount</code></td>
+                    <td>DECIMAL(18,2)</td>
+                    <td>Promotional / operational allowances</td>
+                    <td>Allowance Amount</td>
+                  </tr>
+                  <tr>
+                    <td><code>order_status</code></td>
+                    <td>VARCHAR(20)</td>
+                    <td>Order lifecycle status</td>
+                    <td>Filter: = 'completed'</td>
+                  </tr>
+                  <tr>
+                    <td><code>transaction_date</code></td>
+                    <td>DATE</td>
+                    <td>Date of completed transaction</td>
+                    <td>Time dimension filter</td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td>Processing Logic</td>
+            <td>
+              <div class="code-block">
+<span class="code-comment">-- Net Revenue: aggregated from sbux_cdm DWD layer</span>
+<span class="code-comment">-- Partition: transaction_date (daily, T+1 refresh)</span>
+
+<span class="code-keyword">SELECT</span>
+  store_id,
+  transaction_date,
+  <span class="code-keyword">SUM</span>(gross_revenue)
+    - <span class="code-keyword">SUM</span>(discount_amount)
+    - <span class="code-keyword">SUM</span>(return_amount)
+    - <span class="code-keyword">SUM</span>(allowance_amount)
+    <span class="code-keyword">AS</span> net_revenue
+<span class="code-keyword">FROM</span> <span class="code-schema">sbux_cdm</span>.dwd_order_detail
+<span class="code-keyword">WHERE</span> order_status = <span style="color:var(--sb-brown);">'completed'</span>
+  <span class="code-keyword">AND</span> transaction_date <span class="code-keyword">BETWEEN</span> @start_date <span class="code-keyword">AND</span> @end_date
+<span class="code-keyword">GROUP BY</span>
+  store_id,
+  transaction_date</div>
+            </td>
+          </tr>
+          <tr>
+            <td>Granularity</td>
+            <td>Store / Day / Product Category</td>
+          </tr>
+          <tr>
+            <td>Downstream Systems</td>
+            <td>
+              <span class="tag tag-blue" style="font-size:0.8rem; margin-right:4px;">Tableau Revenue Dashboard</span>
+              <span class="tag tag-blue" style="font-size:0.8rem; margin-right:4px;">Finance Reporting Cube</span>
+              <span class="tag tag-blue" style="font-size:0.8rem;">Quarterly Earnings Report</span>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script>initNav('shelf');</script>
+</body>
+</html>

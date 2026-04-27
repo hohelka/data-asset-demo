@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Asset Hub - Change History</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .admin-tabs {
+      display: flex; gap: 4px; background: var(--bg-white); padding: 4px;
+      border-radius: 8px; box-shadow: var(--shadow-card); margin-bottom: 24px;
+    }
+    .admin-tab {
+      padding: 10px 18px; border-radius: 6px; cursor: pointer; font-size: 0.88rem;
+      color: var(--text-secondary); transition: var(--transition); text-align: center;
+    }
+    .admin-tab:hover { background: var(--bg-primary); }
+    .admin-tab.active { background: var(--sb-green); color: #fff; font-weight: 500; }
+    .change-type {
+      display: inline-flex; align-items: center; padding: 3px 10px;
+      border-radius: 4px; font-size: 0.78rem; font-weight: 500;
+    }
+    .change-type.created { background: var(--sb-light-green); color: var(--sb-success); }
+    .change-type.updated { background: #E3F2FD; color: #1565C0; }
+    .change-type.published { background: var(--sb-light-green); color: var(--sb-green); }
+    .change-type.archived { background: #FFEBEE; color: var(--sb-error); }
+    .change-type.restored { background: #FFF3DC; color: var(--sb-gold); }
+    .diff-block {
+      background: var(--bg-primary); border-radius: 6px; padding: 12px 16px;
+      font-size: 0.85rem; margin-top: 8px;
+    }
+    .diff-old { color: var(--sb-error); text-decoration: line-through; }
+    .diff-new { color: var(--sb-success); font-weight: 500; }
+  </style>
+</head>
+<body>
+  <div id="nav-placeholder"></div>
+
+  <div class="page-wrapper">
+    <div class="page-container wide">
+
+      <div class="page-header">
+        <div class="breadcrumb"><a href="index.html">Home</a> <span>/</span> <a href="admin-list.html">Admin</a> <span>/</span> Change History</div>
+        <h1>Asset Change History</h1>
+        <div style="margin-left:auto;">
+          <button class="btn btn-secondary" onclick="showToast('Exported audit log')">↓ Export Log</button>
+        </div>
+      </div>
+
+      <div class="admin-tabs">
+        <a class="admin-tab" href="admin-list.html">Asset List</a>
+        <a class="admin-tab" href="admin-edit.html">Edit Asset</a>
+        <a class="admin-tab active" href="admin-history.html">Change History</a>
+        <a class="admin-tab" href="admin-config.html">Homepage Config</a>
+        <a class="admin-tab" href="admin-access.html">Access Records</a>
+      </div>
+
+      <!-- Filters -->
+      <div class="flex-between mb-20" style="flex-wrap:wrap; gap:12px;">
+        <div class="search-bar" style="flex:1; max-width:400px;">
+          <input type="text" placeholder="Search by asset name or editor..." onkeydown="if(event.key==='Enter')handleSearch(this)">
+          <button onclick="handleSearch(this.previousElementSibling)">Search</button>
+        </div>
+        <div class="flex gap-8">
+          <select class="form-control" style="width:auto; padding:8px 32px 8px 12px;">
+            <option>All Change Types</option>
+            <option>Created</option>
+            <option>Updated</option>
+            <option>Published</option>
+            <option>Archived</option>
+          </select>
+          <input type="date" class="form-control" style="width:auto;" value="2026-04-01">
+          <span style="align-self:center; color:var(--text-muted);">to</span>
+          <input type="date" class="form-control" style="width:auto;" value="2026-04-23">
+        </div>
+      </div>
+
+      <!-- Change History Timeline -->
+      <div class="card">
+        <div style="overflow-x:auto;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+                <th>Asset Name</th>
+                <th>Change Type</th>
+                <th>Changed By</th>
+                <th>Version</th>
+                <th>Summary</th>
+                <th>Details</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="white-space:nowrap;">2026-04-22 14:32</td>
+                <td><strong>Marketing ROI Formula</strong></td>
+                <td><span class="change-type created">Created</span></td>
+                <td>Kevin Wu</td>
+                <td>v1.0</td>
+                <td>New glossary asset submitted for review</td>
+                <td><button class="btn btn-sm btn-secondary" onclick="openModal('modal-detail')">View</button></td>
+              </tr>
+              <tr>
+                <td style="white-space:nowrap;">2026-04-20 10:15</td>
+                <td><strong>Net Revenue</strong></td>
+                <td><span class="change-type updated">Updated</span></td>
+                <td>Sarah Chen</td>
+                <td>v2.0 → v2.1</td>
+                <td>Updated calculation logic: added allowance deduction</td>
+                <td><button class="btn btn-sm btn-secondary" onclick="openModal('modal-detail')">View</button></td>
+              </tr>
+              <tr>
+                <td style="white-space:nowrap;">2026-04-20 10:18</td>
+                <td><strong>Net Revenue</strong></td>
+                <td><span class="change-type published">Published</span></td>
+                <td>Alex Wang (DO)</td>
+                <td>v2.1</td>
+                <td>Approved and published by Data Office</td>
+                <td><button class="btn btn-sm btn-secondary" onclick="openModal('modal-detail')">View</button></td>
+              </tr>
+              <tr>
+                <td style="white-space:nowrap;">2026-04-19 09:40</td>
+                <td><strong>DWD_Order_Detail</strong></td>
+                <td><span class="change-type updated">Updated</span></td>
+                <td>James Li</td>
+                <td>v1.3 → v1.4</td>
+                <td>Added 2 new fields: payment_method, order_status</td>
+                <td><button class="btn btn-sm btn-secondary" onclick="openModal('modal-detail')">View</button></td>
+              </tr>
+              <tr>
+                <td style="white-space:nowrap;">2026-04-18 16:22</td>
+                <td><strong>Customer Segmentation Guide</strong></td>
+                <td><span class="change-type published">Published</span></td>
+                <td>Alex Wang (DO)</td>
+                <td>v3.0</td>
+                <td>Major update: added loyalty tier mapping</td>
+                <td><button class="btn btn-sm btn-secondary" onclick="openModal('modal-detail')">View</button></td>
+              </tr>
+              <tr>
+                <td style="white-space:nowrap;">2026-04-15 11:05</td>
+                <td><strong>Legacy Sales Metrics v1</strong></td>
+                <td><span class="change-type archived">Archived</span></td>
+                <td>Sarah Chen</td>
+                <td>v1.0</td>
+                <td>Replaced by updated Net Revenue definition</td>
+                <td><button class="btn btn-sm btn-secondary" onclick="openModal('modal-detail')">View</button></td>
+              </tr>
+              <tr>
+                <td style="white-space:nowrap;">2026-04-12 08:30</td>
+                <td><strong>DIM_Store_Master</strong></td>
+                <td><span class="change-type created">Created</span></td>
+                <td>David Liu</td>
+                <td>v1.0</td>
+                <td>New data dictionary for store master table</td>
+                <td><button class="btn btn-sm btn-secondary" onclick="openModal('modal-detail')">View</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="pagination" style="margin-top:16px;">
+          <a href="#">‹</a>
+          <span class="active">1</span>
+          <a href="#">2</a>
+          <a href="#">3</a>
+          <a href="#">›</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Detail Modal -->
+  <div class="modal-overlay" id="modal-detail">
+    <div class="modal">
+      <h2>Change Detail</h2>
+      <div style="margin-bottom:16px;">
+        <div class="detail-row">
+          <div class="detail-label">Asset</div>
+          <div class="detail-value">Net Revenue</div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">Changed By</div>
+          <div class="detail-value">Sarah Chen</div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">Timestamp</div>
+          <div class="detail-value">2026-04-20 10:15:33</div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">Version</div>
+          <div class="detail-value">v2.0 → v2.1</div>
+        </div>
+      </div>
+      <h4 style="margin-bottom:8px; color:var(--sb-dark-green);">Changes</h4>
+      <div class="diff-block">
+        <div style="margin-bottom:6px;"><strong>Calculation Logic:</strong></div>
+        <div class="diff-old">Net Revenue = Gross Revenue - Discounts - Returns</div>
+        <div class="diff-new">Net Revenue = Gross Revenue - Discounts - Returns - Allowances</div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeModal('modal-detail')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script>initNav('admin');</script>
+</body>
+</html>

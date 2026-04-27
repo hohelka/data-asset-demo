@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Asset Hub - Asset Shelf</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .shelf-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 24px;
+    }
+    @media (max-width: 900px) {
+      .shelf-layout { grid-template-columns: 1fr; }
+    }
+    .domain-chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      border: 1px solid var(--border-color);
+      cursor: pointer;
+      transition: var(--transition);
+      background: var(--bg-white);
+      color: var(--text-secondary);
+    }
+    .domain-chip:hover, .domain-chip.active {
+      background: var(--sb-green);
+      color: #fff;
+      border-color: var(--sb-green);
+    }
+    .view-toggle {
+      display: flex;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .view-toggle button {
+      padding: 6px 14px;
+      border: none;
+      background: var(--bg-white);
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: var(--transition);
+    }
+    .view-toggle button.active {
+      background: var(--sb-green);
+      color: #fff;
+    }
+    .asset-list-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 20px;
+      background: var(--bg-white);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-card);
+      transition: var(--transition);
+      cursor: pointer;
+      border-left: 4px solid transparent;
+    }
+    .asset-list-item:hover {
+      box-shadow: var(--shadow-hover);
+      border-left-color: var(--sb-green);
+    }
+    .btn-create-asset:hover {
+      color: var(--sb-light-green) !important;
+    }
+    /* L3 Apply Modal */
+    .apply-modal-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(30,57,50,0.45);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+    }
+    .apply-modal-overlay.show { display: flex; }
+    .apply-modal {
+      background: var(--bg-white);
+      border-radius: 12px;
+      width: 720px;
+      max-width: 95vw;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.18);
+    }
+    .apply-modal-header {
+      padding: 20px 24px 16px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .apply-modal-body {
+      padding: 16px 24px;
+      overflow-y: auto;
+      flex: 1;
+    }
+    .apply-modal-footer {
+      padding: 12px 20px;
+      border-top: 1px solid var(--border-color);
+      display: flex; gap: 10px; align-items: center;
+    }
+    /* Table-style asset list */
+    .asset-modal-table { width: 100%; border-collapse: collapse; font-size: 0.87rem; }
+    .asset-modal-table thead th {
+      padding: 8px 10px;
+      text-align: left;
+      font-weight: 600;
+      color: var(--text-secondary);
+      font-size: 0.8rem;
+      background: var(--bg-primary);
+      border-bottom: 1px solid var(--border-color);
+    }
+    .asset-modal-table tbody tr { border-bottom: 1px solid var(--border-color); cursor: pointer; transition: background 0.15s; }
+    .asset-modal-table tbody tr:last-child { border-bottom: none; }
+    .asset-modal-table tbody tr:hover { background: rgba(0,112,74,0.03); }
+    .asset-modal-table tbody tr.selected { background: rgba(0,112,74,0.06); }
+    .asset-modal-table td { padding: 10px 10px; vertical-align: middle; }
+    .modal-check-cell { width: 28px; }
+    .modal-check {
+      width: 16px; height: 16px; border-radius: 3px;
+      border: 2px solid var(--border-color);
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 0.7rem; color: #fff; font-weight: 700;
+      flex-shrink: 0; transition: var(--transition);
+      background: transparent;
+    }
+    tr.selected .modal-check { background: var(--sb-green); border-color: var(--sb-green); }
+    .modal-asset-name { font-weight: 600; color: var(--text-primary); }
+    .owner-av { width: 22px; height: 22px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.62rem; }
+    .l3-asset-row { display: none; }  /* kept for compat, hidden */
+    .l3-asset-check { display: none; }
+    .l3-asset-info { display: none; }
+    .l3-asset-name { display: none; }
+    .l3-asset-meta { display: none; }
+    .l3-owner-pair { display: none; }
+    .l3-owner-item { display: none; }
+    .l3-av { display: none; }
+  </style>
+</head>
+<body>
+  <div id="nav-placeholder"></div>
+
+  <div class="page-wrapper">
+    <div class="page-container wide">
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="breadcrumb"><a href="index.html">Home</a> <span>/</span> Data Assets</div>
+        <h1>Data Asset Shelf</h1>
+        <div class="flex gap-12" style="margin-left:auto;">
+          <button class="btn btn-secondary" onclick="openApplyModal()">Apply Asset Access</button>
+          <a href="apply-asset.html" class="btn btn-primary btn-create-asset">+ Create Asset</a>
+        </div>
+      </div>
+
+      <!-- Domain Chips -->
+      <div class="flex gap-8 mb-20" style="flex-wrap:wrap;">
+        <span class="domain-chip active">All Domains</span>
+        <span class="domain-chip" onclick="toggleFilter(this)">Sales</span>
+        <span class="domain-chip" onclick="toggleFilter(this)">Customer</span>
+        <span class="domain-chip" onclick="toggleFilter(this)">Finance</span>
+        <span class="domain-chip" onclick="toggleFilter(this)">Supply Chain</span>
+        <span class="domain-chip" onclick="toggleFilter(this)">Marketing</span>
+        <span class="domain-chip" onclick="toggleFilter(this)">External Data</span>
+        <span class="domain-chip" onclick="toggleFilter(this)">HR</span>
+        <span class="domain-chip" onclick="toggleFilter(this)">Public</span>
+      </div>
+
+      <!-- Search & View Toggle -->
+      <div class="flex-between mb-20" style="flex-wrap:wrap; gap:12px;">
+        <div class="search-bar" style="flex:1; max-width:480px;">
+          <input type="text" placeholder="Search assets by name, keyword..." onkeydown="if(event.key==='Enter')handleSearch(this)">
+          <button onclick="handleSearch(this.previousElementSibling)">Search</button>
+        </div>
+        <div class="flex gap-12">
+          <select class="form-control" style="width:auto; padding:8px 32px 8px 12px;">
+            <option>Sort: Latest</option>
+            <option>Sort: Name A-Z</option>
+            <option>Sort: Most Viewed</option>
+          </select>
+          <div class="view-toggle">
+            <button class="active" onclick="switchView('grid',this)">▦ Grid</button>
+            <button onclick="switchView('list',this)">☰ List</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="shelf-layout">
+
+        <!-- Filter Sidebar -->
+        <aside class="filter-sidebar">
+          <div class="filter-group">
+            <h4>Asset Category</h4>
+            <label class="filter-option"><input type="checkbox" checked> Glossaries / Terms</label>
+            <label class="filter-option"><input type="checkbox" checked> Data Dictionary</label>
+            <label class="filter-option"><input type="checkbox" checked> Reference Document</label>
+          </div>
+          <div class="filter-group">
+            <h4>Security Level</h4>
+            <label class="filter-option"><input type="checkbox" checked> L1 - Public</label>
+            <label class="filter-option"><input type="checkbox" checked> L2 - Internal</label>
+            <label class="filter-option"><input type="checkbox"> L3 - Confidential</label>
+          </div>
+          <div class="filter-group">
+            <h4>Data Owner Department</h4>
+            <label class="filter-option"><input type="checkbox" checked> Finance</label>
+            <label class="filter-option"><input type="checkbox" checked> Sales Operations</label>
+            <label class="filter-option"><input type="checkbox" checked> Customer Analytics</label>
+            <label class="filter-option"><input type="checkbox" checked> Supply Chain</label>
+            <label class="filter-option"><input type="checkbox" checked> Marketing</label>
+            <label class="filter-option"><input type="checkbox" checked> IT / Data Engineering</label>
+            <label class="filter-option"><input type="checkbox" checked> HR</label>
+            <label class="filter-option"><input type="checkbox" checked> Data Office</label>
+          </div>
+          <button class="btn btn-secondary" style="width:100%;" onclick="showToast('Filters reset')">Reset Filters</button>
+        </aside>
+
+        <!-- Asset Cards Grid -->
+        <div>
+          <div id="grid-view" class="grid-3">
+
+            <!-- Glossary Collection Card 1: Sales Metrics -->
+            <div class="asset-card" onclick="location.href='detail-glossary.html'">
+              <div class="ac-top">
+                <div class="ac-title">Sales Metrics</div>
+                <span style="cursor:pointer; color:var(--sb-gold); font-size:1.2rem;" title="Bookmark">★</span>
+              </div>
+              <div class="ac-tags">
+                <span class="tag tag-green">Glossary</span>
+                <span class="tag tag-l3">L3 Confidential</span>
+                <span class="tag tag-brown">Sales</span>
+              </div>
+              <div class="ac-desc">5 KPI indicators covering Net Revenue, Comparable Store Sales Growth, Average Ticket Size, Transaction Count, and Gross Revenue.</div>
+              <div class="ac-footer">
+                <div class="ac-owner">
+                  <span class="ac-owner-avatar">SC</span> Sarah Chen
+                </div>
+                <span>Apr 20, 2026</span>
+              </div>
+            </div>
+
+            <!-- Asset Card 2 -->
+            <div class="asset-card" onclick="location.href='detail-dictionary.html'">
+              <div class="ac-top">
+                <div class="ac-title">DWD_Order_Detail</div>
+                <span style="cursor:pointer; color:var(--sb-gold); font-size:1.2rem;" title="Bookmark">★</span>
+              </div>
+              <div class="ac-tags">
+                <span class="tag tag-blue">Dictionary</span>
+                <span class="tag tag-l2">L2 Internal</span>
+                <span class="tag tag-brown">Sales</span>
+              </div>
+              <div class="ac-desc">Order detail table from data warehouse layer. Contains order ID, product info, amount, timestamp and store details.</div>
+              <div class="ac-footer">
+                <div class="ac-owner">
+                  <span class="ac-owner-avatar">JL</span> James Li
+                </div>
+                <span>Apr 19, 2026</span>
+              </div>
+            </div>
+
+            <!-- Asset Card 3 -->
+            <div class="asset-card" onclick="location.href='detail-document.html'">
+              <div class="ac-top">
+                <div class="ac-title">Customer Segmentation Guide</div>
+                <span style="cursor:pointer; color:var(--sb-gold); font-size:1.2rem;" title="Bookmark">☆</span>
+              </div>
+              <div class="ac-tags">
+                <span class="tag tag-brown">Ref Doc</span>
+                <span class="tag tag-l2">L2 Internal</span>
+                <span class="tag tag-green">Customer</span>
+              </div>
+              <div class="ac-desc">Comprehensive guide on customer segmentation methodology, including RFM model application and loyalty tier definitions.</div>
+              <div class="ac-footer">
+                <div class="ac-owner">
+                  <span class="ac-owner-avatar">MZ</span> Ming Zhang
+                </div>
+                <span>Apr 18, 2026</span>
+              </div>
+            </div>
+
+            <!-- Glossary Collection Card 2: Finance Metrics -->
+            <div class="asset-card" onclick="location.href='detail-glossary.html'">
+              <div class="ac-top">
+                <div class="ac-title">Finance Metrics</div>
+                <span style="cursor:pointer; color:var(--sb-gold); font-size:1.2rem;" title="Bookmark">☆</span>
+              </div>
+              <div class="ac-tags">
+                <span class="tag tag-green">Glossary</span>
+                <span class="tag tag-l3">L3 Confidential</span>
+                <span class="tag tag-gold">Finance</span>
+              </div>
+              <div class="ac-desc">6 financial KPIs including Comparable Store Sales Growth, Operating Margin, EBITDA, CapEx Ratio, Free Cash Flow, and ROE.</div>
+              <div class="ac-footer">
+                <div class="ac-owner">
+                  <span class="ac-owner-avatar">LW</span> Lily Wang
+                </div>
+                <span>Apr 17, 2026</span>
+              </div>
+            </div>
+
+            <!-- Asset Card 5 -->
+            <div class="asset-card" onclick="location.href='detail-dictionary.html'">
+              <div class="ac-top">
+                <div class="ac-title">DIM_Store_Master</div>
+                <span style="cursor:pointer; color:var(--sb-gold); font-size:1.2rem;" title="Bookmark">☆</span>
+              </div>
+              <div class="ac-tags">
+                <span class="tag tag-blue">Dictionary</span>
+                <span class="tag tag-l3">L3 Confidential</span>
+                <span class="tag tag-green">Supply Chain</span>
+              </div>
+              <div class="ac-desc">Master dimension table for all store locations. Contains store ID, address, region, open date, format type and capacity.</div>
+              <div class="ac-footer">
+                <div class="ac-owner">
+                  <span class="ac-owner-avatar">DL</span> David Liu
+                </div>
+                <span>Apr 16, 2026</span>
+              </div>
+            </div>
+
+            <!-- Glossary Collection Card 3: Sales Business Terms -->
+            <div class="asset-card" onclick="location.href='detail-glossary.html'">
+              <div class="ac-top">
+                <div class="ac-title">Sales Business Terms</div>
+                <span style="cursor:pointer; color:var(--sb-gold); font-size:1.2rem;" title="Bookmark">☆</span>
+              </div>
+              <div class="ac-tags">
+                <span class="tag tag-green">Glossary</span>
+                <span class="tag tag-l2">L2 Internal</span>
+                <span class="tag tag-brown">Sales</span>
+              </div>
+              <div class="ac-desc">8 business terms standardizing sales domain concepts: Discount Amount, Return Amount, Store Revenue Contribution, Promo Period, and more.</div>
+              <div class="ac-footer">
+                <div class="ac-owner">
+                  <span class="ac-owner-avatar">SC</span> Sarah Chen
+                </div>
+                <span>Apr 15, 2026</span>
+              </div>
+            </div>
+
+            <!-- External Data Card 1 -->
+            <div class="asset-card" onclick="location.href='detail-document.html'">
+              <div class="ac-top">
+                <div class="ac-title">竞品开闭店与销售数据（线上）</div>
+                <span style="cursor:pointer; color:var(--sb-gold); font-size:1.2rem;" title="Bookmark">☆</span>
+              </div>
+              <div class="ac-tags">
+                <span class="tag tag-brown">Ref Doc</span>
+                <span class="tag tag-l2">L2 Internal</span>
+                <span class="tag tag-gold">External Data</span>
+              </div>
+              <div class="ac-desc">线上渠道竞品门店开闭信息与销售数据，覆盖主要竞品品牌的线上销售趋势与市场份额变化。</div>
+              <div class="ac-footer">
+                <div class="ac-owner">
+                  <span class="ac-owner-avatar">GH</span> Grace He
+                </div>
+                <span>Apr 12, 2026</span>
+              </div>
+            </div>
+
+            <!-- External Data Card 2 -->
+            <div class="asset-card" onclick="location.href='detail-dictionary.html'">
+              <div class="ac-top">
+                <div class="ac-title">天气信息数据</div>
+                <span style="cursor:pointer; color:var(--sb-gold); font-size:1.2rem;" title="Bookmark">☆</span>
+              </div>
+              <div class="ac-tags">
+                <span class="tag tag-blue">Dictionary</span>
+                <span class="tag tag-l2">L2 Internal</span>
+                <span class="tag tag-gold">External Data</span>
+              </div>
+              <div class="ac-desc">城市级别天气数据，包含温度、降水、风力等指标，用于分析天气对门店销量的影响。</div>
+              <div class="ac-footer">
+                <div class="ac-owner">
+                  <span class="ac-owner-avatar">TZ</span> Tony Zhang
+                </div>
+                <span>Apr 10, 2026</span>
+              </div>
+            </div>
+
+            <!-- External Data Card 3 -->
+            <div class="asset-card" onclick="location.href='detail-document.html'">
+              <div class="ac-top">
+                <div class="ac-title">街区信息与流量数据</div>
+                <span style="cursor:pointer; color:var(--sb-gold); font-size:1.2rem;" title="Bookmark">☆</span>
+              </div>
+              <div class="ac-tags">
+                <span class="tag tag-brown">Ref Doc</span>
+                <span class="tag tag-l3">L3 Confidential</span>
+                <span class="tag tag-gold">External Data</span>
+              </div>
+              <div class="ac-desc">第三方街区人口特征、客流热力数据，用于门店选址分析与商圈评估。</div>
+              <div class="ac-footer">
+                <div class="ac-owner">
+                  <span class="ac-owner-avatar">GH</span> Grace He
+                </div>
+                <span>Apr 8, 2026</span>
+              </div>
+            </div>
+
+            <!-- External Data Card 4 -->
+            <div class="asset-card" onclick="location.href='detail-dictionary.html'">
+              <div class="ac-top">
+                <div class="ac-title">消费者标签数据</div>
+                <span style="cursor:pointer; color:var(--sb-gold); font-size:1.2rem;" title="Bookmark">☆</span>
+              </div>
+              <div class="ac-tags">
+                <span class="tag tag-blue">Dictionary</span>
+                <span class="tag tag-l3">L3 Confidential</span>
+                <span class="tag tag-gold">External Data</span>
+              </div>
+              <div class="ac-desc">第三方消费者画像标签，包含消费偏好、生活方式、品牌倾向等维度，用于精准营销。</div>
+              <div class="ac-footer">
+                <div class="ac-owner">
+                  <span class="ac-owner-avatar">TZ</span> Tony Zhang
+                </div>
+                <span>Apr 5, 2026</span>
+              </div>
+            </div>
+
+            <!-- External Data Card 5 -->
+            <div class="asset-card" onclick="location.href='detail-document.html'">
+              <div class="ac-top">
+                <div class="ac-title">市场舆情监测数据</div>
+                <span style="cursor:pointer; color:var(--sb-gold); font-size:1.2rem;" title="Bookmark">☆</span>
+              </div>
+              <div class="ac-tags">
+                <span class="tag tag-brown">Ref Doc</span>
+                <span class="tag tag-l2">L2 Internal</span>
+                <span class="tag tag-gold">External Data</span>
+              </div>
+              <div class="ac-desc">社交媒体与新闻舆情监测，覆盖品牌口碑、热点事件、消费者情感分析等。</div>
+              <div class="ac-footer">
+                <div class="ac-owner">
+                  <span class="ac-owner-avatar">GH</span> Grace He
+                </div>
+                <span>Apr 3, 2026</span>
+              </div>
+            </div>
+
+            <!-- Public Domain Card -->
+            <div class="asset-card" onclick="location.href='detail-policy.html'">
+              <div class="ac-top">
+                <div class="ac-title">星巴克中国数据治理政策</div>
+                <span style="cursor:pointer; color:var(--sb-gold); font-size:1.2rem;" title="Bookmark">★</span>
+              </div>
+              <div class="ac-tags">
+                <span class="tag tag-brown">Ref Doc</span>
+                <span class="tag tag-l1">L1 Public</span>
+                <span class="tag tag-green">Public</span>
+              </div>
+              <div class="ac-desc">星巴克中国数据中台数据产品权限获取与数据安全分类政策，规范数据资产全生命周期的安全管理与访问控制。</div>
+              <div class="ac-footer">
+                <div class="ac-owner">
+                  <span class="ac-owner-avatar">DO</span> Data Office
+                </div>
+                <span>Mar 1, 2026</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- List View (hidden by default) -->
+          <div id="list-view" style="display:none; display:flex; flex-direction:column; gap:12px;">
+          </div>
+
+          <!-- Pagination -->
+          <div class="pagination">
+            <a href="#">‹</a>
+            <span class="active">1</span>
+            <a href="#">2</a>
+            <a href="#">3</a>
+            <a href="#">4</a>
+            <span>...</span>
+            <a href="#">12</a>
+            <a href="#">›</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- L3 Apply Modal -->
+  <div class="apply-modal-overlay" id="applyModal" onclick="if(event.target===this)closeApplyModal()">
+    <div class="apply-modal">
+      <div class="apply-modal-header">
+        <div>
+          <div style="font-size:1.05rem; font-weight:700; color:var(--sb-dark-green);">Apply Asset Access</div>
+          <div style="font-size:0.82rem; color:var(--text-muted); margin-top:2px;">Select the L3 Confidential assets you need access to</div>
+        </div>
+        <button onclick="closeApplyModal()" style="background:none; border:none; font-size:1.3rem; cursor:pointer; color:var(--text-muted); line-height:1;">✕</button>
+      </div>
+      <div class="apply-modal-body">
+        <div style="padding:8px 12px; background:rgba(245,166,35,0.08); border:1px solid var(--sb-gold); border-radius:7px; font-size:0.83rem; color:var(--sb-brown); margin-bottom:14px;">
+          Only <strong>L3 Confidential</strong> assets require an application. Tick the assets you need access to.
+        </div>
+
+        <table class="asset-modal-table">
+          <thead>
+            <tr>
+              <th class="modal-check-cell"></th>
+              <th>Asset Name</th>
+              <th>Type</th>
+              <th>Domain</th>
+              <th>Security</th>
+              <th>Biz Owner</th>
+              <th>Tech Owner</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="selected" id="modal-row-1" onclick="toggleModalRow(this)">
+              <td class="modal-check-cell"><span class="modal-check">&#x2713;</span></td>
+              <td class="modal-asset-name">DIM_Store_Master</td>
+              <td><span class="tag tag-blue" style="font-size:0.76rem;">Dictionary</span></td>
+              <td><span class="tag tag-green" style="font-size:0.76rem;">Supply Chain</span></td>
+              <td><span class="tag tag-l3" style="font-size:0.76rem;">L3</span></td>
+              <td><span class="owner-av" style="background:var(--sb-light-green); color:var(--sb-dark-green);">DL</span>&nbsp;David Liu</td>
+              <td><span class="owner-av" style="background:#E3F2FD; color:#1565C0;">TZ</span>&nbsp;Tony Zhang</td>
+            </tr>
+            <tr class="selected" id="modal-row-2" onclick="toggleModalRow(this)">
+              <td class="modal-check-cell"><span class="modal-check">&#x2713;</span></td>
+              <td class="modal-asset-name">&#28040;&#36153;&#32773;&#26631;&#31614;&#25968;&#25454;</td>
+              <td><span class="tag tag-blue" style="font-size:0.76rem;">Dictionary</span></td>
+              <td><span class="tag tag-gold" style="font-size:0.76rem;">External Data</span></td>
+              <td><span class="tag tag-l3" style="font-size:0.76rem;">L3</span></td>
+              <td><span class="owner-av" style="background:var(--sb-light-green); color:var(--sb-dark-green);">GH</span>&nbsp;Grace He</td>
+              <td><span class="owner-av" style="background:#E3F2FD; color:#1565C0;">TZ</span>&nbsp;Tony Zhang</td>
+            </tr>
+            <tr class="selected" id="modal-row-3" onclick="toggleModalRow(this)">
+              <td class="modal-check-cell"><span class="modal-check">&#x2713;</span></td>
+              <td class="modal-asset-name">&#20844;&#21306;&#20449;&#24687;&#19982;&#27969;&#37327;&#25968;&#25454;</td>
+              <td><span class="tag tag-brown" style="font-size:0.76rem;">Ref Doc</span></td>
+              <td><span class="tag tag-gold" style="font-size:0.76rem;">External Data</span></td>
+              <td><span class="tag tag-l3" style="font-size:0.76rem;">L3</span></td>
+              <td><span class="owner-av" style="background:var(--sb-light-green); color:var(--sb-dark-green);">GH</span>&nbsp;Grace He</td>
+              <td><span class="owner-av" style="background:#E3F2FD; color:#1565C0;">RW</span>&nbsp;Ryan Wu</td>
+            </tr>
+            <tr class="selected" id="modal-row-4" onclick="toggleModalRow(this)">
+              <td class="modal-check-cell"><span class="modal-check">&#x2713;</span></td>
+              <td class="modal-asset-name">Sales Metrics</td>
+              <td><span class="tag tag-green" style="font-size:0.76rem;">Glossary</span></td>
+              <td><span class="tag tag-brown" style="font-size:0.76rem;">Sales</span></td>
+              <td><span class="tag tag-l3" style="font-size:0.76rem;">L3</span></td>
+              <td><span class="owner-av" style="background:var(--sb-light-green); color:var(--sb-dark-green);">SC</span>&nbsp;Sarah Chen</td>
+              <td><span class="owner-av" style="background:#E3F2FD; color:#1565C0;">JL</span>&nbsp;James Li</td>
+            </tr>
+            <tr class="selected" id="modal-row-5" onclick="toggleModalRow(this)">
+              <td class="modal-check-cell"><span class="modal-check">&#x2713;</span></td>
+              <td class="modal-asset-name">Finance Metrics</td>
+              <td><span class="tag tag-green" style="font-size:0.76rem;">Glossary</span></td>
+              <td><span class="tag tag-gold" style="font-size:0.76rem;">Finance</span></td>
+              <td><span class="tag tag-l3" style="font-size:0.76rem;">L3</span></td>
+              <td><span class="owner-av" style="background:var(--sb-light-green); color:var(--sb-dark-green);">LW</span>&nbsp;Lily Wang</td>
+              <td><span class="owner-av" style="background:#E3F2FD; color:#1565C0;">JL</span>&nbsp;James Li</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="apply-modal-footer">
+        <div id="modal-count" style="flex:1; font-size:0.85rem; color:var(--text-secondary);">5 asset(s) selected</div>
+        <button class="btn btn-cancel" onclick="closeApplyModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="proceedToApplication()">Proceed to Application &#x2192;</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script>
+    initNav('shelf');
+
+    function switchView(view, btn) {
+      document.querySelectorAll('.view-toggle button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      if (view === 'grid') {
+        document.getElementById('grid-view').style.display = 'grid';
+        document.getElementById('list-view').style.display = 'none';
+      } else {
+        document.getElementById('grid-view').style.display = 'none';
+        document.getElementById('list-view').style.display = 'flex';
+      }
+    }
+
+    function openApplyModal() {
+      document.getElementById('applyModal').classList.add('show');
+      refreshModalCount();
+    }
+
+    function closeApplyModal() {
+      document.getElementById('applyModal').classList.remove('show');
+    }
+
+    function toggleModalRow(row) {
+      row.classList.toggle('selected');
+      const check = row.querySelector('.modal-check');
+      check.innerHTML = row.classList.contains('selected') ? '&#x2713;' : '';
+      refreshModalCount();
+    }
+
+    function refreshModalCount() {
+      const count = document.querySelectorAll('.l3-asset-row.selected').length;
+      document.getElementById('modal-count').textContent = count + ' asset(s) selected';
+    }
+
+    function proceedToApplication() {
+      const selected = [];
+      if (document.getElementById('modal-row-1').classList.contains('selected')) selected.push('Supply Chain-Dictionary');
+      if (document.getElementById('modal-row-2').classList.contains('selected')) selected.push('External Data-Dictionary');
+      if (document.getElementById('modal-row-3').classList.contains('selected')) selected.push('External Data-Ref Doc');
+      if (document.getElementById('modal-row-4').classList.contains('selected')) selected.push('Sales-Glossary');
+      if (document.getElementById('modal-row-5').classList.contains('selected')) selected.push('Finance-Glossary');
+      if (selected.length === 0) { showToast('Please select at least one asset'); return; }
+      closeApplyModal();
+      location.href = 'apply-data.html?tab=asset&assets=' + encodeURIComponent(selected.join(','));
+    }
+  </script>
+</body>
+</html>

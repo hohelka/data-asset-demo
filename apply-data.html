@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Asset Hub - Data Usage Application</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .matrix-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 16px;
+    }
+    .matrix-table th, .matrix-table td {
+      border: 1px solid var(--border-color);
+      padding: 10px 14px;
+      text-align: center;
+      font-size: 0.88rem;
+    }
+    .matrix-table th {
+      background: var(--bg-primary);
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+    .matrix-table td:first-child {
+      text-align: left;
+      font-weight: 500;
+      background: var(--bg-primary);
+    }
+    .matrix-table td input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--sb-green);
+      cursor: pointer;
+    }
+    .matrix-table tr:hover td {
+      background: rgba(0,112,74,0.03);
+    }
+    .matrix-table tr:hover td:first-child {
+      background: rgba(0,112,74,0.06);
+    }
+    .candidate-list {
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .candidate-list-header {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+      padding: 10px 16px;
+      background: var(--bg-primary);
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      border-bottom: 1px solid var(--border-color);
+    }
+    .candidate-list-item {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border-color);
+      align-items: center;
+      font-size: 0.88rem;
+      transition: background 0.15s;
+    }
+    .candidate-list-item:last-child { border-bottom: none; }
+    .candidate-list-item:hover { background: rgba(0,112,74,0.03); }
+    .candidate-list-item .item-name { font-weight: 500; color: var(--text-primary); }
+    .candidate-list-item .item-owner { color: var(--text-secondary); font-size: 0.82rem; }
+    .owner-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+    .owner-badge .av {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--sb-light-green);
+      color: var(--sb-dark-green);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.68rem;
+    }
+    .remove-btn {
+      background: none;
+      border: none;
+      color: var(--sb-cancel-pink);
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      transition: background 0.15s;
+    }
+    .remove-btn:hover { background: rgba(232,150,125,0.12); }
+  </style>
+</head>
+<body>
+  <div id="nav-placeholder"></div>
+
+  <div class="page-wrapper">
+    <div class="page-container">
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="breadcrumb">
+          <a href="index.html">Home</a> <span>/</span> Data Usage Application
+        </div>
+        <h1>Data Usage Application</h1>
+      </div>
+
+      <!-- First-Level Tabs -->
+      <div class="tabs">
+        <div class="tab-item active" data-tab="tab-data-access">🗄️ Data Access Request</div>
+        <div class="tab-item" data-tab="tab-asset-access">📂 Asset Catalog Access (L3)</div>
+      </div>
+
+      <!-- Tab 1: Data Access Request -->
+      <div id="tab-data-access" class="tab-content active">
+        <div style="padding:12px 16px; background:var(--sb-light-green); border-radius:8px; margin-bottom:20px; font-size:0.88rem; color:var(--sb-dark-green);">
+          ℹ️ Apply for access to <strong>External Data Exchange (外部数据交换)</strong>, <strong>Cube (Multi-dimensional Model)</strong>, or <strong>Internal Analytics Data Activation (内部分析数据开通)</strong> assets. Only <strong>L3 Confidential</strong> data requires an application — L1 and L2 access is granted by default.
+        </div>
+        <form onsubmit="return handleSubmit('Data Access Request')">
+
+          <div class="form-section">
+            <h3>Applicant Information</h3>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Applicant Name</label>
+                <input type="text" class="form-control" value="Alex Wang" readonly>
+              </div>
+              <div class="form-group">
+                <label>Department</label>
+                <input type="text" class="form-control" value="Data & Analytics" readonly>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Employee ID</label>
+                <input type="text" class="form-control" value="SB20230156" readonly>
+              </div>
+              <div class="form-group">
+                <label>Job Level</label>
+                <input type="text" class="form-control" value="M3" readonly>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h3>Data Request Details</h3>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Data Type <span class="required">*</span></label>
+                <select class="form-control" id="data-type-select" onchange="updateAccessMethods(this.value)">
+                  <option value="">Select data type...</option>
+                  <option value="raw">External Data Exchange (外部数据交换申请)</option>
+                  <option value="cube">Cube (Multi-dimensional Model)</option>
+                  <option value="midplatform">Internal Analytics Data Activation (内部分析数据开通申请)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Subject Area <span class="required">*</span></label>
+                <select class="form-control" id="subject-area-select">
+                  <option value="">Select subject area...</option>
+                  <option value="sales">Sales</option>
+                  <option value="customer">Customer</option>
+                  <option value="finance">Finance</option>
+                  <option value="supply">Supply Chain</option>
+                  <option value="marketing">Marketing</option>
+                  <option value="external">External Data</option>
+                  <option value="hr">HR</option>
+                  <option value="public">Public</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Data Asset Name <span class="required">*</span></label>
+              <input type="text" class="form-control" id="data-asset-name" placeholder="Enter the specific L3 data asset you need access to">
+            </div>
+            <div class="form-group">
+              <label>Purpose of Use <span class="required">*</span></label>
+              <textarea class="form-control" rows="3" placeholder="Describe why you need access to this data and how it will be used..."></textarea>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Expected Duration <span class="required">*</span></label>
+                <select class="form-control">
+                  <option value="">Select duration...</option>
+                  <option value="30">30 days</option>
+                  <option value="90">90 days</option>
+                  <option value="180">180 days</option>
+                  <option value="365">1 year</option>
+                  <option value="perm">Permanent</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Access Method</label>
+                <select class="form-control" id="access-method-select">
+                  <option value="view">View Only</option>
+                  <option value="download">Download</option>
+                  <option value="api">API Access</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Approval Flow Preview -->
+          <div class="form-section">
+            <h3>Approval Flow Preview</h3>
+            <div class="timeline">
+              <div class="timeline-item">
+                <div class="timeline-dot pending"></div>
+                <div class="timeline-content">
+                  <div class="tl-header">
+                    <span class="tl-name">Step 1: Line Manager Approval</span>
+                    <span class="tag status-pending">Pending</span>
+                  </div>
+                  <div class="tl-role">Your direct manager will review the request</div>
+                  <div class="tl-date">Approver: Auto-routed based on org chart</div>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-dot pending"></div>
+                <div class="timeline-content">
+                  <div class="tl-header">
+                    <span class="tl-name">Step 2: Data Owner Approval</span>
+                    <span class="tag status-pending">Pending</span>
+                  </div>
+                  <div class="tl-role">The data owner will verify data access scope</div>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-dot pending"></div>
+                <div class="timeline-content">
+                  <div class="tl-header">
+                    <span class="tl-name">Step 3: System Provisioning</span>
+                    <span class="tag status-draft">Auto</span>
+                  </div>
+                  <div class="tl-role">System automatically grants access upon approval</div>
+                </div>
+              </div>
+            </div>
+            <div style="margin-top:16px; padding:12px 16px; background:rgba(203,162,88,0.1); border-radius:8px; font-size:0.85rem; color:var(--sb-brown);">
+              ⚠️ Note: For M4+ employees, Line Manager approval is automatically skipped. Data Office members have self-approval privileges.
+            </div>
+          </div>
+
+          <div style="display:flex; gap:12px; justify-content:flex-end; margin-top:4px;">
+            <button type="button" class="btn btn-cancel" onclick="showToast('Application cancelled')">Cancel</button>
+            <button type="button" class="btn btn-secondary" onclick="showToast('Saved as draft')">Save Draft</button>
+            <button type="submit" class="btn btn-primary btn-lg">Submit Application</button>
+          </div>
+
+        </form>
+      </div>
+
+      <!-- Tab 2: Asset Catalog Access (L3) -->
+      <div id="tab-asset-access" class="tab-content">
+        <div style="padding:12px 16px; background:rgba(245,166,35,0.08); border:1px solid var(--sb-gold); border-radius:8px; margin-bottom:20px; font-size:0.88rem; color:var(--sb-brown);">
+          ⚠️ Only <strong>L3 Confidential</strong> assets require an application. L1 (Public) and L2 (Internal) assets are accessible by default. Select assets from the matrix below — you may apply for multiple assets in a single request.
+        </div>
+
+        <div class="form-section">
+          <h3>Applicant Information</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Applicant Name</label>
+              <input type="text" class="form-control" value="Alex Wang" readonly>
+            </div>
+            <div class="form-group">
+              <label>Department</label>
+              <input type="text" class="form-control" value="Data & Analytics" readonly>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h3>Step 1 — Select by Domain × Asset Type (L3 Assets Only)</h3>
+          <p style="font-size:0.88rem; color:var(--text-secondary); margin-bottom:14px;">Check the cells to add matching assets to your candidate list below. Only L3 confidential assets that you do not currently have access to are selectable.</p>
+          <div style="overflow-x:auto;">
+            <table class="matrix-table">
+              <thead>
+                <tr>
+                  <th style="text-align:left; min-width:140px;">Data Domain</th>
+                  <th>Glossaries / Terms</th>
+                  <th>Data Dictionary</th>
+                  <th>Reference Document</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Sales</td>
+                  <td><input type="checkbox" onchange="updateCandidates(this,'Sales','Glossary')"></td>
+                  <td><input type="checkbox" onchange="updateCandidates(this,'Sales','Dictionary')"></td>
+                  <td><input type="checkbox" onchange="updateCandidates(this,'Sales','Ref Doc')"></td>
+                </tr>
+                <tr>
+                  <td>Customer</td>
+                  <td><input type="checkbox" onchange="updateCandidates(this,'Customer','Glossary')"></td>
+                  <td><input type="checkbox" onchange="updateCandidates(this,'Customer','Dictionary')"></td>
+                  <td><input type="checkbox" onchange="updateCandidates(this,'Customer','Ref Doc')"></td>
+                </tr>
+                <tr>
+                  <td>Finance</td>
+                  <td><input type="checkbox" onchange="updateCandidates(this,'Finance','Glossary')"></td>
+                  <td><input type="checkbox" onchange="updateCandidates(this,'Finance','Dictionary')"></td>
+                  <td><input type="checkbox" onchange="updateCandidates(this,'Finance','Ref Doc')"></td>
+                </tr>
+                <tr>
+                  <td>Supply Chain</td>
+                  <td><input type="checkbox" onchange="updateCandidates(this,'Supply Chain','Glossary')"></td>
+                  <td><input type="checkbox" checked onchange="updateCandidates(this,'Supply Chain','Dictionary')"></td>
+                  <td><input type="checkbox" onchange="updateCandidates(this,'Supply Chain','Ref Doc')"></td>
+                </tr>
+                <tr>
+                  <td>Marketing</td>
+                  <td><input type="checkbox" onchange="updateCandidates(this,'Marketing','Glossary')"></td>
+                  <td><input type="checkbox" onchange="updateCandidates(this,'Marketing','Dictionary')"></td>
+                  <td><input type="checkbox" onchange="updateCandidates(this,'Marketing','Ref Doc')"></td>
+                </tr>
+                <tr>
+                  <td>External Data</td>
+                  <td><input type="checkbox" onchange="updateCandidates(this,'External Data','Glossary')"></td>
+                  <td><input type="checkbox" checked onchange="updateCandidates(this,'External Data','Dictionary')"></td>
+                  <td><input type="checkbox" checked onchange="updateCandidates(this,'External Data','Ref Doc')"></td>
+                </tr>
+                <tr>
+                  <td>HR</td>
+                  <td><input type="checkbox" onchange="updateCandidates(this,'HR','Glossary')"></td>
+                  <td><input type="checkbox" onchange="updateCandidates(this,'HR','Dictionary')"></td>
+                  <td><input type="checkbox" onchange="updateCandidates(this,'HR','Ref Doc')"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h3>Step 2 — Candidate Asset List</h3>
+          <p style="font-size:0.88rem; color:var(--text-secondary); margin-bottom:14px;">Review the assets selected from the matrix. You can remove individual items before submitting.</p>
+
+          <div class="candidate-list">
+            <div class="candidate-list-header">
+              <span>Asset Name</span>
+              <span>Domain</span>
+              <span>Type</span>
+              <span>Business Owner</span>
+              <span>Tech Owner</span>
+            </div>
+            <div id="candidate-body">
+              <!-- Default: Supply Chain / Dictionary -->
+              <div class="candidate-list-item" id="cand-Supply Chain-Dictionary">
+                <div>
+                  <div class="item-name">DIM_Store_Master</div>
+                  <div class="item-owner">Store dimension table — L3 Confidential</div>
+                </div>
+                <span><span class="tag tag-green" style="font-size:0.78rem;">Supply Chain</span></span>
+                <span><span class="tag tag-blue" style="font-size:0.78rem;">Dictionary</span></span>
+                <div class="owner-badge"><span class="av">DL</span> David Liu</div>
+                <div style="display:flex; align-items:center; justify-content:space-between;">
+                  <div class="owner-badge"><span class="av" style="background:#E3F2FD; color:#1565C0;">TZ</span> Tony Zhang</div>
+                  <button class="remove-btn" onclick="removeCandidate('Supply Chain','Dictionary')" title="Remove">✕</button>
+                </div>
+              </div>
+              <!-- Default: External Data / Dictionary -->
+              <div class="candidate-list-item" id="cand-External Data-Dictionary">
+                <div>
+                  <div class="item-name">消费者标签数据</div>
+                  <div class="item-owner">Consumer profile tags — L3 Confidential</div>
+                </div>
+                <span><span class="tag tag-gold" style="font-size:0.78rem;">External Data</span></span>
+                <span><span class="tag tag-blue" style="font-size:0.78rem;">Dictionary</span></span>
+                <div class="owner-badge"><span class="av">GH</span> Grace He</div>
+                <div style="display:flex; align-items:center; justify-content:space-between;">
+                  <div class="owner-badge"><span class="av" style="background:#E3F2FD; color:#1565C0;">TZ</span> Tony Zhang</div>
+                  <button class="remove-btn" onclick="removeCandidate('External Data','Dictionary')" title="Remove">✕</button>
+                </div>
+              </div>
+              <!-- Default: External Data / Ref Doc -->
+              <div class="candidate-list-item" id="cand-External Data-Ref Doc">
+                <div>
+                  <div class="item-name">街区信息与流量数据</div>
+                  <div class="item-owner">Block & traffic data — L3 Confidential</div>
+                </div>
+                <span><span class="tag tag-gold" style="font-size:0.78rem;">External Data</span></span>
+                <span><span class="tag tag-brown" style="font-size:0.78rem;">Ref Doc</span></span>
+                <div class="owner-badge"><span class="av">GH</span> Grace He</div>
+                <div style="display:flex; align-items:center; justify-content:space-between;">
+                  <div class="owner-badge"><span class="av" style="background:#E3F2FD; color:#1565C0;">RW</span> Ryan Wu</div>
+                  <button class="remove-btn" onclick="removeCandidate('External Data','Ref Doc')" title="Remove">✕</button>
+                </div>
+              </div>
+            </div>
+            <div id="candidate-empty" style="display:none; padding:24px; text-align:center; color:var(--text-muted); font-size:0.9rem;">
+              No assets selected. Use the matrix above to add candidates.
+            </div>
+          </div>
+          <div id="candidate-count" style="margin-top:8px; font-size:0.85rem; color:var(--text-secondary);">3 asset(s) selected</div>
+        </div>
+
+        <div class="form-section">
+          <h3>Step 3 — Justification</h3>
+          <div class="form-group">
+            <label>Business Justification <span class="required">*</span></label>
+            <textarea class="form-control" rows="4" placeholder="Provide a detailed business reason for accessing these L3 confidential assets..."></textarea>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Project / Initiative</label>
+              <input type="text" class="form-control" placeholder="Associated project name">
+            </div>
+            <div class="form-group">
+              <label>Expected Duration <span class="required">*</span></label>
+              <select class="form-control">
+                <option value="">Select duration...</option>
+                <option value="30">30 days</option>
+                <option value="90">90 days</option>
+                <option value="180">180 days</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>
+              <input type="checkbox" style="accent-color:var(--sb-green); margin-right:6px;"> I confirm that I will handle these assets in accordance with the company's Data Classification Policy and will not share them outside the approved scope.
+            </label>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h3>Approval Flow Preview</h3>
+          <div class="timeline" id="approval-flow-timeline">
+            <div class="timeline-item">
+              <div class="timeline-dot pending"></div>
+              <div class="timeline-content">
+                <div class="tl-header">
+                  <span class="tl-name">Step 1: Business Owner Approval</span>
+                  <span class="tag status-pending">Pending</span>
+                </div>
+                <div class="tl-role">Business Owner of each selected asset will review the request (parallel approvals)</div>
+                <div id="biz-owners-list" style="margin-top:8px; display:flex; flex-wrap:wrap; gap:6px;"></div>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot pending"></div>
+              <div class="timeline-content">
+                <div class="tl-header">
+                  <span class="tl-name">Step 2: Tech Owner Confirmation</span>
+                  <span class="tag status-pending">Pending</span>
+                </div>
+                <div class="tl-role">Tech Owner confirms feasibility and access scope</div>
+                <div id="tech-owners-list" style="margin-top:8px; display:flex; flex-wrap:wrap; gap:6px;"></div>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot pending"></div>
+              <div class="timeline-content">
+                <div class="tl-header">
+                  <span class="tl-name">Step 3: System Provisioning</span>
+                  <span class="tag status-draft">Auto</span>
+                </div>
+                <div class="tl-role">Permissions granted automatically upon full approval</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:12px; justify-content:flex-end; margin-top:4px;">
+          <button type="button" class="btn btn-cancel" onclick="showToast('Application cancelled')">Cancel</button>
+          <button type="button" class="btn btn-secondary" onclick="showToast('Saved as draft')">Save Draft</button>
+          <button type="button" class="btn btn-primary btn-lg" onclick="handleSubmit('Asset Catalog Access Request')">Submit Request</button>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script>
+    initNav('apply-data');
+
+    // Pre-select tab if redirected from shelf Apply button
+    (function() {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('tab') === 'asset') {
+        document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        document.querySelector('[data-tab="tab-asset-access"]').classList.add('active');
+        document.getElementById('tab-asset-access').classList.add('active');
+      }
+      // Pre-fill data access form when coming from dictionary/glossary Apply button
+      const type = params.get('type');
+      const table = params.get('table');
+      if (type || table) {
+        // Ensure Data Access tab is active
+        document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        document.querySelector('[data-tab="tab-data-access"]').classList.add('active');
+        document.getElementById('tab-data-access').classList.add('active');
+        if (type) {
+          const sel = document.getElementById('data-type-select');
+          if (sel) sel.value = type;
+        }
+        if (table) {
+          const inp = document.getElementById('data-asset-name');
+          if (inp) inp.value = table;
+        }
+        const domain = params.get('domain');
+        if (domain) {
+          const domainMap = { 'Sales':'sales','Customer':'customer','Finance':'finance','Supply Chain':'supply','Marketing':'marketing','External Data':'external','HR':'hr','Public':'public' };
+          const sel = document.getElementById('subject-area-select');
+          if (sel) sel.value = domainMap[domain] || domain.toLowerCase();
+        }
+      }
+    })();
+
+    // Dynamic Access Method options based on data type
+    function updateAccessMethods(type) {
+      const sel = document.getElementById('access-method-select');
+      if (!sel) return;
+      if (type === 'midplatform') {
+        sel.innerHTML = `
+          <option value="query">查询权限 (SELECT / Read-only)</option>
+          <option value="query_export">查询 + 下载 (SELECT + Export)</option>
+          <option value="etl">数据管道接入 (ETL / Pipeline Access)</option>
+          <option value="api">数据接口服务 (API Data Service)</option>
+          <option value="report">报表嵌入 (Report Embedding)</option>`;
+      } else {
+        sel.innerHTML = `
+          <option value="view">View Only</option>
+          <option value="download">Download</option>
+          <option value="api">API Access</option>`;
+      }
+    }
+
+    // L3 assets data (domain → type → list)
+    const l3Assets = {
+      'Sales': {
+        'Glossary': { name: 'Sales Metrics', desc: 'Sales KPI glossary collection — L3 Confidential', bizOwner: ['SC','Sarah Chen'], techOwner: ['JL','James Li'], domainTag: 'tag-brown' },
+        'Dictionary': null, 'Ref Doc': null },
+      'Customer': { 'Glossary': null, 'Dictionary': null, 'Ref Doc': null },
+      'Finance': {
+        'Glossary': { name: 'Finance Metrics', desc: 'Finance KPI glossary collection — L3 Confidential', bizOwner: ['LW','Lily Wang'], techOwner: ['JL','James Li'], domainTag: 'tag-gold' },
+        'Dictionary': null, 'Ref Doc': null },
+      'Supply Chain': {
+        'Glossary': null,
+        'Dictionary': { name: 'DIM_Store_Master', desc: 'Store dimension table — L3 Confidential', bizOwner: ['DL','David Liu'], techOwner: ['TZ','Tony Zhang'], domainTag: 'tag-green' },
+        'Ref Doc': null
+      },
+      'Marketing': { 'Glossary': null, 'Dictionary': null, 'Ref Doc': null },
+      'External Data': {
+        'Glossary': null,
+        'Dictionary': { name: '消费者标签数据', desc: 'Consumer profile tags — L3 Confidential', bizOwner: ['GH','Grace He'], techOwner: ['TZ','Tony Zhang'], domainTag: 'tag-gold' },
+        'Ref Doc': { name: '街区信息与流量数据', desc: 'Block & traffic data — L3 Confidential', bizOwner: ['GH','Grace He'], techOwner: ['RW','Ryan Wu'], domainTag: 'tag-gold' }
+      },
+      'HR': { 'Glossary': null, 'Dictionary': null, 'Ref Doc': null },
+    };
+
+    const typeTagMap = { 'Glossary': 'tag-green', 'Dictionary': 'tag-blue', 'Ref Doc': 'tag-brown' };
+
+    function updateCandidates(checkbox, domain, type) {
+      const id = `cand-${domain}-${type}`;
+      const asset = l3Assets[domain] && l3Assets[domain][type];
+
+      if (checkbox.checked) {
+        if (!asset) {
+          showToast(`No L3 assets found for ${domain} / ${type}`);
+          checkbox.checked = false;
+          return;
+        }
+        if (document.getElementById(id)) return; // already exists
+        const row = document.createElement('div');
+        row.className = 'candidate-list-item';
+        row.id = id;
+        row.innerHTML = `
+          <div>
+            <div class="item-name">${asset.name}</div>
+            <div class="item-owner">${asset.desc}</div>
+          </div>
+          <span><span class="tag ${asset.domainTag}" style="font-size:0.78rem;">${domain}</span></span>
+          <span><span class="tag ${typeTagMap[type]}" style="font-size:0.78rem;">${type}</span></span>
+          <div class="owner-badge"><span class="av">${asset.bizOwner[0]}</span> ${asset.bizOwner[1]}</div>
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <div class="owner-badge"><span class="av" style="background:#E3F2FD; color:#1565C0;">${asset.techOwner[0]}</span> ${asset.techOwner[1]}</div>
+            <button class="remove-btn" onclick="removeCandidate('${domain}','${type}')" title="Remove">✕</button>
+          </div>`;
+        document.getElementById('candidate-body').appendChild(row);
+      } else {
+        removeCandidate(domain, type);
+      }
+      refreshCandidateCount();
+    }
+
+    function removeCandidate(domain, type) {
+      const id = `cand-${domain}-${type}`;
+      const row = document.getElementById(id);
+      if (row) row.remove();
+      // uncheck the matrix checkbox
+      document.querySelectorAll('.matrix-table input[type="checkbox"]').forEach(cb => {
+        if (cb.getAttribute('onchange') && cb.getAttribute('onchange').includes(`'${domain}'`) && cb.getAttribute('onchange').includes(`'${type}'`)) {
+          cb.checked = false;
+        }
+      });
+      refreshCandidateCount();
+    }
+
+    function refreshCandidateCount() {
+      const items = document.querySelectorAll('#candidate-body .candidate-list-item');
+      const count = items.length;
+      document.getElementById('candidate-count').textContent = count + ' asset(s) selected';
+      document.getElementById('candidate-empty').style.display = count === 0 ? 'block' : 'none';
+      renderApprovalOwners();
+    }
+
+    function renderApprovalOwners() {
+      // Collect unique biz and tech owners from candidate list
+      const bizOwners = new Map();
+      const techOwners = new Map();
+
+      document.querySelectorAll('#candidate-body .candidate-list-item').forEach(row => {
+        // Extract from owner-badge elements
+        const badges = row.querySelectorAll('.owner-badge');
+        if (badges.length >= 1) {
+          const av = badges[0].querySelector('.av');
+          const initials = av ? av.textContent.trim() : '';
+          const name = badges[0].textContent.trim();
+          if (initials && !bizOwners.has(initials)) bizOwners.set(initials, name);
+        }
+        if (badges.length >= 2) {
+          const av = badges[1].querySelector('.av');
+          const initials = av ? av.textContent.trim() : '';
+          const name = badges[1].textContent.trim();
+          if (initials && !techOwners.has(initials)) techOwners.set(initials, name);
+        }
+      });
+
+      const bizEl = document.getElementById('biz-owners-list');
+      const techEl = document.getElementById('tech-owners-list');
+
+      if (bizEl) {
+        if (bizOwners.size === 0) {
+          bizEl.innerHTML = '<span style="font-size:0.82rem; color:var(--text-muted);">No assets selected yet</span>';
+        } else {
+          bizEl.innerHTML = [...bizOwners.entries()].map(([init, name]) =>
+            `<span style="display:inline-flex; align-items:center; gap:5px; padding:4px 10px; background:var(--sb-light-green); border-radius:20px; font-size:0.8rem; color:var(--sb-dark-green);">
+              <span style="width:20px;height:20px;border-radius:50%;background:var(--sb-green);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:0.62rem;">${init}</span>
+              ${name}
+            </span>`
+          ).join('');
+        }
+      }
+
+      if (techEl) {
+        if (techOwners.size === 0) {
+          techEl.innerHTML = '<span style="font-size:0.82rem; color:var(--text-muted);">No assets selected yet</span>';
+        } else {
+          techEl.innerHTML = [...techOwners.entries()].map(([init, name]) =>
+            `<span style="display:inline-flex; align-items:center; gap:5px; padding:4px 10px; background:#E3F2FD; border-radius:20px; font-size:0.8rem; color:#1565C0;">
+              <span style="width:20px;height:20px;border-radius:50%;background:#1565C0;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:0.62rem;">${init}</span>
+              ${name}
+            </span>`
+          ).join('');
+        }
+      }
+    }
+
+    // Pre-populate candidates from shelf modal URL param ?assets=domain-type,...
+    (function() {
+      const params = new URLSearchParams(window.location.search);
+      const assets = params.get('assets');
+      if (!assets) { refreshCandidateCount(); return; }
+
+      // Clear defaults first
+      document.querySelectorAll('#candidate-body .candidate-list-item').forEach(el => el.remove());
+
+      const keys = assets.split(',');
+      keys.forEach(key => {
+        // key format: "Domain-Type" e.g. "Supply Chain-Dictionary"
+        // find matching l3Asset entry
+        for (const [domain, types] of Object.entries(l3Assets)) {
+          for (const [type, asset] of Object.entries(types)) {
+            if (asset && key === `${domain}-${type}`) {
+              const id = `cand-${domain}-${type}`;
+              const row = document.createElement('div');
+              row.className = 'candidate-list-item';
+              row.id = id;
+              row.innerHTML = `
+                <div>
+                  <div class="item-name">${asset.name}</div>
+                  <div class="item-owner">${asset.desc}</div>
+                </div>
+                <span><span class="tag ${asset.domainTag}" style="font-size:0.78rem;">${domain}</span></span>
+                <span><span class="tag ${typeTagMap[type]}" style="font-size:0.78rem;">${type}</span></span>
+                <div class="owner-badge"><span class="av">${asset.bizOwner[0]}</span> ${asset.bizOwner[1]}</div>
+                <div style="display:flex; align-items:center; justify-content:space-between;">
+                  <div class="owner-badge"><span class="av" style="background:#E3F2FD; color:#1565C0;">${asset.techOwner[0]}</span> ${asset.techOwner[1]}</div>
+                  <button class="remove-btn" onclick="removeCandidate('${domain}','${type}')" title="Remove">✕</button>
+                </div>`;
+              document.getElementById('candidate-body').appendChild(row);
+              // Check matrix checkbox if visible
+              document.querySelectorAll('.matrix-table input[type="checkbox"]').forEach(cb => {
+                if (cb.getAttribute('onchange') && cb.getAttribute('onchange').includes(`'${domain}'`) && cb.getAttribute('onchange').includes(`'${type}'`)) {
+                  cb.checked = true;
+                }
+              });
+            }
+          }
+        }
+      });
+      refreshCandidateCount();
+    })();
+
+    refreshCandidateCount();
+  </script>
+</body>
+</html>

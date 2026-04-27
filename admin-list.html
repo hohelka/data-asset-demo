@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Asset Hub - Admin Management</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .admin-tabs {
+      display: flex;
+      gap: 4px;
+      background: var(--bg-white);
+      padding: 4px;
+      border-radius: 8px;
+      box-shadow: var(--shadow-card);
+      margin-bottom: 24px;
+    }
+    .admin-tab {
+      padding: 10px 18px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      transition: var(--transition);
+      text-align: center;
+    }
+    .admin-tab:hover { background: var(--bg-primary); }
+    .admin-tab.active {
+      background: var(--sb-green);
+      color: #fff;
+      font-weight: 500;
+    }
+    .status-dot {
+      display: inline-block;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      margin-right: 6px;
+    }
+    .status-dot.published { background: var(--sb-success); }
+    .status-dot.draft { background: var(--text-muted); }
+    .status-dot.archived { background: var(--sb-error); }
+    .status-dot.pending { background: var(--sb-warning); }
+  </style>
+</head>
+<body>
+  <div id="nav-placeholder"></div>
+
+  <div class="page-wrapper">
+    <div class="page-container wide">
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="breadcrumb"><a href="index.html">Home</a> <span>/</span> Admin</div>
+        <h1>Data Asset Management</h1>
+        <div style="margin-left:auto; display:flex; gap:10px;">
+          <a href="apply-asset.html" class="btn btn-primary">+ Create Asset</a>
+          <button class="btn btn-secondary" onclick="showToast('Exported to CSV')">↓ Export</button>
+        </div>
+      </div>
+
+      <!-- Admin Sub-Navigation -->
+      <div class="admin-tabs">
+        <a class="admin-tab active" href="admin-list.html">Asset List</a>
+        <a class="admin-tab" href="admin-edit.html">Edit Asset</a>
+        <a class="admin-tab" href="admin-history.html">Change History</a>
+        <a class="admin-tab" href="admin-config.html">Homepage Config</a>
+        <a class="admin-tab" href="admin-access.html">Access Records</a>
+      </div>
+
+      <!-- Filters Row -->
+      <div class="flex-between mb-20" style="flex-wrap:wrap; gap:12px;">
+        <div class="search-bar" style="flex:1; max-width:400px;">
+          <input type="text" placeholder="Search assets..." onkeydown="if(event.key==='Enter')handleSearch(this)">
+          <button onclick="handleSearch(this.previousElementSibling)">Search</button>
+        </div>
+        <div class="flex gap-8">
+          <select class="form-control" style="width:auto; padding:8px 32px 8px 12px;">
+            <option>All Categories</option>
+            <option>Glossary</option>
+            <option>Dictionary</option>
+            <option>Reference Doc</option>
+          </select>
+          <select class="form-control" style="width:auto; padding:8px 32px 8px 12px;">
+            <option>All Status</option>
+            <option>Published</option>
+            <option>Draft</option>
+            <option>Pending Review</option>
+            <option>Archived</option>
+          </select>
+          <select class="form-control" style="width:auto; padding:8px 32px 8px 12px;">
+            <option>All Domains</option>
+            <option>Sales</option>
+            <option>Customer</option>
+            <option>Finance</option>
+            <option>Supply Chain</option>
+            <option>Marketing</option>
+            <option>External Data</option>
+            <option>HR</option>
+            <option>Public</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Stats Row -->
+      <div class="grid-4 mb-20">
+        <div class="stat-card" style="padding:14px;">
+          <div class="stat-number" style="font-size:1.5rem;">1,247</div>
+          <div class="stat-label">Total Assets</div>
+        </div>
+        <div class="stat-card" style="padding:14px;">
+          <div class="stat-number" style="font-size:1.5rem; color:var(--sb-success);">1,089</div>
+          <div class="stat-label">Published</div>
+        </div>
+        <div class="stat-card" style="padding:14px;">
+          <div class="stat-number" style="font-size:1.5rem; color:var(--sb-warning);">42</div>
+          <div class="stat-label">Pending Review</div>
+        </div>
+        <div class="stat-card" style="padding:14px;">
+          <div class="stat-number" style="font-size:1.5rem; color:var(--text-muted);">116</div>
+          <div class="stat-label">Draft / Archived</div>
+        </div>
+      </div>
+
+      <!-- Asset Table -->
+      <div class="card">
+        <div style="overflow-x:auto;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th><input type="checkbox" style="accent-color:var(--sb-green);"></th>
+                <th>Asset Name</th>
+                <th>Category</th>
+                <th>Domain</th>
+                <th>Security</th>
+                <th>Status</th>
+                <th>Version</th>
+                <th>Owner</th>
+                <th>Last Updated</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input type="checkbox" style="accent-color:var(--sb-green);"></td>
+                <td><a href="detail-glossary.html"><strong>Net Revenue</strong></a></td>
+                <td><span class="tag tag-green">Glossary</span></td>
+                <td>Sales</td>
+                <td><span class="tag tag-l1">L1</span></td>
+                <td><span class="status-dot published"></span>Published</td>
+                <td>v2.1</td>
+                <td>Sarah Chen</td>
+                <td>2026-04-20</td>
+                <td>
+                  <a href="admin-edit.html" class="btn btn-sm btn-secondary">Edit</a>
+                  <button class="btn btn-sm btn-cancel" onclick="showToast('Asset archived')">Archive</button>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" style="accent-color:var(--sb-green);"></td>
+                <td><a href="detail-dictionary.html"><strong>DWD_Order_Detail</strong></a></td>
+                <td><span class="tag tag-blue">Dictionary</span></td>
+                <td>Sales</td>
+                <td><span class="tag tag-l2">L2</span></td>
+                <td><span class="status-dot published"></span>Published</td>
+                <td>v1.4</td>
+                <td>James Li</td>
+                <td>2026-04-19</td>
+                <td>
+                  <a href="admin-edit.html" class="btn btn-sm btn-secondary">Edit</a>
+                  <button class="btn btn-sm btn-cancel" onclick="showToast('Asset archived')">Archive</button>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" style="accent-color:var(--sb-green);"></td>
+                <td><a href="detail-document.html"><strong>Customer Segmentation Guide</strong></a></td>
+                <td><span class="tag tag-brown">Ref Doc</span></td>
+                <td>Customer</td>
+                <td><span class="tag tag-l2">L2</span></td>
+                <td><span class="status-dot published"></span>Published</td>
+                <td>v3.0</td>
+                <td>Ming Zhang</td>
+                <td>2026-04-18</td>
+                <td>
+                  <a href="admin-edit.html" class="btn btn-sm btn-secondary">Edit</a>
+                  <button class="btn btn-sm btn-cancel" onclick="showToast('Asset archived')">Archive</button>
+                </td>
+              </tr>
+              <tr style="background:rgba(245,166,35,0.04);">
+                <td><input type="checkbox" style="accent-color:var(--sb-green);"></td>
+                <td><strong>Marketing ROI Formula</strong></td>
+                <td><span class="tag tag-green">Glossary</span></td>
+                <td>Marketing</td>
+                <td><span class="tag tag-l2">L2</span></td>
+                <td><span class="status-dot pending"></span>Pending</td>
+                <td>v1.0</td>
+                <td>Kevin Wu</td>
+                <td>2026-04-22</td>
+                <td>
+                  <button class="btn btn-sm btn-primary" onclick="showToast('Asset approved and published!')">Approve</button>
+                  <button class="btn btn-sm btn-cancel" onclick="showToast('Asset rejected')">Reject</button>
+                </td>
+              </tr>
+              <tr style="background:rgba(245,166,35,0.04);">
+                <td><input type="checkbox" style="accent-color:var(--sb-green);"></td>
+                <td><strong>Supply Chain Cost Breakdown</strong></td>
+                <td><span class="tag tag-brown">Ref Doc</span></td>
+                <td>Supply Chain</td>
+                <td><span class="tag tag-l3">L3</span></td>
+                <td><span class="status-dot pending"></span>Pending</td>
+                <td>v1.0</td>
+                <td>David Liu</td>
+                <td>2026-04-21</td>
+                <td>
+                  <button class="btn btn-sm btn-primary" onclick="showToast('Asset approved and published!')">Approve</button>
+                  <button class="btn btn-sm btn-cancel" onclick="showToast('Asset rejected')">Reject</button>
+                </td>
+              </tr>
+              <tr style="opacity:0.6;">
+                <td><input type="checkbox" style="accent-color:var(--sb-green);"></td>
+                <td><strong>Legacy Sales Metrics v1</strong></td>
+                <td><span class="tag tag-green">Glossary</span></td>
+                <td>Sales</td>
+                <td><span class="tag tag-l1">L1</span></td>
+                <td><span class="status-dot archived"></span>Archived</td>
+                <td>v1.0</td>
+                <td>Sarah Chen</td>
+                <td>2025-11-15</td>
+                <td>
+                  <button class="btn btn-sm btn-secondary" onclick="showToast('Asset restored')">Restore</button>
+                </td>
+              </tr>
+              <tr style="opacity:0.7;">
+                <td><input type="checkbox" style="accent-color:var(--sb-green);"></td>
+                <td><strong>Employee Satisfaction Index</strong></td>
+                <td><span class="tag tag-green">Glossary</span></td>
+                <td>HR</td>
+                <td><span class="tag tag-l2">L2</span></td>
+                <td><span class="status-dot draft"></span>Draft</td>
+                <td>v0.1</td>
+                <td>Lisa He</td>
+                <td>2026-04-10</td>
+                <td>
+                  <a href="admin-edit.html" class="btn btn-sm btn-secondary">Edit</a>
+                  <button class="btn btn-sm btn-cancel" onclick="showToast('Draft deleted')">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Bulk Actions & Pagination -->
+        <div class="flex-between" style="margin-top:16px;">
+          <div class="flex gap-8">
+            <button class="btn btn-sm btn-secondary" onclick="showToast('Bulk action: publish')">Bulk Publish</button>
+            <button class="btn btn-sm btn-cancel" onclick="showToast('Bulk action: archive')">Bulk Archive</button>
+          </div>
+          <div class="pagination" style="margin:0;">
+            <a href="#">‹</a>
+            <span class="active">1</span>
+            <a href="#">2</a>
+            <a href="#">3</a>
+            <span>...</span>
+            <a href="#">25</a>
+            <a href="#">›</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script>initNav('admin');</script>
+</body>
+</html>

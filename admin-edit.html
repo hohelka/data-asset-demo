@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Asset Hub - Edit Asset</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .admin-tabs {
+      display: flex; gap: 4px; background: var(--bg-white); padding: 4px;
+      border-radius: 8px; box-shadow: var(--shadow-card); margin-bottom: 24px;
+    }
+    .admin-tab {
+      padding: 10px 18px; border-radius: 6px; cursor: pointer; font-size: 0.88rem;
+      color: var(--text-secondary); transition: var(--transition); text-align: center;
+    }
+    .admin-tab:hover { background: var(--bg-primary); }
+    .admin-tab.active { background: var(--sb-green); color: #fff; font-weight: 500; }
+    .edit-type-selector {
+      display: flex; gap: 16px; margin-bottom: 24px;
+    }
+    .edit-type-card {
+      flex: 1; padding: 20px; border: 2px solid var(--border-color);
+      border-radius: var(--border-radius); cursor: pointer; text-align: center;
+      transition: var(--transition);
+    }
+    .edit-type-card:hover, .edit-type-card.selected {
+      border-color: var(--sb-green); background: rgba(0,112,74,0.03);
+    }
+    .edit-type-card.selected { box-shadow: 0 0 0 1px var(--sb-green); }
+  </style>
+</head>
+<body>
+  <div id="nav-placeholder"></div>
+
+  <div class="page-wrapper">
+    <div class="page-container">
+
+      <div class="page-header">
+        <div class="breadcrumb"><a href="index.html">Home</a> <span>/</span> <a href="admin-list.html">Admin</a> <span>/</span> Edit Asset</div>
+        <h1>Edit Data Asset</h1>
+      </div>
+
+      <div class="admin-tabs">
+        <a class="admin-tab" href="admin-list.html">Asset List</a>
+        <a class="admin-tab active" href="admin-edit.html">Edit Asset</a>
+        <a class="admin-tab" href="admin-history.html">Change History</a>
+        <a class="admin-tab" href="admin-config.html">Homepage Config</a>
+        <a class="admin-tab" href="admin-access.html">Access Records</a>
+      </div>
+
+      <!-- Select Asset Type to Edit -->
+      <div class="card mb-24">
+        <div class="card-header">
+          <h3>Select Asset Type</h3>
+        </div>
+        <div class="edit-type-selector">
+          <div class="edit-type-card selected" onclick="selectEditType('glossary', this)">
+            <div style="font-size:2rem; margin-bottom:8px;">📊</div>
+            <div style="font-weight:600; color:var(--sb-dark-green);">Glossary / Term</div>
+            <div style="font-size:0.82rem; color:var(--text-muted); margin-top:4px;">Edit KPI definitions, calculation logic</div>
+          </div>
+          <div class="edit-type-card" onclick="selectEditType('dictionary', this)">
+            <div style="font-size:2rem; margin-bottom:8px;">🗂️</div>
+            <div style="font-weight:600; color:var(--sb-dark-green);">Data Dictionary</div>
+            <div style="font-size:0.82rem; color:var(--text-muted); margin-top:4px;">Edit table schema, field descriptions</div>
+          </div>
+          <div class="edit-type-card" onclick="selectEditType('document', this)">
+            <div style="font-size:2rem; margin-bottom:8px;">📄</div>
+            <div style="font-weight:600; color:var(--sb-dark-green);">Reference Document</div>
+            <div style="font-size:0.82rem; color:var(--text-muted); margin-top:4px;">Edit guides, manuals, procedures</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Glossary Edit Form -->
+      <div id="form-glossary">
+        <form onsubmit="return handleSubmit('Asset Updated')">
+          <div class="form-section">
+            <h3>Edit Glossary: Net Revenue</h3>
+            <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px;">
+              <span class="tag status-approved">Published</span>
+              <span style="font-size:0.85rem; color:var(--text-muted);">Version v2.1 | Last edited: 2026-04-20</span>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Name (EN) <span class="required">*</span></label>
+                <input type="text" class="form-control" value="Net Revenue">
+              </div>
+              <div class="form-group">
+                <label>Name (CN) <span class="required">*</span></label>
+                <input type="text" class="form-control" value="净收入">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Subject Area <span class="required">*</span></label>
+                <select class="form-control">
+                  <option selected>Sales</option>
+                  <option>Customer</option>
+                  <option>Finance</option>
+                  <option>Supply Chain</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Is KPI</label>
+                <select class="form-control">
+                  <option selected>Yes</option>
+                  <option>No</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Business Definition (EN) <span class="required">*</span></label>
+              <textarea class="form-control" rows="3">Total revenue generated from sales of beverages, food, and merchandise, after deducting discounts, promotional allowances, and product returns.</textarea>
+            </div>
+            <div class="form-group">
+              <label>Business Definition (CN)</label>
+              <textarea class="form-control" rows="3">饮料、食品和商品销售产生的总收入，扣除折扣、促销津贴和退货后的净额。</textarea>
+            </div>
+            <div class="form-group">
+              <label>Calculation Logic</label>
+              <textarea class="form-control" rows="4" style="font-family:monospace;">Net Revenue = Gross Revenue - Discounts - Returns - Allowances
+
+SELECT SUM(gross_revenue) - SUM(discount_amount) - SUM(return_amount) - SUM(allowance_amount) AS net_revenue
+FROM dwd_order_detail
+WHERE order_status = 'completed'</textarea>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Data Owner</label>
+                <input type="text" class="form-control" value="Sarah Chen">
+              </div>
+              <div class="form-group">
+                <label>Security Level</label>
+                <select class="form-control">
+                  <option selected>L1 - Public</option>
+                  <option>L2 - Internal</option>
+                  <option>L3 - Confidential</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h3>Change Notes</h3>
+            <div class="form-group">
+              <label>Reason for Change <span class="required">*</span></label>
+              <textarea class="form-control" rows="2" placeholder="Describe what changed and why..."></textarea>
+            </div>
+          </div>
+
+          <div style="display:flex; gap:12px; justify-content:flex-end;">
+            <button type="button" class="btn btn-cancel" onclick="history.back()">Cancel</button>
+            <button type="button" class="btn btn-secondary" onclick="showToast('Saved as draft')">Save Draft</button>
+            <button type="submit" class="btn btn-primary btn-lg">Publish Changes</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script>
+    initNav('admin');
+
+    function selectEditType(type, el) {
+      document.querySelectorAll('.edit-type-card').forEach(c => c.classList.remove('selected'));
+      el.classList.add('selected');
+    }
+  </script>
+</body>
+</html>

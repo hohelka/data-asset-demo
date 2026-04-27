@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Asset Hub - Homepage Config</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .admin-tabs {
+      display: flex; gap: 4px; background: var(--bg-white); padding: 4px;
+      border-radius: 8px; box-shadow: var(--shadow-card); margin-bottom: 24px;
+    }
+    .admin-tab {
+      padding: 10px 18px; border-radius: 6px; cursor: pointer; font-size: 0.88rem;
+      color: var(--text-secondary); transition: var(--transition); text-align: center;
+    }
+    .admin-tab:hover { background: var(--bg-primary); }
+    .admin-tab.active { background: var(--sb-green); color: #fff; font-weight: 500; }
+    .config-block {
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius);
+      padding: 20px;
+      margin-bottom: 16px;
+      background: var(--bg-white);
+      transition: var(--transition);
+    }
+    .config-block:hover {
+      border-color: var(--sb-green);
+    }
+    .config-block-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .drag-handle {
+      cursor: grab;
+      color: var(--text-muted);
+      font-size: 1.2rem;
+      padding: 4px 8px;
+    }
+    .toggle-switch {
+      position: relative;
+      width: 44px; height: 24px;
+      background: var(--border-color);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .toggle-switch.on { background: var(--sb-green); }
+    .toggle-switch::after {
+      content: '';
+      position: absolute;
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: #fff;
+      top: 2px; left: 2px;
+      transition: var(--transition);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+    .toggle-switch.on::after { left: 22px; }
+    .link-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div id="nav-placeholder"></div>
+
+  <div class="page-wrapper">
+    <div class="page-container">
+
+      <div class="page-header">
+        <div class="breadcrumb"><a href="index.html">Home</a> <span>/</span> <a href="admin-list.html">Admin</a> <span>/</span> Homepage Config</div>
+        <h1>Homepage Content Configuration</h1>
+      </div>
+
+      <div class="admin-tabs">
+        <a class="admin-tab" href="admin-list.html">Asset List</a>
+        <a class="admin-tab" href="admin-edit.html">Edit Asset</a>
+        <a class="admin-tab" href="admin-history.html">Change History</a>
+        <a class="admin-tab active" href="admin-config.html">Homepage Config</a>
+        <a class="admin-tab" href="admin-access.html">Access Records</a>
+      </div>
+
+      <div class="grid-2" style="gap:24px;">
+
+        <!-- Left: Module Configuration -->
+        <div>
+          <div class="card mb-20">
+            <div class="card-header">
+              <h3>Display Modules</h3>
+              <span style="font-size:0.82rem; color:var(--text-muted);">Drag to reorder</span>
+            </div>
+
+            <div class="config-block">
+              <div class="config-block-header">
+                <div class="flex gap-8">
+                  <span class="drag-handle">⋮⋮</span>
+                  <strong>Hero Banner / Search</strong>
+                </div>
+                <div class="toggle-switch on" onclick="this.classList.toggle('on')"></div>
+              </div>
+              <div style="font-size:0.85rem; color:var(--text-secondary);">Welcome banner with search functionality. Always recommended to keep enabled.</div>
+            </div>
+
+            <div class="config-block">
+              <div class="config-block-header">
+                <div class="flex gap-8">
+                  <span class="drag-handle">⋮⋮</span>
+                  <strong>Statistics Overview</strong>
+                </div>
+                <div class="toggle-switch on" onclick="this.classList.toggle('on')"></div>
+              </div>
+              <div style="font-size:0.85rem; color:var(--text-secondary);">Displays total asset counts by category (Glossaries, Dictionaries, Reference Docs).</div>
+            </div>
+
+            <div class="config-block">
+              <div class="config-block-header">
+                <div class="flex gap-8">
+                  <span class="drag-handle">⋮⋮</span>
+                  <strong>Quick Access Icons</strong>
+                </div>
+                <div class="toggle-switch on" onclick="this.classList.toggle('on')"></div>
+              </div>
+              <div style="font-size:0.85rem; color:var(--text-secondary);">Feature entry icons for Metadata, Dictionary, Ref Docs, External Data.</div>
+            </div>
+
+            <div class="config-block">
+              <div class="config-block-header">
+                <div class="flex gap-8">
+                  <span class="drag-handle">⋮⋮</span>
+                  <strong>Platform Matrix</strong>
+                </div>
+                <div class="toggle-switch on" onclick="this.classList.toggle('on')"></div>
+              </div>
+              <div style="font-size:0.85rem; color:var(--text-secondary);">Domain × Asset Type matrix showing coverage status (AC/ID/NC).</div>
+            </div>
+
+            <div class="config-block">
+              <div class="config-block-header">
+                <div class="flex gap-8">
+                  <span class="drag-handle">⋮⋮</span>
+                  <strong>Governance Policies</strong>
+                </div>
+                <div class="toggle-switch on" onclick="this.classList.toggle('on')"></div>
+              </div>
+              <div style="font-size:0.85rem; color:var(--text-secondary);">Links to data governance policy documents.</div>
+            </div>
+
+            <div class="config-block">
+              <div class="config-block-header">
+                <div class="flex gap-8">
+                  <span class="drag-handle">⋮⋮</span>
+                  <strong>Recently Published Assets</strong>
+                </div>
+                <div class="toggle-switch on" onclick="this.classList.toggle('on')"></div>
+              </div>
+              <div style="font-size:0.85rem; color:var(--text-secondary);">Table of latest published assets. Shows top 5 by default.</div>
+              <div class="form-group" style="margin-top:12px; margin-bottom:0;">
+                <label style="font-size:0.82rem;">Number of items to show</label>
+                <select class="form-control" style="width:120px;">
+                  <option>5</option>
+                  <option>10</option>
+                  <option>15</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="config-block">
+              <div class="config-block-header">
+                <div class="flex gap-8">
+                  <span class="drag-handle">⋮⋮</span>
+                  <strong>Security Classification Guide</strong>
+                </div>
+                <div class="toggle-switch on" onclick="this.classList.toggle('on')"></div>
+              </div>
+              <div style="font-size:0.85rem; color:var(--text-secondary);">L1-L4 classification cards for user reference.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Useful Links & Recommended Content -->
+        <div>
+
+          <!-- Useful Links -->
+          <div class="card mb-20">
+            <div class="card-header">
+              <h3>Useful Links</h3>
+              <button class="btn btn-sm btn-primary" onclick="showToast('Add new link')">+ Add Link</button>
+            </div>
+            <div class="link-item">
+              <span class="drag-handle" style="font-size:0.9rem;">⋮⋮</span>
+              <span style="flex:1;">How to Request Data Access</span>
+              <button class="btn btn-sm btn-secondary">Edit</button>
+              <button class="btn btn-sm btn-cancel" onclick="showToast('Link removed')">✕</button>
+            </div>
+            <div class="link-item">
+              <span class="drag-handle" style="font-size:0.9rem;">⋮⋮</span>
+              <span style="flex:1;">Data Asset Onboarding Guide</span>
+              <button class="btn btn-sm btn-secondary">Edit</button>
+              <button class="btn btn-sm btn-cancel" onclick="showToast('Link removed')">✕</button>
+            </div>
+            <div class="link-item">
+              <span class="drag-handle" style="font-size:0.9rem;">⋮⋮</span>
+              <span style="flex:1;">FAQ - Data Classification Levels</span>
+              <button class="btn btn-sm btn-secondary">Edit</button>
+              <button class="btn btn-sm btn-cancel" onclick="showToast('Link removed')">✕</button>
+            </div>
+            <div class="link-item">
+              <span class="drag-handle" style="font-size:0.9rem;">⋮⋮</span>
+              <span style="flex:1;">Contact Data Office Team</span>
+              <button class="btn btn-sm btn-secondary">Edit</button>
+              <button class="btn btn-sm btn-cancel" onclick="showToast('Link removed')">✕</button>
+            </div>
+          </div>
+
+          <!-- Recommended / Featured Assets -->
+          <div class="card mb-20">
+            <div class="card-header">
+              <h3>Featured / Recommended Assets</h3>
+              <button class="btn btn-sm btn-primary" onclick="showToast('Add featured asset')">+ Add Asset</button>
+            </div>
+            <div style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:12px;">
+              Pin specific assets to appear in the "Recently Published" section or a dedicated featured section.
+            </div>
+            <div class="link-item">
+              <span>📊</span>
+              <span style="flex:1;"><strong>Net Revenue</strong> <span class="tag tag-green" style="margin-left:6px;">Glossary</span></span>
+              <span class="tag tag-l1">L1</span>
+              <button class="btn btn-sm btn-cancel" onclick="showToast('Removed from featured')">✕</button>
+            </div>
+            <div class="link-item">
+              <span>📄</span>
+              <span style="flex:1;"><strong>Customer Segmentation Guide</strong> <span class="tag tag-brown" style="margin-left:6px;">Ref Doc</span></span>
+              <span class="tag tag-l2">L2</span>
+              <button class="btn btn-sm btn-cancel" onclick="showToast('Removed from featured')">✕</button>
+            </div>
+          </div>
+
+          <!-- Announcement -->
+          <div class="card">
+            <div class="card-header">
+              <h3>Homepage Announcement</h3>
+            </div>
+            <div class="form-group">
+              <label>Announcement Text</label>
+              <textarea class="form-control" rows="3" placeholder="Enter an announcement to display on the homepage banner...">📢 Data Governance Week: Join us for data quality workshops! Register at the Learning Portal.</textarea>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Show Until</label>
+                <input type="date" class="form-control" value="2026-05-01">
+              </div>
+              <div class="form-group">
+                <label>Enabled</label>
+                <div class="toggle-switch on" onclick="this.classList.toggle('on')" style="margin-top:6px;"></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div style="display:flex; gap:12px; justify-content:flex-end; margin-top:24px;">
+        <button class="btn btn-secondary" onclick="showToast('Preview opened')">Preview Homepage</button>
+        <button class="btn btn-primary btn-lg" onclick="showToast('Homepage configuration saved!')">Save Configuration</button>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script>initNav('admin');</script>
+</body>
+</html>
