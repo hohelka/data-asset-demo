@@ -1,1 +1,4 @@
-1.Customer Segmentation Guide这个详情页面，标题部分加上背景绿色跟别的数据资产保持一致。
+数据字典的上架页面修改意见：
+1.step1的提示文字要根据新的页面内容要做出相应修改
+2.数据安全等级选择L3之后，第二行“未经审批的用户在资产晕上是不可见该条目的”文字不通，删除
+3.technical details部分，把source system的信息放在最右边，database跟table name是必填，比较重要，往左边放。description的部分，鼠标点击进文字框，保留里面的提示文字，可以进行补充跟修改

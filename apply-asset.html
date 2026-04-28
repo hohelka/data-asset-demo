@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -6,164 +6,258 @@
   <title>Data Asset Hub - Create Asset</title>
   <link rel="stylesheet" href="css/style.css">
   <style>
+    /* ===== Type selector cards ===== */
+    .type-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:28px; }
+    @media(max-width:700px){ .type-grid{ grid-template-columns:1fr; } }
+    .type-card {
+      border: 2px solid var(--border-color); border-radius:10px; padding:22px 18px;
+      cursor:pointer; transition:var(--transition); text-align:center; background:var(--bg-white);
+    }
+    .type-card:hover { border-color:var(--sb-green); background:rgba(0,112,74,0.03); }
+    .type-card.selected { border-color:var(--sb-green); background:rgba(0,112,74,0.07); box-shadow:0 0 0 3px rgba(0,112,74,0.1); }
+    .type-card .tc-icon { font-size:1.9rem; margin-bottom:8px; }
+    .type-card .tc-title { font-weight:700; font-size:0.95rem; color:var(--text-primary); }
+    .type-card .tc-desc { font-size:0.81rem; color:var(--text-muted); margin-top:5px; line-height:1.4; }
+    .type-card.selected .tc-title { color:var(--sb-green); }
+
+    /* ===== Hashtag chip input ===== */
+    .tag-wrap {
+      display:flex; flex-wrap:wrap; gap:6px; padding:7px 10px;
+      border:1px solid var(--border-color); border-radius:6px;
+      background:#fff; cursor:text; min-height:42px; align-items:center;
+    }
+    .tag-wrap:focus-within { border-color:var(--sb-green); box-shadow:0 0 0 3px rgba(0,112,74,0.08); }
+    .chip {
+      display:inline-flex; align-items:center; gap:4px;
+      padding:3px 8px; background:var(--sb-light-green);
+      color:var(--sb-dark-green); border-radius:4px;
+      font-size:0.81rem; font-weight:500; white-space:nowrap;
+    }
+    .chip button { background:none; border:none; cursor:pointer; color:var(--sb-dark-green); font-size:0.95rem; padding:0 1px; line-height:1; opacity:0.55; }
+    .chip button:hover { opacity:1; }
+    .tag-field { border:none; outline:none; font-size:0.88rem; flex:1; min-width:100px; padding:2px 4px; background:transparent; }
+    .tag-hint { font-size:0.78rem; color:var(--text-muted); margin-top:4px; }
+
+    /* ===== Section visibility ===== */
+    .type-section { display:none; }
+    .type-section.visible { display:block; }
+    .always-section { display:none; }
+    .always-section.visible { display:block; }
+
+    /* ===== Upload zone ===== */
     .upload-zone {
-      border: 2px dashed var(--border-color);
-      border-radius: 8px;
-      padding: 32px;
-      text-align: center;
-      color: var(--text-muted);
-      cursor: pointer;
-      transition: var(--transition);
+      border:2px dashed var(--border-color); border-radius:8px; padding:28px;
+      text-align:center; color:var(--text-muted); cursor:pointer; transition:var(--transition);
     }
-    .upload-zone:hover {
-      border-color: var(--sb-green);
-      background: rgba(0,112,74,0.02);
+    .upload-zone:hover { border-color:var(--sb-green); background:rgba(0,112,74,0.02); }
+    .upload-zone .uz-icon { font-size:1.8rem; margin-bottom:6px; }
+
+    /* ===== Inline two-col row for small groups ===== */
+    .form-3col { display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; }
+    @media(max-width:700px){ .form-3col{ grid-template-columns:1fr; } }
+
+    /* ===== Prompt hint box ===== */
+    .type-prompt {
+      padding:14px 18px; background:rgba(212,233,226,0.6); border:1px solid var(--sb-light-green);
+      border-radius:8px; font-size:0.87rem; color:var(--sb-dark-green); margin-bottom:20px;
     }
-    .step-indicator {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0;
-      margin-bottom: 32px;
+
+    /* ===== Custom checkbox dropdown ===== */
+    .chk-dropdown { position:relative; }
+    .chk-trigger {
+      display:flex; align-items:center; justify-content:space-between;
+      padding:8px 12px; border:1px solid var(--border-color); border-radius:6px;
+      background:#fff; cursor:pointer; font-size:0.88rem; min-height:38px;
+      user-select:none; transition:var(--transition);
     }
-    .step {
-      display: flex;
-      align-items: center;
-      gap: 8px;
+    .chk-trigger:focus { outline:none; }
+    .chk-trigger.open, .chk-trigger:focus { border-color:var(--sb-green); box-shadow:0 0 0 3px rgba(0,112,74,0.08); }
+    .chk-trigger .chk-val { flex:1; color:var(--text-primary); }
+    .chk-trigger .chk-val.placeholder { color:var(--text-muted); }
+    .chk-trigger .chk-arrow { font-size:0.7rem; color:var(--text-muted); margin-left:8px; transition:transform 0.15s; }
+    .chk-trigger.open .chk-arrow { transform:rotate(180deg); }
+    .chk-panel {
+      display:none; position:absolute; top:calc(100% + 4px); left:0; right:0; z-index:200;
+      background:#fff; border:1px solid var(--border-color); border-radius:8px;
+      box-shadow:0 4px 16px rgba(0,0,0,0.12); padding:6px 0; max-height:240px; overflow-y:auto;
     }
-    .step-num {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 600;
-      font-size: 0.88rem;
-      background: var(--border-color);
-      color: var(--text-muted);
+    .chk-panel.open { display:block; }
+    .chk-option {
+      display:flex; align-items:center; gap:10px;
+      padding:8px 14px; cursor:pointer; font-size:0.88rem; transition:background 0.1s;
     }
-    .step.active .step-num {
-      background: var(--sb-green);
-      color: #fff;
+    .chk-option:hover { background:rgba(0,112,74,0.05); }
+    .chk-option input[type=checkbox] { accent-color:var(--sb-green); width:15px; height:15px; cursor:pointer; flex-shrink:0; }
+    .chk-option label { cursor:pointer; flex:1; margin:0; font-weight:400; }
+    .chk-chips { display:flex; flex-wrap:wrap; gap:5px; margin-top:6px; min-height:0; }
+    .chk-chip {
+      display:inline-flex; align-items:center; gap:4px;
+      padding:2px 8px; background:var(--sb-light-green); color:var(--sb-dark-green);
+      border-radius:4px; font-size:0.8rem; font-weight:500;
     }
-    .step.done .step-num {
-      background: var(--sb-light-green);
-      color: var(--sb-green);
+    .chk-chip button { background:none; border:none; cursor:pointer; color:var(--sb-dark-green); opacity:0.55; padding:0 1px; font-size:0.9rem; line-height:1; }
+    .chk-chip button:hover { opacity:1; }
+
+    /* ===== Radio toggle (Yes/No) ===== */
+    .radio-toggle { display:flex; gap:10px; }
+    .radio-toggle label {
+      display:flex; align-items:center; gap:6px; padding:7px 14px;
+      border:1px solid var(--border-color); border-radius:6px; cursor:pointer;
+      font-size:0.87rem; transition:var(--transition);
     }
-    .step-label {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-    }
-    .step.active .step-label {
-      color: var(--sb-green);
-      font-weight: 600;
-    }
-    .step-line {
-      width: 60px;
-      height: 2px;
-      background: var(--border-color);
-      margin: 0 12px;
-    }
-    .step-line.done {
-      background: var(--sb-green);
-    }
+    .radio-toggle input[type=radio] { accent-color:var(--sb-green); }
+    .radio-toggle label:has(input:checked) { border-color:var(--sb-green); background:rgba(0,112,74,0.06); color:var(--sb-dark-green); font-weight:600; }
   </style>
 </head>
 <body>
   <div id="nav-placeholder"></div>
-
   <div class="page-wrapper">
     <div class="page-container">
 
       <!-- Page Header -->
       <div class="page-header">
         <div class="breadcrumb">
-          <a href="index.html">Home</a> <span>/</span> Create Data Asset
+          <a href="index.html">Home</a> <span>/</span>
+          <a href="shelf.html">Data Assets</a> <span>/</span>
+          Create Data Asset
         </div>
         <h1>Create Data Asset</h1>
       </div>
 
-      <!-- Step Indicator -->
-      <div class="step-indicator">
-        <div class="step active">
-          <div class="step-num">1</div>
-          <div class="step-label">Basic Info</div>
+      <!-- Step 1: Asset Type Selection -->
+      <div class="form-section">
+        <h3>Step 1 &#8212; Select Asset Type <span class="required">*</span></h3>
+        <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:16px;">Choose the type of data asset you want to register. The form fields below will adapt accordingly.</p>
+        <div class="type-grid">
+          <div class="type-card" id="tc-glossary" onclick="selectType('glossary')">
+            <div class="tc-icon">&#128218;</div>
+            <div class="tc-title">Glossary / Term</div>
+            <div class="tc-desc">Business metrics, KPI definitions, domain terms and acronyms.</div>
+          </div>
+          <div class="type-card" id="tc-dictionary" onclick="selectType('dictionary')">
+            <div class="tc-icon">&#128202;</div>
+            <div class="tc-title">Data Dictionary</div>
+            <div class="tc-desc">Database table/view metadata, field schema definitions and data lineage.</div>
+          </div>
+          <div class="type-card" id="tc-document" onclick="selectType('document')">
+            <div class="tc-icon">&#128196;</div>
+            <div class="tc-title">Reference Document</div>
+            <div class="tc-desc">Guides, policies, manuals, SOPs and analysis reports.</div>
+          </div>
         </div>
-        <div class="step-line"></div>
-        <div class="step">
-          <div class="step-num">2</div>
-          <div class="step-label">Content Upload</div>
-        </div>
-        <div class="step-line"></div>
-        <div class="step">
-          <div class="step-num">3</div>
-          <div class="step-label">Security & Review</div>
+        <div id="type-prompt" style="display:none;" class="type-prompt">
+          <span id="type-prompt-text"></span>
         </div>
       </div>
 
-      <form onsubmit="return handleSubmit('Asset Creation Request')">
+      <form id="asset-form" onsubmit="return checkAndSubmit()">
 
-        <!-- Section 1: Basic Information -->
-        <div class="form-section">
+        <!-- ========== GLOSSARY SECTIONS ========== -->
+
+        <!-- G1: Basic Information -->
+        <div class="form-section type-section" id="sec-g-basic">
           <h3>Basic Information</h3>
           <div class="form-row">
             <div class="form-group">
-              <label>Asset Category <span class="required">*</span></label>
-              <select class="form-control" id="assetCategory" onchange="toggleCategoryFields()">
-                <option value="">Select category...</option>
-                <option value="glossary">Glossary / Term</option>
-                <option value="dictionary">Data Dictionary</option>
-                <option value="document">Reference Document</option>
-              </select>
+              <label>Term Name (EN) <span class="required">*</span></label>
+              <input type="text" class="form-control" placeholder="e.g. Net Revenue">
             </div>
+            <div class="form-group">
+              <label>&#20013;&#25991;&#21517;&#31216; (CN) <span class="required">*</span></label>
+              <input type="text" class="form-control" placeholder="&#35831;&#36755;&#20837;&#20013;&#25991;&#21517;&#31216;">
+            </div>
+          </div>
+          <div class="form-row">
             <div class="form-group">
               <label>Subject Area <span class="required">*</span></label>
               <select class="form-control">
                 <option value="">Select subject area...</option>
-                <option value="sales">Sales</option>
-                <option value="customer">Customer</option>
-                <option value="finance">Finance</option>
-                <option value="supply">Supply Chain</option>
-                <option value="marketing">Marketing</option>
-                <option value="external">External Data</option>
-                <option value="hr">HR</option>
-                <option value="public">Public</option>
+                <option>Sales</option><option>Customer</option><option>Finance</option>
+                <option>Supply Chain</option><option>Marketing</option><option>External Data</option>
+                <option>HR</option><option>Public</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Asset Type <span class="required">*</span></label>
+              <select class="form-control">
+                <option value="">Select type...</option>
+                <option>Metrics (&#25351;&#26631;)</option>
+                <option>KPI</option>
+                <option>Business Term (&#19994;&#21153;&#26415;&#35821;)</option>
+                <option>Dimension (&#32500;&#24230;)</option>
               </select>
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label>Asset Name (EN) <span class="required">*</span></label>
-              <input type="text" class="form-control" placeholder="Enter English name">
+              <label>Business Definition (EN) <span class="required">*</span></label>
+              <textarea class="form-control" rows="3" placeholder="Describe the business meaning of this term..."></textarea>
             </div>
             <div class="form-group">
-              <label>Asset Name (CN) <span class="required">*</span></label>
-              <input type="text" class="form-control" placeholder="请输入中文名称">
+              <label>&#19994;&#21153;&#23450;&#20041; (CN)</label>
+              <textarea class="form-control" rows="3" placeholder="&#35831;&#36755;&#20837;&#19994;&#21153;&#23450;&#20041;..."></textarea>
             </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label>Description (EN) <span class="required">*</span></label>
-              <textarea class="form-control" rows="3" placeholder="Enter English description..."></textarea>
-            </div>
-            <div class="form-group">
-              <label>Description (CN)</label>
-              <textarea class="form-control" rows="3" placeholder="请输入中文描述..."></textarea>
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Tags</label>
-            <input type="text" class="form-control" placeholder="Enter tags separated by commas (e.g., KPI, Revenue, Quarterly)">
           </div>
         </div>
 
-        <!-- Section 2: Data Domain & Owner -->
-        <div class="form-section">
-          <h3>Data Domain & Owner</h3>
+        <!-- G2: Term Details -->
+        <div class="form-section type-section" id="sec-g-detail">
+          <h3>Term Details</h3>
           <div class="form-row">
             <div class="form-group">
-              <label>Data Owner <span class="required">*</span></label>
+              <label>Acronym</label>
+              <input type="text" class="form-control" placeholder="e.g. AT, PSD, ADT">
+            </div>
+            <div class="form-group">
+              <label>Is KPI <span class="required">*</span></label>
+              <div class="radio-toggle" style="margin-top:6px;">
+                <label><input type="radio" name="is-kpi" value="yes"> Yes</label>
+                <label><input type="radio" name="is-kpi" value="no" checked> No</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Alternate Labels (EN)
+                <span style="font-size:0.78rem; color:var(--text-muted); font-weight:400;">&nbsp;&#8212; press Enter or comma to add</span>
+              </label>
+              <div class="tag-wrap" onclick="this.querySelector('.tag-field').focus()">
+                <input type="text" class="tag-field" id="alt-en-inp" placeholder="Add alternate label...">
+              </div>
+              <input type="hidden" id="alt-en-val">
+            </div>
+            <div class="form-group">
+              <label>&#22791;&#29992;&#21517;&#31216; (CN)
+                <span style="font-size:0.78rem; color:var(--text-muted); font-weight:400;">&nbsp;&#8212; &#25353;&#22238;&#36275;&#25110;&#36923;&#21495;&#28155;&#21152;</span>
+              </label>
+              <div class="tag-wrap" onclick="this.querySelector('.tag-field').focus()">
+                <input type="text" class="tag-field" id="alt-cn-inp" placeholder="&#28155;&#21152;&#22791;&#29992;&#21517;&#31216;...">
+              </div>
+              <input type="hidden" id="alt-cn-val">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Related Cube / Report Name</label>
+              <input type="text" class="form-control" placeholder="e.g. Sales Cube, Transaction Report">
+            </div>
+            <div class="form-group">
+              <label>Unit</label>
+              <input type="text" class="form-control" placeholder="e.g. CNY, %, Transactions">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Calculation Logic / Formula</label>
+            <textarea class="form-control" rows="3" placeholder="e.g. Gross Revenue &#8722; Discount &#8722; Return &#8722; Allowance"></textarea>
+          </div>
+        </div>
+
+        <!-- G3: Ownership -->
+        <div class="form-section type-section" id="sec-g-owner">
+          <h3>Ownership</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Business Owner (Partner) <span class="required">*</span></label>
               <input type="text" class="form-control" placeholder="Search employee name...">
             </div>
             <div class="form-group">
@@ -171,91 +265,297 @@
               <input type="text" class="form-control" placeholder="Search employee name...">
             </div>
           </div>
+          <div class="form-group">
+            <label>Owning Department <span class="required">*</span></label>
+            <select class="form-control">
+              <option value="">Select department...</option>
+              <option>Finance</option><option>Sales Operations</option><option>Customer Analytics</option>
+              <option>Supply Chain</option><option>Marketing</option><option>HR</option>
+              <option>IT / Data Engineering</option><option>Data Office</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- ========== DATA DICTIONARY SECTIONS ========== -->
+
+        <!-- D1: Basic Information -->
+        <div class="form-section type-section" id="sec-d-basic">
+          <h3>Basic Information</h3>
           <div class="form-row">
             <div class="form-group">
-              <label>Owning Department <span class="required">*</span></label>
+              <label>Asset Display Name (EN) <span class="required">*</span></label>
+              <input type="text" class="form-control" placeholder="e.g. Order Detail Fact Table">
+            </div>
+            <div class="form-group">
+              <label>&#20013;&#25991;&#21517;&#31216; (CN) <span class="required">*</span></label>
+              <input type="text" class="form-control" placeholder="&#35831;&#36755;&#20837;&#20013;&#25991;&#21517;&#31216;">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Subject Area <span class="required">*</span></label>
+              <div class="chk-dropdown" id="sa-dropdown">
+                <div class="chk-trigger" id="sa-trigger" tabindex="0"
+                     onclick="toggleChkDropdown('sa-dropdown')"
+                     onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleChkDropdown('sa-dropdown')}">
+                  <span class="chk-val placeholder" id="sa-display">Select subject area(s)...</span>
+                  <span class="chk-arrow">&#9660;</span>
+                </div>
+                <div class="chk-panel" id="sa-panel">
+                  <div class="chk-option"><input type="checkbox" id="sa-sales" value="Sales"><label for="sa-sales">Sales</label></div>
+                  <div class="chk-option"><input type="checkbox" id="sa-customer" value="Customer"><label for="sa-customer">Customer</label></div>
+                  <div class="chk-option"><input type="checkbox" id="sa-finance" value="Finance"><label for="sa-finance">Finance</label></div>
+                  <div class="chk-option"><input type="checkbox" id="sa-sc" value="Supply Chain"><label for="sa-sc">Supply Chain</label></div>
+                  <div class="chk-option"><input type="checkbox" id="sa-mkt" value="Marketing"><label for="sa-mkt">Marketing</label></div>
+                  <div class="chk-option"><input type="checkbox" id="sa-ext" value="External Data"><label for="sa-ext">External Data</label></div>
+                  <div class="chk-option"><input type="checkbox" id="sa-hr" value="HR"><label for="sa-hr">HR</label></div>
+                  <div class="chk-option"><input type="checkbox" id="sa-pub" value="Public"><label for="sa-pub">Public</label></div>
+                </div>
+              </div>
+              <div class="chk-chips" id="sa-chips"></div>
+              <input type="hidden" id="sa-val">
+            </div>
+            <div class="form-group">
+              <label>Table Type <span class="required">*</span></label>
               <select class="form-control">
+                <option value="">Select table type...</option>
+                <option>ODS &#8212; Operational Data Store</option>
+                <option>DWD &#8212; Data Warehouse Detail</option>
+                <option>DWS &#8212; Data Warehouse Summary</option>
+                <option>ADS &#8212; Application Data Store</option>
+                <option>DIM &#8212; Dimension Table</option>
+                <option>Fact Table</option>
+                <option>External / Raw Data</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- D2: Technical Details -->
+        <div class="form-section type-section" id="sec-d-tech">
+          <h3>Technical Details</h3>
+          <div class="form-3col">
+            <div class="form-group">
+              <label>Database / Schema <span class="required">*</span></label>
+              <input type="text" id="d-schema-inp" class="form-control" placeholder="e.g. sbux_cdm">
+            </div>
+            <div class="form-group">
+              <label>Table Name <span class="required">*</span></label>
+              <input type="text" id="d-table-inp" class="form-control" placeholder="e.g. dwd_order_detail">
+            </div>
+            <div class="form-group">
+              <label>Source System</label>
+              <input type="text" class="form-control" placeholder="e.g. POS, CRM, ERP">
+            </div>
+          </div>
+          <!-- Test Connection -->
+          <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:18px; padding:12px 16px; background:var(--bg-primary); border-radius:8px; border:1px solid var(--border-color);">
+            <button type="button" class="btn btn-secondary" id="btn-test-conn" onclick="testConnection()" style="white-space:nowrap;">&#128268; Test Connection</button>
+            <span id="conn-status" style="font-size:0.87rem; color:var(--text-muted);">Click to verify the table exists in the data platform before submitting.</span>
+          </div>
+          <div class="form-group">
+            <label>Description <span class="required">*</span></label>
+            <textarea class="form-control" rows="8" id="d-desc-inp">&#19978;&#28216;&#20381;&#36182;&#65306;
+&#35843;&#24230;&#21608;&#26399;&#65306;
+&#25968;&#25454;&#33539;&#22260;&#65306;&#65288;&#26085;&#34920;&#65295;&#26376;&#34920;&#65295;&#22686;&#37327;&#34920;&#65295;&#20840;&#37327;&#34920;&#65289;
+&#22238;&#21010;&#25968;&#25454;&#33539;&#22260;&#65306;
+&#25903;&#25345;&#25968;&#25454;&#24212;&#29992;&#65306;
+&#20854;&#20182;&#34917;&#20805;&#35828;&#26126;&#65306;</textarea>
+          </div>
+        </div>
+
+        <!-- D4: Ownership -->
+        <div class="form-section type-section" id="sec-d-owner">
+          <h3>Ownership</h3>
+          <div class="form-group">
+            <label>Tech Owner <span class="required">*</span></label>
+            <input type="text" class="form-control" placeholder="Search employee name...">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Department (&#19968;&#32423;&#37096;&#38376;) <span class="required">*</span></label>
+              <select class="form-control" id="d-dept-l1">
                 <option value="">Select department...</option>
-                <option>Finance</option>
-                <option>Sales Operations</option>
-                <option>Customer Analytics</option>
-                <option>Supply Chain</option>
-                <option>Marketing</option>
-                <option>HR</option>
+                <option>Finance (&#36134;&#21153;)</option>
+                <option>Sales Operations (&#38144;&#21552;&#36816;&#33829;)</option>
+                <option>Customer Analytics (&#23458;&#25143;&#20998;&#26512;)</option>
+                <option>Supply Chain (&#20379;&#24212;&#38190;)</option>
+                <option>Marketing (&#24066;&#22330;)</option>
+                <option>HR (&#20154;&#21147;&#36164;&#28304;)</option>
                 <option>IT / Data Engineering</option>
+                <option>Data Office (&#25968;&#25454;&#21551;&#21046;)</option>
               </select>
             </div>
             <div class="form-group">
-              <label>Data Source System</label>
-              <input type="text" class="form-control" placeholder="e.g., POS, CRM, ERP...">
+              <label>Sub-Department (&#20108;&#32423;&#37096;&#38376;)
+                <span style="font-size:0.8rem; color:var(--text-muted); font-weight:400;">&#8212; Optional</span>
+              </label>
+              <input type="text" class="form-control" id="d-dept-l2" placeholder="e.g. FP&amp;A, Revenue Analytics, CDM Team">
             </div>
           </div>
         </div>
 
-        <!-- Section 3: Data Security Classification -->
-        <div class="form-section">
+        <!-- ========== REFERENCE DOCUMENT SECTIONS ========== -->
+
+        <!-- R1: Basic Information -->
+        <div class="form-section type-section" id="sec-r-basic">
+          <h3>Basic Information</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Document Title (EN) <span class="required">*</span></label>
+              <input type="text" class="form-control" placeholder="e.g. Customer Segmentation Guide">
+            </div>
+            <div class="form-group">
+              <label>&#25991;&#26723;&#26631;&#39064; (CN)</label>
+              <input type="text" class="form-control" placeholder="&#35831;&#36755;&#20837;&#20013;&#25991;&#26631;&#39064;">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Subject Area <span class="required">*</span></label>
+              <select class="form-control">
+                <option value="">Select subject area...</option>
+                <option>Sales</option><option>Customer</option><option>Finance</option>
+                <option>Supply Chain</option><option>Marketing</option><option>External Data</option>
+                <option>HR</option><option>Public</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Document Type <span class="required">*</span></label>
+              <select class="form-control">
+                <option value="">Select document type...</option>
+                <option>Guide / How-to</option>
+                <option>Policy (&#25919;&#31574;&#35268;&#33539;)</option>
+                <option>SOP &#8212; Standard Operating Procedure</option>
+                <option>Analysis Report (&#20998;&#26512;&#25253;&#21578;)</option>
+                <option>Data Specification (&#25968;&#25454;&#35268;&#33539;)</option>
+                <option>Training Material (&#22521;&#35757;&#26448;&#26009;)</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Version <span class="required">*</span></label>
+              <input type="text" class="form-control" placeholder="e.g. v1.0">
+            </div>
+            <div class="form-group">
+              <label>Effective Date</label>
+              <input type="date" class="form-control">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Description / Abstract (EN) <span class="required">*</span></label>
+              <textarea class="form-control" rows="3" placeholder="Briefly describe the document purpose and scope..."></textarea>
+            </div>
+            <div class="form-group">
+              <label>&#25688;&#35201;&#35828;&#26126; (CN)</label>
+              <textarea class="form-control" rows="3" placeholder="&#35831;&#36755;&#20837;&#25688;&#35201;&#35828;&#26126;..."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- R2: Document Content & Upload -->
+        <div class="form-section type-section" id="sec-r-content">
+          <h3>Document Content</h3>
+          <div class="form-group" style="margin-bottom:20px;">
+            <label style="font-weight:600;">Upload Document File <span class="required">*</span></label>
+            <div class="upload-zone">
+              <div class="uz-icon">&#128196;</div>
+              <div>Drag &amp; drop your document here</div>
+              <div style="font-size:0.82rem; margin-top:4px;">Supports: .pdf, .docx, .pptx, .md (Max 50MB)</div>
+              <button type="button" class="btn btn-secondary" style="margin-top:12px; font-size:0.83rem;" onclick="showToast('File browser opened')">Browse Files</button>
+            </div>
+          </div>
+          <div class="form-group" style="margin-bottom:20px;">
+            <label>Appendix / Supporting Attachments</label>
+            <div class="upload-zone">
+              <div class="uz-icon">&#128206;</div>
+              <div>Upload supporting files, screenshots, or data samples</div>
+              <div style="font-size:0.82rem; margin-top:4px;">Supports: .png, .jpg, .xlsx, .csv (Max 10MB each, up to 5 files)</div>
+              <button type="button" class="btn btn-secondary" style="margin-top:12px; font-size:0.83rem;" onclick="showToast('File browser opened')">Browse Files</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Table of Contents (Optional)</label>
+            <textarea class="form-control" rows="5" placeholder="1. Background&#10;2. Methodology&#10;3. Application Scenarios&#10;4. System Operation&#10;5. Appendix"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Related Data Assets</label>
+            <input type="text" class="form-control" placeholder="Link related dictionaries or glossaries, e.g. DWD_Order_Detail, Sales Metrics">
+          </div>
+        </div>
+
+        <!-- R3: Ownership -->
+        <div class="form-section type-section" id="sec-r-owner">
+          <h3>Ownership</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Document Owner <span class="required">*</span></label>
+              <input type="text" class="form-control" placeholder="Search employee name...">
+            </div>
+            <div class="form-group">
+              <label>Reviewer(s)</label>
+              <input type="text" class="form-control" placeholder="Names separated by commas">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Owning Department <span class="required">*</span></label>
+            <select class="form-control">
+              <option value="">Select department...</option>
+              <option>Finance</option><option>Sales Operations</option><option>Customer Analytics</option>
+              <option>Supply Chain</option><option>Marketing</option><option>HR</option>
+              <option>IT / Data Engineering</option><option>Data Office</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- ========== COMMON SECTIONS (shown for all types once selected) ========== -->
+
+        <!-- Security Classification -->
+        <div class="form-section always-section" id="sec-security">
           <h3>Data Security Classification</h3>
           <div class="form-group">
             <label>Security Level <span class="required">*</span></label>
-            <select class="form-control">
+            <select class="form-control" id="security-level-sel" onchange="updateSecurityHint()">
               <option value="">Select security level...</option>
-              <option value="L1">L1 - Public (Can be shared internally and externally)</option>
-              <option value="L2">L2 - Internal (Default access for all employees)</option>
-              <option value="L3">L3 - Confidential (Requires Data Owner approval)</option>
+              <option value="L1">L1 &#8212; Public (can be shared internally and externally)</option>
+              <option value="L2" selected>L2 &#8212; Internal (default access for all employees)</option>
+              <option value="L3">L3 &#8212; Confidential (requires Data Owner approval to access)</option>
             </select>
           </div>
-          <div style="padding:14px 18px; background:rgba(211,47,47,0.05); border:1px solid rgba(211,47,47,0.2); border-radius:8px;">
-            <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
-              <span style="font-size:1.1rem;">🚫</span>
-              <strong style="color:var(--sb-error);">L4 - Private Data Not Allowed</strong>
+          <div id="l3-dict-hint" style="display:none; padding:12px 16px; background:rgba(245,166,35,0.08); border:1px solid rgba(245,166,35,0.4); border-radius:8px; font-size:0.84rem; margin-bottom:12px;">
+            <strong style="color:#7d5900;">&#9432;&nbsp;L3 &#8212; &#25968;&#25454;&#23383;&#20856;&#26597;&#30475;&#26435;&#38480;&#35828;&#26126;</strong>
+            <div style="color:var(--text-secondary); margin-top:6px; line-height:1.7;">
+              &#9679; &#36873;&#25321; L3 &#21518;&#65292;&#29992;&#25143;&#22312;&#25968;&#25454;&#36164;&#20135;&#24179;&#21488;&#26597;&#30475;&#35813;&#25968;&#25454;&#23383;&#20856;&#26102;&#65292;&#38656;&#35201;&#32463;&#36807; <strong>Data Owner &#23457;&#25209;</strong>&#25165;&#21487;&#26597;&#30475;&#12290;<br>
+              &#9679; <strong>&#27880;&#24847;&#65306;&#25968;&#25454;&#23383;&#20856;&#26597;&#30475;&#26435;&#38480; &#8800; &#25968;&#25454;&#26412;&#36523;&#30340;&#35775;&#38382;&#26435;&#38480;&#12290;</strong>&#33021;&#26597;&#30475;&#35813;&#25968;&#25454;&#23383;&#20856;&#31454;&#30446;&#30340;&#29992;&#25143;&#65292;&#20173;&#38656;&#21333;&#29420;&#30003;&#35831;&#25968;&#25454;&#26435;&#38480;&#25165;&#33021;&#35775;&#38382;&#24213;&#23618;&#25968;&#25454;&#12290;
             </div>
-            <div style="font-size:0.85rem; color:var(--text-secondary);">
-              Highly sensitive data (e.g., personal ID numbers, phone numbers, home addresses) is strictly prohibited from being uploaded to this platform.
-            </div>
+          </div>
+          <div style="padding:12px 16px; background:rgba(211,47,47,0.05); border:1px solid rgba(211,47,47,0.2); border-radius:8px; font-size:0.84rem;">
+            <strong style="color:#c62828;">&#10006; L4 &#8212; Private Data Not Allowed</strong>
+            <div style="color:var(--text-secondary); margin-top:4px;">Highly sensitive data (personal ID, phone numbers, home addresses) is strictly prohibited from upload to this platform.</div>
           </div>
         </div>
 
-        <!-- Section 4: Content Upload -->
-        <div class="form-section">
-          <h3>Content Upload</h3>
-
-          <!-- For Dictionary type -->
-          <div id="dict-upload" style="margin-bottom:20px;">
-            <label style="font-weight:600; display:block; margin-bottom:10px;">Data Dictionary File</label>
-            <div class="upload-zone">
-              <div style="font-size:2rem; margin-bottom:8px;">📁</div>
-              <div>Drag & drop your data dictionary file here</div>
-              <div style="font-size:0.82rem; margin-top:4px;">Supports: .xlsx, .csv, .json (Max 10MB)</div>
-              <button type="button" class="btn btn-secondary btn-sm" style="margin-top:12px;">Browse Files</button>
+        <!-- Labels / Tags -->
+        <div class="form-section always-section" id="sec-labels">
+          <h3>Labels &amp; Tags</h3>
+          <div class="form-group">
+            <label>Labels
+              <span style="font-size:0.78rem; color:var(--text-muted); font-weight:400;">&nbsp;&#8212; press Enter, comma, or semicolon to create a tag</span>
+            </label>
+            <div class="tag-wrap" id="label-wrap" onclick="document.getElementById('label-inp').focus()">
+              <input type="text" class="tag-field" id="label-inp" placeholder="Add a label...">
             </div>
-          </div>
-
-          <!-- For Document type -->
-          <div id="doc-upload" style="margin-bottom:20px;">
-            <label style="font-weight:600; display:block; margin-bottom:10px;">Reference Document</label>
-            <div class="upload-zone">
-              <div style="font-size:2rem; margin-bottom:8px;">📄</div>
-              <div>Drag & drop your reference document here</div>
-              <div style="font-size:0.82rem; margin-top:4px;">Supports: .pdf, .docx, .pptx, .md (Max 50MB)</div>
-              <button type="button" class="btn btn-secondary btn-sm" style="margin-top:12px;">Browse Files</button>
-            </div>
-          </div>
-
-          <!-- Screenshots -->
-          <div>
-            <label style="font-weight:600; display:block; margin-bottom:10px;">Screenshots / Attachments (Optional)</label>
-            <div class="upload-zone">
-              <div style="font-size:2rem; margin-bottom:8px;">🖼️</div>
-              <div>Add screenshots or supporting images</div>
-              <div style="font-size:0.82rem; margin-top:4px;">Supports: .png, .jpg, .gif (Max 5MB each)</div>
-              <button type="button" class="btn btn-secondary btn-sm" style="margin-top:12px;">Browse Files</button>
-            </div>
+            <input type="hidden" id="label-val">
+            <div class="tag-hint">e.g. <code>KPI</code>, <code>Revenue</code>, <code>&#26085;&#26356;&#26032;</code>, <code>L3</code></div>
           </div>
         </div>
 
-        <!-- Approval Flow Info -->
-        <div class="form-section">
-          <h3>Approval Flow</h3>
+        <!-- Approval Flow -->
+        <div class="form-section always-section" id="sec-approval">
+          <h3>Approval Flow Preview</h3>
           <div class="timeline">
             <div class="timeline-item">
               <div class="timeline-dot pending"></div>
@@ -264,8 +564,8 @@
                   <span class="tl-name">Step 1: Line Manager Review</span>
                   <span class="tag status-pending">Required</span>
                 </div>
-                <div class="tl-role">Your direct manager reviews the asset request</div>
-                <div class="tl-date" style="margin-top:4px; font-size:0.8rem;">Skip for M4+ employees</div>
+                <div class="tl-role">Your direct manager reviews the asset registration request</div>
+                <div style="font-size:0.8rem; color:var(--text-muted); margin-top:3px;">Automatically skipped for M4+ employees</div>
               </div>
             </div>
             <div class="timeline-item">
@@ -275,7 +575,7 @@
                   <span class="tl-name">Step 2: Data Office Review</span>
                   <span class="tag status-pending">Required</span>
                 </div>
-                <div class="tl-role">Data Office reviews content quality and compliance</div>
+                <div class="tl-role">Data Office reviews content quality, completeness and compliance</div>
               </div>
             </div>
             <div class="timeline-item">
@@ -285,20 +585,20 @@
                   <span class="tl-name">Step 3: Auto Publish</span>
                   <span class="tag status-draft">Auto</span>
                 </div>
-                <div class="tl-role">Asset is automatically published upon final approval</div>
+                <div class="tl-role">Asset is automatically published to the Data Asset Shelf upon final approval</div>
               </div>
             </div>
           </div>
         </div>
 
-        <div style="display:flex; gap:12px; justify-content:flex-end; margin-top:4px;">
+        <!-- Submit actions -->
+        <div class="always-section" id="sec-actions" style="display:none; justify-content:flex-end; gap:12px; margin-top:4px; padding:0 0 20px;">
           <button type="button" class="btn btn-cancel" onclick="showToast('Cancelled')">Cancel</button>
           <button type="button" class="btn btn-secondary" onclick="showToast('Saved as draft')">Save Draft</button>
           <button type="submit" class="btn btn-primary btn-lg">Submit for Approval</button>
         </div>
 
       </form>
-
     </div>
   </div>
 
@@ -306,11 +606,200 @@
   <script>
     initNav('apply-asset');
 
-    function toggleCategoryFields() {
-      const cat = document.getElementById('assetCategory').value;
-      document.getElementById('dict-upload').style.display = (cat === 'dictionary' || cat === '') ? 'block' : 'none';
-      document.getElementById('doc-upload').style.display = (cat === 'document' || cat === '') ? 'block' : 'none';
+    let currentType = null;
+    let dictConnTested = false;
+
+    function checkAndSubmit() {
+      if (currentType === 'dictionary' && !dictConnTested) {
+        showToast('Please test the database connection before submitting.');
+        var btn = document.getElementById('btn-test-conn');
+        if (btn) btn.scrollIntoView({behavior:'smooth', block:'center'});
+        return false;
+      }
+      return handleSubmit('Asset Creation Request');
     }
+
+    function testConnection() {
+      var schema = document.getElementById('d-schema-inp') ? document.getElementById('d-schema-inp').value.trim() : '';
+      var table  = document.getElementById('d-table-inp')  ? document.getElementById('d-table-inp').value.trim()  : '';
+      var status = document.getElementById('conn-status');
+      var btn    = document.getElementById('btn-test-conn');
+      if (!schema || !table) {
+        status.style.color = '#c62828';
+        status.textContent = 'Please fill in Database / Schema and Table Name before testing.';
+        return;
+      }
+      btn.disabled = true;
+      btn.textContent = 'Testing...';
+      status.style.color = 'var(--text-muted)';
+      status.textContent = 'Connecting to data platform...';
+      setTimeout(function() {
+        btn.disabled = false;
+        btn.textContent = '\u{1F50C} Test Connection';
+        dictConnTested = true;
+        status.style.color = '#2e7d32';
+        status.innerHTML = '<strong style="color:#2e7d32;">&#10003; Connection successful</strong> &mdash; Table <code>' + schema + '.' + table + '</code> found in the data platform. You may proceed to submit.';
+      }, 1400);
+    }
+
+    function updateSecurityHint() {
+      var sel  = document.getElementById('security-level-sel');
+      var hint = document.getElementById('l3-dict-hint');
+      if (sel && hint) hint.style.display = (sel.value === 'L3') ? '' : 'none';
+    }
+
+    const TYPE_SECTIONS = {
+      glossary:    ['sec-g-basic','sec-g-detail','sec-g-owner'],
+      dictionary:  ['sec-d-basic','sec-d-tech','sec-d-owner'],
+      document:    ['sec-r-basic','sec-r-content','sec-r-owner'],
+    };
+    const TYPE_PROMPTS = {
+      glossary:   'You are registering a <strong>Glossary / Term</strong> asset. Fill in the term name, definition, calculation logic, and ownership details below.',
+      dictionary: 'You are registering a <strong>Data Dictionary</strong> asset. Fill in the asset name, select subject area(s) and table type, then provide the database connection info. The system will verify the table exists in the data platform before submission.',
+      document:   'You are registering a <strong>Reference Document</strong> asset. Fill in the document title, upload the file, and specify ownership.',
+    };
+    const ALWAYS_SECTIONS = ['sec-security','sec-labels','sec-approval'];
+    const ACTIONS_SECTION = 'sec-actions';
+
+    function selectType(type) {
+      currentType = type;
+      // Update card selection
+      ['glossary','dictionary','document'].forEach(t => {
+        document.getElementById('tc-'+t).classList.toggle('selected', t === type);
+      });
+      // Hide all type sections
+      document.querySelectorAll('.type-section').forEach(s => s.classList.remove('visible'));
+      // Show selected type sections
+      TYPE_SECTIONS[type].forEach(id => document.getElementById(id).classList.add('visible'));
+      // Show common sections
+      ALWAYS_SECTIONS.forEach(id => {
+        const el = document.getElementById(id);
+        el.classList.add('visible');
+        el.style.display = '';
+      });
+      // Show actions
+      const actions = document.getElementById(ACTIONS_SECTION);
+      actions.classList.add('visible');
+      actions.style.display = 'flex';
+      // Show type prompt
+      const prompt = document.getElementById('type-prompt');
+      document.getElementById('type-prompt-text').innerHTML = TYPE_PROMPTS[type];
+      prompt.style.display = '';
+      // Scroll to form
+      document.getElementById('asset-form').scrollIntoView({behavior:'smooth', block:'start'});
+    }
+
+    // ===== Hashtag chip input =====
+    function initChipInput(inputId, hiddenId, wrapId) {
+      const inp = document.getElementById(inputId);
+      const wrap = document.getElementById(wrapId) || inp.parentElement;
+      let tags = [];
+
+      function addTag(val) {
+        val = val.trim().replace(/^[,;]+|[,;]+$/g, '');
+        if (!val || tags.includes(val)) return;
+        tags.push(val);
+        render();
+        inp.value = '';
+      }
+
+      function removeTag(val) {
+        tags = tags.filter(t => t !== val);
+        render();
+      }
+
+      function render() {
+        wrap.querySelectorAll('.chip').forEach(c => c.remove());
+        tags.forEach(tag => {
+          const chip = document.createElement('span');
+          chip.className = 'chip';
+          chip.innerHTML = '#' + tag + ' <button type="button" title="Remove">&#10005;</button>';
+          chip.querySelector('button').addEventListener('click', () => removeTag(tag));
+          wrap.insertBefore(chip, inp);
+        });
+        const hid = document.getElementById(hiddenId);
+        if (hid) hid.value = tags.join(',');
+      }
+
+      inp.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          addTag(this.value);
+        } else if (e.key === 'Backspace' && this.value === '' && tags.length > 0) {
+          removeTag(tags[tags.length - 1]);
+        }
+      });
+
+      inp.addEventListener('input', function() {
+        const v = this.value;
+        if (v.endsWith(',') || v.endsWith(';')) {
+          addTag(v);
+        }
+      });
+    }
+
+    // Init all chip inputs
+    initChipInput('alt-en-inp', 'alt-en-val', null);
+    initChipInput('alt-cn-inp', 'alt-cn-val', null);
+    initChipInput('label-inp', 'label-val', 'label-wrap');
+
+    // ===== Checkbox dropdown =====
+    function toggleChkDropdown(id) {
+      var dd     = document.getElementById(id);
+      var panel  = dd.querySelector('.chk-panel');
+      var trigger= dd.querySelector('.chk-trigger');
+      var isOpen = panel.classList.contains('open');
+      // Close all other open dropdowns
+      document.querySelectorAll('.chk-panel.open').forEach(function(p){ p.classList.remove('open'); p.closest('.chk-dropdown').querySelector('.chk-trigger').classList.remove('open'); });
+      if (!isOpen) { panel.classList.add('open'); trigger.classList.add('open'); }
+    }
+
+    function initChkDropdown(ddId, displayId, chipsId, hiddenId) {
+      var dd      = document.getElementById(ddId);
+      var display = document.getElementById(displayId);
+      var chips   = document.getElementById(chipsId);
+      var hidden  = document.getElementById(hiddenId);
+      dd.querySelectorAll('input[type=checkbox]').forEach(function(cb) {
+        cb.addEventListener('change', function() { renderChkDropdown(dd, display, chips, hidden); });
+        // Prevent dropdown close on label click
+        cb.closest('.chk-option').addEventListener('click', function(e){ if(e.target !== cb && e.target.tagName !== 'LABEL') e.stopPropagation(); });
+      });
+    }
+
+    function renderChkDropdown(dd, display, chips, hidden) {
+      var checked = Array.from(dd.querySelectorAll('input[type=checkbox]:checked')).map(function(c){ return c.value; });
+      // Update display text
+      if (checked.length === 0) {
+        display.textContent = 'Select subject area(s)...';
+        display.classList.add('placeholder');
+      } else {
+        display.textContent = checked.join(', ');
+        display.classList.remove('placeholder');
+      }
+      // Render chips
+      chips.innerHTML = '';
+      checked.forEach(function(val) {
+        var chip = document.createElement('span');
+        chip.className = 'chk-chip';
+        chip.innerHTML = val + ' <button type="button" data-val="' + val + '" title="Remove">&#10005;</button>';
+        chip.querySelector('button').addEventListener('click', function() {
+          var cb = dd.querySelector('input[value="' + this.dataset.val + '"]');
+          if (cb) { cb.checked = false; }
+          renderChkDropdown(dd, display, chips, hidden);
+        });
+        chips.appendChild(chip);
+      });
+      if (hidden) hidden.value = checked.join(',');
+    }
+
+    initChkDropdown('sa-dropdown', 'sa-display', 'sa-chips', 'sa-val');
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.chk-dropdown')) {
+        document.querySelectorAll('.chk-panel.open').forEach(function(p){ p.classList.remove('open'); p.closest('.chk-dropdown').querySelector('.chk-trigger').classList.remove('open'); });
+      }
+    });
   </script>
 </body>
 </html>
