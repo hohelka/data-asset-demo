@@ -97,10 +97,175 @@
       transition: background 0.15s;
     }
     .remove-btn:hover { background: rgba(232,150,125,0.12); }
+
+    /* ── Application Type Selection Modal ── */
+    .app-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      backdrop-filter: blur(3px);
+    }
+    .app-modal-dialog {
+      background: #fff;
+      border-radius: 16px;
+      width: 640px;
+      max-width: 95vw;
+      max-height: 92vh;
+      overflow-y: auto;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.22);
+      animation: modalIn 0.22s ease;
+    }
+    @keyframes modalIn {
+      from { transform: translateY(20px); opacity: 0; }
+      to   { transform: translateY(0);    opacity: 1; }
+    }
+    .app-modal-header {
+      padding: 28px 32px 18px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .app-modal-header h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0 0 5px;
+    }
+    .app-modal-header p {
+      color: var(--text-secondary);
+      font-size: 0.88rem;
+      margin: 0;
+    }
+    .app-modal-body { padding: 20px 32px; }
+    .app-modal-section-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin: 20px 0 10px;
+    }
+    .app-modal-section-label:first-child { margin-top: 4px; }
+    .app-modal-options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    .app-modal-card {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 14px 16px;
+      border: 2px solid var(--border-color);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
+      user-select: none;
+    }
+    .app-modal-card:hover {
+      border-color: var(--sb-green);
+      background: rgba(0,112,74,0.03);
+    }
+    .app-modal-card.selected {
+      border-color: var(--sb-green);
+      background: rgba(0,112,74,0.07);
+      box-shadow: 0 0 0 1px var(--sb-green);
+    }
+    .app-modal-card .card-icon { font-size: 1.2rem; margin-bottom: 4px; }
+    .app-modal-card .card-name {
+      font-weight: 600;
+      font-size: 0.88rem;
+      color: var(--text-primary);
+      line-height: 1.3;
+    }
+    .app-modal-card .card-desc {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+    .app-modal-footer {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+      padding: 16px 32px 24px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    /* ── Applied-for type badge shown on the form ── */
+    .app-type-badge {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: var(--sb-light-green);
+      color: var(--sb-dark-green);
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+      border: 1px solid rgba(0,112,74,0.2);
+    }
   </style>
 </head>
 <body>
   <div id="nav-placeholder"></div>
+
+  <!-- ── Application Type Selection Modal ── -->
+  <div id="app-type-modal" class="app-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" style="display:none;">
+    <div class="app-modal-dialog">
+      <div class="app-modal-header">
+        <h2 id="modal-title">What would you like to apply for?</h2>
+        <p>Select the type of access you need before filling out the form.</p>
+      </div>
+      <div class="app-modal-body">
+
+        <div class="app-modal-section-label">🗄️ Data Access Request</div>
+        <div class="app-modal-options">
+          <div class="app-modal-card" data-tab="data-access" data-type="raw" onclick="selectModalCard(this)">
+            <span class="card-icon">🔄</span>
+            <span class="card-name">External Data Exchange</span>
+            <span class="card-desc">外部数据交换申请</span>
+          </div>
+          <div class="app-modal-card" data-tab="data-access" data-type="cube" onclick="selectModalCard(this)">
+            <span class="card-icon">📊</span>
+            <span class="card-name">Cube</span>
+            <span class="card-desc">Multi-dimensional Model</span>
+          </div>
+          <div class="app-modal-card" data-tab="data-access" data-type="midplatform" onclick="selectModalCard(this)">
+            <span class="card-icon">⚡</span>
+            <span class="card-name">Internal Analytics Data</span>
+            <span class="card-desc">内部分析数据开通申请</span>
+          </div>
+        </div>
+
+        <div class="app-modal-section-label">📂 Asset Catalog Access</div>
+        <div class="app-modal-options">
+          <div class="app-modal-card" data-tab="asset-access" data-assettype="Glossary" onclick="selectModalCard(this)">
+            <span class="card-icon">📖</span>
+            <span class="card-name">Glossaries</span>
+            <span class="card-desc">业务术语词汇表</span>
+          </div>
+          <div class="app-modal-card" data-tab="asset-access" data-assettype="Dictionary" onclick="selectModalCard(this)">
+            <span class="card-icon">📋</span>
+            <span class="card-name">Data Dictionary</span>
+            <span class="card-desc">数据字典</span>
+          </div>
+          <div class="app-modal-card" data-tab="asset-access" data-assettype="Ref Doc" onclick="selectModalCard(this)">
+            <span class="card-icon">📄</span>
+            <span class="card-name">Reference Document</span>
+            <span class="card-desc">参考文档</span>
+          </div>
+        </div>
+
+      </div>
+      <div class="app-modal-footer">
+        <button class="btn btn-cancel" onclick="window.history.back()">Cancel</button>
+        <button class="btn btn-primary" id="modal-confirm-btn" onclick="confirmAppType()" disabled>Continue →</button>
+      </div>
+    </div>
+  </div>
 
   <div class="page-wrapper">
     <div class="page-container">
@@ -121,9 +286,10 @@
 
       <!-- Tab 1: Data Access Request -->
       <div id="tab-data-access" class="tab-content active">
-        <div style="padding:12px 16px; background:var(--sb-light-green); border-radius:8px; margin-bottom:20px; font-size:0.88rem; color:var(--sb-dark-green);">
-          ℹ️ Apply for access to <strong>External Data Exchange (外部数据交换)</strong>, <strong>Cube (Multi-dimensional Model)</strong>, or <strong>Internal Analytics Data Activation (内部分析数据开通)</strong> assets. Only <strong>L3 Confidential</strong> data requires an application — L1 and L2 access is granted by default.
+        <div style="padding:12px 16px; background:var(--sb-light-green); border-radius:8px; margin-bottom:16px; font-size:0.88rem; color:var(--sb-dark-green);">
+          ℹ️ Apply for access to <strong>External Data Exchange (外部数据交换)</strong>, <strong>Cube (Multi-dimensional Model)</strong>, or <strong>Internal Analytics Data Activation (内部分析数据开通申请)</strong> assets. Only <strong>L3 Confidential</strong> data requires an application — L1 and L2 access is granted by default.
         </div>
+        <div id="data-type-badge" class="app-type-badge"></div>
         <form onsubmit="return handleSubmit('Data Access Request')">
 
           <div class="form-section">
@@ -260,9 +426,10 @@
 
       <!-- Tab 2: Asset Catalog Access (L3) -->
       <div id="tab-asset-access" class="tab-content">
-        <div style="padding:12px 16px; background:rgba(245,166,35,0.08); border:1px solid var(--sb-gold); border-radius:8px; margin-bottom:20px; font-size:0.88rem; color:var(--sb-brown);">
+        <div style="padding:12px 16px; background:rgba(245,166,35,0.08); border:1px solid var(--sb-gold); border-radius:8px; margin-bottom:16px; font-size:0.88rem; color:var(--sb-brown);">
           ⚠️ Only <strong>L3 Confidential</strong> assets require an application. L1 (Public) and L2 (Internal) assets are accessible by default. Select assets from the matrix below — you may apply for multiple assets in a single request.
         </div>
+        <div id="asset-type-badge" class="app-type-badge"></div>
 
         <div class="form-section">
           <h3>Applicant Information</h3>
@@ -482,6 +649,71 @@
   <script src="js/main.js"></script>
   <script>
     initNav('apply-data');
+
+    // ── Modal: show on direct navigation, skip when URL params are present ──
+    (function() {
+      const params = new URLSearchParams(window.location.search);
+      const hasParams = params.get('tab') || params.get('type') || params.get('table') || params.get('assets');
+      if (!hasParams) {
+        document.getElementById('app-type-modal').style.display = 'flex';
+      }
+    })();
+
+    function selectModalCard(card) {
+      document.querySelectorAll('.app-modal-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      document.getElementById('modal-confirm-btn').disabled = false;
+    }
+
+    const _dataTypeLabels = {
+      'raw':         '🔄 External Data Exchange (外部数据交换)',
+      'cube':        '📊 Cube (Multi-dimensional Model)',
+      'midplatform': '⚡ Internal Analytics Data Activation (内部分析数据开通)'
+    };
+    const _assetTypeLabels = {
+      'Glossary':   '📖 Applying for: Glossaries / Terms',
+      'Dictionary': '📋 Applying for: Data Dictionary',
+      'Ref Doc':    '📄 Applying for: Reference Document'
+    };
+
+    function confirmAppType() {
+      const selected = document.querySelector('.app-modal-card.selected');
+      if (!selected) return;
+
+      // Close modal
+      document.getElementById('app-type-modal').style.display = 'none';
+
+      const tab = selected.dataset.tab;
+      const type = selected.dataset.type;
+      const assettype = selected.dataset.assettype;
+
+      // Activate the correct tab
+      document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+      if (tab === 'data-access') {
+        document.querySelector('[data-tab="tab-data-access"]').classList.add('active');
+        document.getElementById('tab-data-access').classList.add('active');
+        // Pre-select the data type dropdown
+        const sel = document.getElementById('data-type-select');
+        if (sel && type) { sel.value = type; updateAccessMethods(type); }
+        // Show badge
+        const badge = document.getElementById('data-type-badge');
+        if (badge) {
+          badge.textContent = '📋 Applying for: ' + (_dataTypeLabels[type] || type);
+          badge.style.display = 'flex';
+        }
+      } else {
+        document.querySelector('[data-tab="tab-asset-access"]').classList.add('active');
+        document.getElementById('tab-asset-access').classList.add('active');
+        // Show badge
+        const badge = document.getElementById('asset-type-badge');
+        if (badge) {
+          badge.textContent = _assetTypeLabels[assettype] || ('📋 Applying for: ' + assettype);
+          badge.style.display = 'flex';
+        }
+      }
+    }
 
     // Pre-select tab if redirected from shelf Apply button
     (function() {

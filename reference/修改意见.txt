@@ -1,4 +1,2 @@
-数据字典的上架页面修改意见：
-1.step1的提示文字要根据新的页面内容要做出相应修改
-2.数据安全等级选择L3之后，第二行“未经审批的用户在资产晕上是不可见该条目的”文字不通，删除
-3.technical details部分，把source system的信息放在最右边，database跟table name是必填，比较重要，往左边放。description的部分，鼠标点击进文字框，保留里面的提示文字，可以进行补充跟修改
+Customer Segmentation Guide页面修改意见：
+1.编辑时，插入data dictionary改为插入data asset（文字描述上修改），允许在文章中任何位置插入已经approved的数据资产。插入后，点击资产可以跳到对应的资产详情页。

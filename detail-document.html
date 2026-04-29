@@ -157,7 +157,7 @@
 
       <!-- Edit mode info bar -->
       <div id="edit-bar" style="display:none; padding:8px 14px; background:rgba(245,166,35,0.08); border:1px solid var(--sb-gold); border-radius:8px; font-size:0.84rem; color:var(--sb-brown); margin-bottom:12px;">
-        <strong>Editing Mode</strong> &#8212; Click the document body to type. Use the toolbar to format text, insert images, data dictionaries, or attach files.
+        <strong>Editing Mode</strong> &#8212; Click the document body to type. Use the toolbar to format text, insert images, data assets, or attach files.
       </div>
 
       <!-- Toolbar -->
@@ -175,7 +175,7 @@
         <button class="tb" onclick="fmt('insertOrderedList')">1. List</button>
         <div class="tb-sep"></div>
         <button class="tb" onclick="document.getElementById('img-inp').click()">Image</button>
-        <button class="tb" onclick="openDictPicker()">Data Dict</button>
+        <button class="tb" onclick="openDictPicker()">Data Asset</button>
         <button class="tb" onclick="document.getElementById('att-inp').click()">Attach</button>
         <div class="tb-sep"></div>
         <button class="tb" onclick="fmt('removeFormat')">Clear</button>
@@ -323,8 +323,8 @@
     <div class="dp-modal">
       <div class="dp-head">
         <div>
-          <div style="font-size:1rem; font-weight:700; color:var(--sb-dark-green);">Insert Data Dictionary Reference</div>
-          <div style="font-size:0.82rem; color:var(--text-muted); margin-top:2px;">Select an approved asset to embed as an inline card</div>
+          <div style="font-size:1rem; font-weight:700; color:var(--sb-dark-green);">Insert Data Asset</div>
+          <div style="font-size:0.82rem; color:var(--text-muted); margin-top:2px;">Select an approved data asset to embed as an inline card at the cursor position</div>
         </div>
         <button onclick="closeDictPicker()" style="background:none; border:none; font-size:1.2rem; cursor:pointer; color:var(--text-muted);">&#10005;</button>
       </div>
@@ -391,6 +391,32 @@
               <span class="tag tag-gold" style="font-size:0.74rem; margin-left:4px;">Finance</span>
             </div>
             <div style="font-size:0.79rem; color:var(--text-muted); margin-top:2px;">Finance KPI definitions &#8212; Owner: Lily Wang</div>
+          </div>
+          <span style="font-size:0.78rem; color:var(--sb-green); font-weight:600; flex-shrink:0;">&#10004; Approved</span>
+        </div>
+        <div class="dp-row" id="dopt-6" onclick="selDict('dopt-6')">
+          <span style="font-size:1.2rem; flex-shrink:0;">&#128196;</span>
+          <div style="flex:1;">
+            <div style="font-weight:600; font-size:0.9rem;">Customer Segmentation Guide</div>
+            <div style="margin-top:3px;">
+              <span class="tag tag-brown" style="font-size:0.74rem;">Ref Doc</span>
+              <span class="tag tag-l2" style="font-size:0.74rem; margin-left:4px;">L2</span>
+              <span class="tag tag-green" style="font-size:0.74rem; margin-left:4px;">Customer</span>
+            </div>
+            <div style="font-size:0.79rem; color:var(--text-muted); margin-top:2px;">Customer segmentation methodology &#8212; Owner: Ming Zhang</div>
+          </div>
+          <span style="font-size:0.78rem; color:var(--sb-green); font-weight:600; flex-shrink:0;">&#10004; Approved</span>
+        </div>
+        <div class="dp-row" id="dopt-7" onclick="selDict('dopt-7')">
+          <span style="font-size:1.2rem; flex-shrink:0;">&#128196;</span>
+          <div style="flex:1;">
+            <div style="font-weight:600; font-size:0.9rem;">Data Governance Policy v2</div>
+            <div style="margin-top:3px;">
+              <span class="tag tag-brown" style="font-size:0.74rem;">Ref Doc</span>
+              <span class="tag tag-l2" style="font-size:0.74rem; margin-left:4px;">L2</span>
+              <span class="tag" style="font-size:0.74rem; margin-left:4px; background:var(--bg-primary); color:var(--text-secondary);">Public</span>
+            </div>
+            <div style="font-size:0.79rem; color:var(--text-muted); margin-top:2px;">Enterprise data governance standards &#8212; Owner: Data Office</div>
           </div>
           <span style="font-size:0.78rem; color:var(--sb-green); font-weight:600; flex-shrink:0;">&#10004; Approved</span>
         </div>
@@ -526,8 +552,10 @@
       'dopt-1': { name:'DWD_Order_Detail',       type:'Dictionary', lv:'L2', tc:'tag-l2', ty:'tag-blue', domain:'Sales',        owner:'James Li',   href:'detail-dictionary.html' },
       'dopt-2': { name:'DIM_Store_Master',        type:'Dictionary', lv:'L3', tc:'tag-l3', ty:'tag-blue', domain:'Supply Chain',  owner:'David Liu',  href:'detail-dictionary.html' },
       'dopt-3': { name:'\u5929\u6c14\u4fe1\u606f\u6570\u636e',        type:'Dictionary', lv:'L2', tc:'tag-l2', ty:'tag-blue', domain:'External Data',owner:'Tony Zhang', href:'detail-dictionary.html' },
-      'dopt-4': { name:'Sales Metrics Glossary', type:'Glossary',   lv:'L3', tc:'tag-l3', ty:'tag-green',domain:'Sales',        owner:'Sarah Chen', href:'detail-glossary.html' },
-      'dopt-5': { name:'Finance Metrics Glossary',type:'Glossary',  lv:'L3', tc:'tag-l3', ty:'tag-green',domain:'Finance',      owner:'Lily Wang',  href:'detail-glossary.html' },
+      'dopt-4': { name:'Sales Metrics Glossary',      type:'Glossary', lv:'L3', tc:'tag-l3', ty:'tag-green', domain:'Sales',    owner:'Sarah Chen',  href:'detail-glossary.html' },
+      'dopt-5': { name:'Finance Metrics Glossary',    type:'Glossary', lv:'L3', tc:'tag-l3', ty:'tag-green', domain:'Finance',  owner:'Lily Wang',   href:'detail-glossary.html' },
+      'dopt-6': { name:'Customer Segmentation Guide', type:'Ref Doc',  lv:'L2', tc:'tag-l2', ty:'tag-brown', domain:'Customer', owner:'Ming Zhang',  href:'detail-document.html' },
+      'dopt-7': { name:'Data Governance Policy v2',   type:'Ref Doc',  lv:'L2', tc:'tag-l2', ty:'tag-brown', domain:'Public',   owner:'Data Office', href:'detail-policy.html' },
     };
 
     function openDictPicker() {
