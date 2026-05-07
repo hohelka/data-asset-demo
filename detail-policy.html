@@ -19,6 +19,222 @@
       color: var(--sb-green);
       background: rgba(0,112,74,0.03);
     }
+    .policy-flow-card {
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      background: #fff;
+      overflow: hidden;
+    }
+    .policy-flow-header {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border-color);
+      background: rgba(0,112,74,0.03);
+    }
+    .policy-flow-header h4 {
+      margin: 0;
+      font-size: 0.95rem;
+      color: var(--sb-dark-green);
+    }
+    .policy-flow-header p {
+      margin: 4px 0 0;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+    .policy-flow-body {
+      padding: 16px;
+      background: #fff;
+    }
+    .policy-flow-steps {
+      display: flex;
+      align-items: stretch;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .flow-step {
+      flex: 1 1 170px;
+      min-height: 92px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 10px 12px;
+      background: #fff;
+    }
+    .flow-step .step-kicker {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      color: var(--sb-green);
+      margin-bottom: 4px;
+    }
+    .flow-step .step-title {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--sb-dark-green);
+      margin-bottom: 4px;
+      line-height: 1.35;
+    }
+    .flow-step .step-desc {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      line-height: 1.45;
+    }
+    .flow-arrow {
+      align-self: center;
+      font-size: 1rem;
+      color: var(--sb-green);
+      font-weight: 700;
+      padding: 0 2px;
+    }
+    .flow-diagram {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px dashed var(--border-color);
+    }
+    .flow-diagram p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin: 0 0 8px;
+    }
+    .flow-diagram img {
+      width: 100%;
+      max-width: 100%;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .matrix-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      background: #fff;
+    }
+    .policy-matrix {
+      border-radius: 6px;
+      border-collapse: separate;
+      border-spacing: 0;
+      table-layout: fixed;
+      min-width: 1180px;
+      width: 100%;
+    }
+    .policy-matrix thead th {
+      background: #f4faf7;
+      color: var(--sb-dark-green);
+      border-bottom: 1px solid var(--border-color);
+      font-size: 0.82rem;
+      padding: 10px 8px;
+      text-align: center;
+      white-space: normal;
+      word-wrap: break-word;
+    }
+    .policy-matrix thead th.domain-col {
+      font-family: 'Courier New', monospace;
+      letter-spacing: 0.2px;
+    }
+    .policy-matrix tbody td {
+      border-bottom: 1px solid #ececec;
+      padding: 9px 8px;
+      font-size: 0.82rem;
+      text-align: center;
+      white-space: nowrap;
+      background: #fff;
+    }
+    .policy-matrix tbody td.domain-col {
+      font-family: 'Courier New', monospace;
+      letter-spacing: 0.2px;
+      white-space: normal;
+      word-wrap: break-word;
+    }
+    .policy-matrix tbody tr:nth-child(even) td {
+      background: #fcfcfc;
+    }
+    .policy-matrix td.role-col,
+    .policy-matrix td.level-col {
+      text-align: center;
+      font-weight: 600;
+      color: var(--sb-dark-green);
+      background: #fafafa;
+    }
+    .policy-matrix td.role-col {
+      text-align: left;
+      padding-left: 12px;
+    }
+    .policy-matrix col.col-function {
+      width: 190px;
+    }
+    .policy-matrix col.col-role {
+      width: 72px;
+    }
+    .policy-matrix col.col-domain {
+      width: calc((100% - 262px) / 10);
+    }
+    .perm {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 26px;
+      height: 24px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.8rem;
+      border: 1px solid transparent;
+    }
+    .perm.o {
+      background: rgba(0,112,74,0.1);
+      color: var(--sb-green);
+      border-color: rgba(0,112,74,0.25);
+    }
+    .perm.cross {
+      background: rgba(245,166,35,0.14);
+      color: #9a6a00;
+      border-color: rgba(245,166,35,0.35);
+    }
+    .perm.x {
+      background: rgba(211,47,47,0.09);
+      color: var(--sb-error);
+      border-color: rgba(211,47,47,0.25);
+    }
+    .matrix-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 12px;
+      font-size: 0.84rem;
+      color: var(--text-secondary);
+    }
+    .matrix-legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .approval-note {
+      margin-top: 12px;
+      padding: 12px 14px;
+      background: rgba(245,166,35,0.08);
+      border: 1px solid rgba(245,166,35,0.26);
+      border-radius: 8px;
+      font-size: 0.84rem;
+      color: var(--text-secondary);
+      line-height: 1.75;
+    }
+    .approval-note strong {
+      color: #9a6a00;
+    }
+    .approval-note ol {
+      margin: 8px 0 0 20px;
+      padding: 0;
+    }
+    .approval-note li + li {
+      margin-top: 8px;
+    }
+    @media (max-width: 960px) {
+      .policy-layout {
+        grid-template-columns: 1fr !important;
+      }
+      .flow-arrow {
+        display: none;
+      }
+      .flow-step {
+        flex-basis: 100%;
+      }
+    }
   </style>
 </head>
 <body>
@@ -36,7 +252,6 @@
         </div>
         <div style="display:flex; gap:10px; margin-left:auto;">
           <button class="btn btn-secondary" onclick="history.back()">← Back</button>
-          <a class="btn btn-primary" href="reference/星巴克中国数据治理政策（数据中台-数据产品权限获取与数据安全分类）- 征求意见终稿.pdf" target="_blank">↓ Download PDF</a>
         </div>
       </div>
 
@@ -49,15 +264,14 @@
         <p style="opacity:0.9; font-size:0.95rem; margin-bottom:12px;">Starbucks China Data Governance Policy — Data Platform Product Access & Data Security Classification</p>
         <div class="detail-meta">
           <span>📂 Domain: <strong>Public</strong></span>
-          <span>🔒 Security: <strong>L1 - Public</strong></span>
+          <span>🔒 Security: <strong>L2 - Internal</strong></span>
           <span>👤 Owner: <strong>Data Office</strong></span>
-          <span>📅 Published: <strong>2026-03-01</strong></span>
-          <span>📄 Version: <strong>Final Draft</strong></span>
+          <span>📅 Effective Date: <strong>2025-12-01</strong></span>
         </div>
       </div>
 
       <!-- Two column layout: TOC + Content -->
-      <div style="display:grid; grid-template-columns:220px 1fr; gap:24px;">
+      <div class="policy-layout" style="display:grid; grid-template-columns:220px 1fr; gap:24px;">
 
         <!-- Table of Contents -->
         <div class="card" style="align-self:start; position:sticky; top:84px;">
@@ -69,7 +283,7 @@
             <a class="policy-toc-item" href="#access">4. Data Access & Authorization</a>
             <a class="policy-toc-item" href="#lifecycle">5. Data Product Lifecycle</a>
             <a class="policy-toc-item" href="#responsibilities">6. Roles & Responsibilities</a>
-            <a class="policy-toc-item" href="#download">7. Download Full Document</a>
+            <a class="policy-toc-item" href="#appendix-flow">7. Appendix 10.1-10.5</a>
           </nav>
         </div>
 
@@ -91,7 +305,7 @@
             </div>
             <div class="detail-row">
               <div class="detail-label">Effective Date</div>
-              <div class="detail-value">2026-03-01</div>
+              <div class="detail-value">2025-12-01</div>
             </div>
             <div class="detail-row">
               <div class="detail-label">Review Cycle</div>
@@ -99,7 +313,7 @@
             </div>
             <div class="detail-row">
               <div class="detail-label">Status</div>
-              <div class="detail-value"><span class="tag status-approved">Approved — Final Draft</span></div>
+              <div class="detail-value"><span class="tag status-approved">Approved</span></div>
             </div>
           </div>
 
@@ -107,7 +321,7 @@
           <div class="detail-section" id="scope">
             <h2>2. Scope & Applicability</h2>
             <p style="color:var(--text-secondary); line-height:1.8; margin-bottom:16px;">
-              本政策适用于所有通过星巴克中国数据中台获取、使用、分发数据产品的内部员工及合作伙伴。
+              本政策适用于所有通过<strong>星巴克中国数据中台</strong>获取、使用、分发数据产品的内部员工及合作伙伴，规范数据获取与使用流程，保障数据中台上的数据资产在公司范围内被合理、合规使用。
             </p>
             <div style="display:flex; flex-direction:column; gap:12px;">
               <div style="padding:14px 18px; background:rgba(0,112,74,0.03); border-left:4px solid var(--sb-green); border-radius:0 8px 8px 0;">
@@ -122,6 +336,10 @@
                 <strong style="color:var(--sb-brown);">All Data Products on the Platform</strong>
                 <p style="color:var(--text-secondary); margin-top:4px; font-size:0.9rem;">数据中台上的所有数据产品（报表、多维模型、原始数据）均纳入本政策管辖范围。</p>
               </div>
+            </div>
+            <div style="margin-top:14px; padding:12px 16px; background:rgba(245,166,35,0.06); border:1px solid rgba(245,166,35,0.3); border-radius:8px; font-size:0.88rem; color:var(--text-secondary); line-height:1.75;">
+              <strong style="color:#9a6a00;">⚠️ 源系统数据范围说明</strong><br>
+              在星巴克中国信息应用源系统中存在原始与轻度聚合数据。此部分数据的获取与使用需要遵从源系统管理与公司信息安全保护政策条例的要求：<em>Starbucks Data Protection Standard — approved by Global Cybersecurity Services 2021</em>。本政策不覆盖源系统数据的管理。
             </div>
           </div>
 
@@ -289,60 +507,289 @@
           <!-- Roles & Responsibilities -->
           <div class="detail-section" id="responsibilities">
             <h2>6. Roles & Responsibilities</h2>
+            <p style="color:var(--text-secondary); font-size:0.88rem; line-height:1.7; margin-bottom:14px;">角色与管理职责严格参照《星巴克中国数据治理政策》第 5 章（5.1–5.4）。</p>
             <table class="data-table">
               <thead>
                 <tr>
+                  <th style="width:44px; text-align:center;">§</th>
                   <th>Role</th>
-                  <th>中文</th>
-                  <th>Responsibilities</th>
+                  <th style="white-space:nowrap;">中文名称</th>
+                  <th>Key Responsibilities（主要职责）</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td><strong>Data Office</strong></td>
-                  <td>数据治理组</td>
-                  <td>Policy governance, platform management, content review, access audit</td>
+                  <td style="text-align:center; color:var(--sb-green); font-weight:700;">5.1</td>
+                  <td><strong>Data Governance Team</strong></td>
+                  <td style="white-space:nowrap;">数据治理团队</td>
+                  <td>数据治理办公室牵头团队。负责规划与协同数据治理工作，制定并发布数据治理路线图、政策、标准与流程；管理业务术语；协同制定数据质量预期与监测指标；界定数据需求范围并确定优先级；在公司内部组织数据治理培训推广。</td>
                 </tr>
                 <tr>
-                  <td><strong>Data Owner</strong></td>
-                  <td>数据所有者</td>
-                  <td>Defines data classification, approves L3 access requests, ensures data quality</td>
+                  <td style="text-align:center; color:var(--sb-green); font-weight:700;">5.2</td>
+                  <td><strong>Technical Data Steward</strong></td>
+                  <td style="white-space:nowrap;">技术数据团队</td>
+                  <td>将数据业务需求转化为技术解决方案。提供数据技术定义、数据字典及技术元数据；监控落地执行；提供问题或变更影响分析；负责数据标准技术属性的解释与应用指导，及技术团队内培训推广。</td>
                 </tr>
                 <tr>
-                  <td><strong>Data Steward</strong></td>
-                  <td>数据管理员</td>
-                  <td>Maintains data documentation, monitors data quality metrics</td>
+                  <td style="text-align:center; color:var(--sb-green); font-weight:700;">5.3</td>
+                  <td><strong>Business Data Stewards</strong></td>
+                  <td style="white-space:nowrap;">业务数据团队</td>
+                  <td>定义数据的业务含义与用途，配合推动数据治理机制建设。定义并管理业务术语表及业务/管理元数据；提出业务规则与数据质量预期；收集业务侧数据需求并确定优先级；遵从外部合规要求；负责业务团队内培训推广。</td>
+                </tr>
+                <tr style="background:rgba(0,112,74,0.025);">
+                  <td style="text-align:center; color:var(--text-muted); font-size:0.8rem;">5.3.1</td>
+                  <td><strong>Data Owner</strong><br><span class="tag tag-green" style="font-size:0.72rem; margin-top:4px;">Sub-role of 5.3</span></td>
+                  <td style="white-space:nowrap;">数据管理者</td>
+                  <td>由业务数据团队委派代表构成。拥有本主题域内数据的定义权与数据权限矩阵定义权；负责本主题域内元数据和数据权限的定义与管理；执行职责范围内数据权限审批（每主题域需指定至少 1 名）。</td>
                 </tr>
                 <tr>
-                  <td><strong>Line Manager</strong></td>
-                  <td>直线经理</td>
-                  <td>Reviews and approves team member data requests based on business need</td>
-                </tr>
-                <tr>
-                  <td><strong>End User</strong></td>
-                  <td>最终用户</td>
-                  <td>Requests access, uses data responsibly, reports data quality issues</td>
+                  <td style="text-align:center; color:var(--sb-green); font-weight:700;">5.4</td>
+                  <td><strong>Control &amp; Advisor Team</strong></td>
+                  <td style="white-space:nowrap;">政策与流程控制咨询团队</td>
+                  <td>审核数据治理政策、标准是否符合公司与外部法律、法规及监管要求；为内部政策与标准制定提供专业领域建议与支持（含 Internal Audit、Internal Control、Legal Team）。</td>
                 </tr>
               </tbody>
             </table>
           </div>
 
-          <!-- Download -->
-          <div class="detail-section" id="download">
-            <h2>7. Download Full Document</h2>
-            <div style="display:flex; align-items:center; gap:20px; padding:20px; background:var(--bg-primary); border-radius:8px;">
-              <div style="font-size:3rem;">📕</div>
-              <div style="flex:1;">
-                <div style="font-weight:600; font-size:1.05rem; color:var(--sb-dark-green); margin-bottom:4px;">
-                  星巴克中国数据治理政策（数据中台-数据产品权限获取与数据安全分类）
+          <!-- Appendix Flowcharts -->
+          <div class="detail-section" id="appendix-flow">
+            <h2>7. Appendix 10.1 - 10.5</h2>
+            <p style="color:var(--text-secondary); line-height:1.8; margin-bottom:16px;">
+              以下内容严格参考《星巴克中国数据治理政策》附录 10.1、10.2、10.3、10.4、10.5，支持通过 Tab 查看 4 个流程，并展示权限矩阵。
+            </p>
+
+            <div class="tabs" style="margin-bottom:16px; flex-wrap:wrap;">
+              <div class="tab-item active" data-tab="flow-101">10.1 政策发布/变更/废弃</div>
+              <div class="tab-item" data-tab="flow-102">10.2 数据权限获取</div>
+              <div class="tab-item" data-tab="flow-103">10.3 权限矩阵/流程变更</div>
+              <div class="tab-item" data-tab="flow-104">10.4 元数据新增/变更/废弃</div>
+            </div>
+
+            <div class="tab-content active" id="flow-101">
+              <div class="policy-flow-card">
+                <div class="policy-flow-header">
+                  <h4>10.1 数据治理政策发布/变更/废弃流程</h4>
+                  <p>按需发起：从需求收集到内控法务审核，再到治理委员会审核发布。</p>
                 </div>
-                <div style="font-size:0.85rem; color:var(--text-secondary);">
-                  Starbucks China Data Governance Policy — Final Draft &nbsp;|&nbsp; PDF &nbsp;|&nbsp; ~1.2 MB
+                <div class="policy-flow-body">
+                  <div class="policy-flow-steps">
+                    <div class="flow-step">
+                      <div class="step-kicker">STEP 1</div>
+                      <div class="step-title">数据需求收集整理</div>
+                      <div class="step-desc">数据治理团队收集、汇总需求并整理优先级。</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                      <div class="step-kicker">STEP 2</div>
+                      <div class="step-title">政策制定</div>
+                      <div class="step-desc">按需制定新政策，或对现存政策变更/废弃。</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                      <div class="step-kicker">STEP 3</div>
+                      <div class="step-title">内控、法务审核</div>
+                      <div class="step-desc">政策与流程控制咨询团队审核合规性。</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                      <div class="step-kicker">STEP 4</div>
+                      <div class="step-title">政策审核与发布</div>
+                      <div class="step-desc">数据治理委员会审核通过后由数据治理团队发布。</div>
+                    </div>
+                  </div>
+                  <div class="flow-diagram">
+                    <p>📎 参考流程图</p>
+                    <img src="reference/10.1_full.png" alt="10.1 数据治理政策发布/变更/废弃流程">
+                  </div>
                 </div>
               </div>
-              <a class="btn btn-primary btn-lg" href="reference/星巴克中国数据治理政策（数据中台-数据产品权限获取与数据安全分类）- 征求意见终稿.pdf" target="_blank">
-                ↓ Download PDF
-              </a>
+            </div>
+
+            <div class="tab-content" id="flow-102">
+              <div class="policy-flow-card">
+                <div class="policy-flow-header">
+                  <h4>10.2 数据产品上的数据权限获取流程</h4>
+                  <p>业务用户在 OAH 申请后，按安全等级与权限矩阵判断是否进入审批。</p>
+                </div>
+                <div class="policy-flow-body">
+                  <div class="policy-flow-steps">
+                    <div class="flow-step">
+                      <div class="step-kicker">STEP 1</div>
+                      <div class="step-title">数据需求申请</div>
+                      <div class="step-desc">业务用户提交申请，选择数据范围并说明用途。</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                      <div class="step-kicker">STEP 2</div>
+                      <div class="step-title">数据安全等级判断</div>
+                      <div class="step-desc">L1-L2 可自动开通；涉及 L3 则进入审批流程。</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                      <div class="step-kicker">STEP 3</div>
+                      <div class="step-title">业务意图审批</div>
+                      <div class="step-desc">由本业务条线 Line Manager（M4+）审批使用意图。</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                      <div class="step-kicker">STEP 4</div>
+                      <div class="step-title">权限矩阵判断</div>
+                      <div class="step-desc">治理团队判断是否跨域及是否满足最小化原则。</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                      <div class="step-kicker">STEP 5</div>
+                      <div class="step-title">跨业务域管理者审批</div>
+                      <div class="step-desc">跨域申请由相应数据管理者（M4+）审批。</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                      <div class="step-kicker">STEP 6</div>
+                      <div class="step-title">数据授权</div>
+                      <div class="step-desc">技术执行团队/系统完成权限开通。</div>
+                    </div>
+                  </div>
+                  <div class="flow-diagram">
+                    <p>📎 参考流程图</p>
+                    <img src="reference/10.2_full.png" alt="10.2 数据产品上的数据权限获取流程">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-content" id="flow-103">
+              <div class="policy-flow-card">
+                <div class="policy-flow-header">
+                  <h4>10.3 数据权限矩阵与数据权限获取流程变更流程</h4>
+                  <p>覆盖报表与元数据，处理权限矩阵与申请流程的常态化变更。</p>
+                </div>
+                <div class="policy-flow-body">
+                  <div class="policy-flow-steps">
+                    <div class="flow-step">
+                      <div class="step-kicker">STEP 1</div>
+                      <div class="step-title">变更需求收集</div>
+                      <div class="step-desc">收集业务反馈与管理要求，形成矩阵/流程变更需求。</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                      <div class="step-kicker">STEP 2</div>
+                      <div class="step-title">变更审核</div>
+                      <div class="step-desc">数据治理团队审核需求合理性并确认执行方案。</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                      <div class="step-kicker">STEP 3</div>
+                      <div class="step-title">变更发布</div>
+                      <div class="step-desc">发布新的权限矩阵或数据获取流程并通知相关团队。</div>
+                    </div>
+                  </div>
+                  <div class="flow-diagram">
+                    <p>📎 参考流程图</p>
+                    <img src="reference/10.3_full.png" alt="10.3 数据权限矩阵与数据权限获取流程变更流程">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-content" id="flow-104">
+              <div class="policy-flow-card">
+                <div class="policy-flow-header">
+                  <h4>10.4 元数据新增/变更/废弃流程</h4>
+                  <p>指导业务数据、技术数据与治理团队协同完成元数据变更。</p>
+                </div>
+                <div class="policy-flow-body">
+                  <div class="policy-flow-steps">
+                    <div class="flow-step">
+                      <div class="step-kicker">STEP 1</div>
+                      <div class="step-title">变更需求收集</div>
+                      <div class="step-desc">收集并整理新增/删除、业务/技术/管理元数据变更需求。</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                      <div class="step-kicker">STEP 2</div>
+                      <div class="step-title">变更审核</div>
+                      <div class="step-desc">治理团队拟定意见稿并与业务/技术管理者确认审核。</div>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                      <div class="step-kicker">STEP 3</div>
+                      <div class="step-title">变更发布</div>
+                      <div class="step-desc">向公司内部团队发布新的元数据资产标准。</div>
+                    </div>
+                  </div>
+                  <div class="flow-diagram">
+                    <p>📋 参考流程图</p>
+                    <img src="reference/10.4_full.png" alt="10.4 元数据新增/变更/废弃流程">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top:20px;" id="appendix-matrix">
+              <h3 style="font-size:1rem; color:var(--sb-dark-green); margin:0 0 10px;">10.5 数据中台数据产品的权限矩阵（10.5.1 支持中心人员）</h3>
+              <p style="color:var(--text-secondary); font-size:0.86rem; line-height:1.7; margin-bottom:12px;">
+                说明：O = 可申请（本部门业务域，不需跨域审批）；√ = 可申请（跨业务域，需对应业务域数据管理者审批）；X = 不可申请。
+              </p>
+
+              <div class="matrix-legend">
+                <span><i class="perm o">O</i>本业务域可申请（通常无需额外审批）</span>
+                <span><i class="perm cross">√</i>跨域可申请（需要跨业务域审批）</span>
+                <span><i class="perm x">X</i>不可申请</span>
+              </div>
+
+              <div class="matrix-wrap">
+                <table class="policy-matrix">
+                  <colgroup>
+                    <col class="col-function">
+                    <col class="col-role">
+                    <col class="col-domain"><col class="col-domain"><col class="col-domain"><col class="col-domain"><col class="col-domain">
+                    <col class="col-domain"><col class="col-domain"><col class="col-domain"><col class="col-domain"><col class="col-domain">
+                  </colgroup>
+                  <thead>
+                    <tr>
+                      <th>Function</th>
+                      <th>Role</th>
+                      <th class="domain-col">Sales</th>
+                      <th class="domain-col">Product &amp; Item</th>
+                      <th class="domain-col">Promotion &amp; Campaign</th>
+                      <th class="domain-col">Customer</th>
+                      <th class="domain-col">Supply Chain</th>
+                      <th class="domain-col">Ops</th>
+                      <th class="domain-col">Store</th>
+                      <th class="domain-col">Finance</th>
+                      <th class="domain-col">Legal</th>
+                      <th class="domain-col">Partner</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td class="role-col">Insights &amp; Analytics</td><td class="level-col">M1+</td><td class="domain-col"><i class="perm o">O</i></td><td class="domain-col"><i class="perm o">O</i></td><td class="domain-col"><i class="perm o">O</i></td><td class="domain-col"><i class="perm o">O</i></td><td class="domain-col"><i class="perm o">O</i></td><td class="domain-col"><i class="perm o">O</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm x">X</i></td><td class="domain-col"><i class="perm x">X</i></td></tr>
+                    <tr><td class="role-col">FP&amp;A</td><td class="level-col">M1+</td><td class="domain-col"><i class="perm o">O</i></td><td class="domain-col"><i class="perm o">O</i></td><td class="domain-col"><i class="perm o">O</i></td><td class="domain-col"><i class="perm o">O</i></td><td class="domain-col"><i class="perm o">O</i></td><td class="domain-col"><i class="perm o">O</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm o">O</i></td><td class="domain-col"><i class="perm x">X</i></td><td class="domain-col"><i class="perm x">X</i></td></tr>
+                    <tr><td class="role-col">CGO (DV)</td><td class="level-col">M1+</td><td class="domain-col"><i class="perm o">O</i></td><td class="domain-col"><i class="perm o">O</i></td><td class="domain-col"><i class="perm o">O</i></td><td class="domain-col"><i class="perm o">O</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm x">X</i></td><td class="domain-col"><i class="perm x">X</i></td></tr>
+                    <tr><td class="role-col">CGO (Category)</td><td class="level-col">M1+</td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm o">O</i></td><td class="domain-col"><i class="perm o">O</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm x">X</i></td><td class="domain-col"><i class="perm x">X</i></td></tr>
+                    <tr><td class="role-col">CGO (Marketing)</td><td class="level-col">M1+</td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm o">O</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm x">X</i></td><td class="domain-col"><i class="perm x">X</i></td></tr>
+                    <tr><td class="role-col">OPS Services</td><td class="level-col">M1+</td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm o">O</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm x">X</i></td><td class="domain-col"><i class="perm x">X</i></td></tr>
+                    <tr><td class="role-col">PRO</td><td class="level-col">M1+</td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm x">X</i></td><td class="domain-col"><i class="perm o">O</i></td></tr>
+                    <tr><td class="role-col">Legal</td><td class="level-col">M1+</td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm o">O</i></td><td class="domain-col"><i class="perm x">X</i></td></tr>
+                    <tr><td class="role-col">SD</td><td class="level-col">M1+</td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm o">O</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm x">X</i></td><td class="domain-col"><i class="perm x">X</i></td></tr>
+                    <tr><td class="role-col">QA</td><td class="level-col">M1+</td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm o">O</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm x">X</i></td><td class="domain-col"><i class="perm x">X</i></td></tr>
+                    <tr><td class="role-col">SCO</td><td class="level-col">M1+</td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm o">O</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm x">X</i></td><td class="domain-col"><i class="perm x">X</i></td></tr>
+                    <tr><td class="role-col">Technology</td><td class="level-col">M1+</td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm cross">√</i></td><td class="domain-col"><i class="perm x">X</i></td><td class="domain-col"><i class="perm x">X</i></td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="approval-note">
+                <strong>审批提示：</strong>
+                <ol>
+                  <li>当申请单元为 <strong>√</strong> 时，表示该部门可申请但属于跨业务域，必须经过对应业务域数据管理者审批；当为 <strong>O</strong> 时，通常为本域申请，不需跨域审批；<strong>X</strong> 为不可申请。</li>
+                  <li><strong>VP 及以上员工</strong>可查看所有报表数据（所有 Data Domain），无需权限限制。</li>
+                </ol>
+              </div>
+
+              <div style="margin-top:10px; font-size:0.82rem; color:var(--text-muted); line-height:1.7;">
+                10.5.2 运营组织架构人员的数据权限管理，遵循现有在运行中的权限矩阵。
+              </div>
             </div>
           </div>
 
@@ -363,15 +810,15 @@
             </div>
             <div class="detail-row">
               <div class="detail-label">Security Level</div>
-              <div class="detail-value"><span class="tag tag-l1">L1 - Public</span></div>
+              <div class="detail-value"><span class="tag tag-l2">L2 - Internal</span></div>
             </div>
             <div class="detail-row">
               <div class="detail-label">Owner</div>
               <div class="detail-value">Data Office, Starbucks China</div>
             </div>
             <div class="detail-row">
-              <div class="detail-label">Last Updated</div>
-              <div class="detail-value">2026-03-01</div>
+              <div class="detail-label">Effective Date</div>
+              <div class="detail-value">2025-12-01</div>
             </div>
           </div>
 
