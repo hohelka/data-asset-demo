@@ -138,6 +138,7 @@ const I18N = {
     policy_toc_5: '5. Data Product Lifecycle', policy_toc_6: '6. Roles & Responsibilities',
     policy_toc_7: '7. Appendix 10.1-10.5',
     th_security: 'Security',
+  },
   cn: {
     // Navigation
     nav_home: '首页', nav_assets: '数据资产', nav_apply_data: '数据申请',
