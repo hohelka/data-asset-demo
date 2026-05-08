@@ -77,19 +77,19 @@
       <div id="form-glossary">
         <form onsubmit="return handleSubmit('Asset Updated')">
           <div class="form-section">
-            <h3>Edit Glossary: Net Revenue</h3>
+            <h3>Edit Glossary: Sales Metrics</h3>
             <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px;">
               <span class="tag status-approved">Published</span>
-              <span style="font-size:0.85rem; color:var(--text-muted);">Version v2.1 | Last edited: 2026-04-20</span>
+              <span style="font-size:0.85rem; color:var(--text-muted);">Version v3.0 | Last edited: 2026-04-20</span>
             </div>
             <div class="form-row">
               <div class="form-group">
                 <label>Name (EN) <span class="required">*</span></label>
-                <input type="text" class="form-control" value="Net Revenue">
+                <input type="text" class="form-control" value="Sales Metrics">
               </div>
               <div class="form-group">
                 <label>Name (CN) <span class="required">*</span></label>
-                <input type="text" class="form-control" value="净收入">
+                <input type="text" class="form-control" value="销售指标">
               </div>
             </div>
             <div class="form-row">
@@ -112,19 +112,18 @@
             </div>
             <div class="form-group">
               <label>Business Definition (EN) <span class="required">*</span></label>
-              <textarea class="form-control" rows="3">Total revenue generated from sales of beverages, food, and merchandise, after deducting discounts, promotional allowances, and product returns.</textarea>
+              <textarea class="form-control" rows="3">A collection of 5 key sales performance indicators covering Net Revenue, Comparable Store Sales Growth, Average Ticket Size, Transaction Count, and Gross Revenue.</textarea>
             </div>
             <div class="form-group">
               <label>Business Definition (CN)</label>
-              <textarea class="form-control" rows="3">饮料、食品和商品销售产生的总收入，扣除折扣、促销津贴和退货后的净额。</textarea>
+              <textarea class="form-control" rows="3">销售域核心 KPI 集合，涵盖净收入、可比门店销售增长、客单价、交易笔数及毛收入共 5 个指标，数据来源于 sbux_cdm DWD 层。</textarea>
             </div>
             <div class="form-group">
               <label>Calculation Logic</label>
-              <textarea class="form-control" rows="4" style="font-family:monospace;">Net Revenue = Gross Revenue - Discounts - Returns - Allowances
-
-SELECT SUM(gross_revenue) - SUM(discount_amount) - SUM(return_amount) - SUM(allowance_amount) AS net_revenue
-FROM dwd_order_detail
-WHERE order_status = 'completed'</textarea>
+              <textarea class="form-control" rows="4" style="font-family:monospace;">-- Sales Metrics Glossary (v3.0) — 5 KPI indicators
+-- KPIs: Net Revenue, Comparable Store Sales Growth, Average Ticket Size, Transaction Count, Gross Revenue
+-- Primary source: sbux_cdm DWD layer, table: dwd_order_detail
+SELECT * FROM sbux_cdm.dwd_order_detail WHERE order_status = 'completed'</textarea>
             </div>
             <div class="form-row">
               <div class="form-group">
@@ -134,9 +133,9 @@ WHERE order_status = 'completed'</textarea>
               <div class="form-group">
                 <label>Security Level</label>
                 <select class="form-control">
-                  <option selected>L1 - Public</option>
+                  <option>L1 - Public</option>
                   <option>L2 - Internal</option>
-                  <option>L3 - Confidential</option>
+                  <option selected>L3 - Confidential</option>
                 </select>
               </div>
             </div>

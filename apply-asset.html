@@ -107,6 +107,16 @@
     }
     .radio-toggle input[type=radio] { accent-color:var(--sb-green); }
     .radio-toggle label:has(input:checked) { border-color:var(--sb-green); background:rgba(0,112,74,0.06); color:var(--sb-dark-green); font-weight:600; }
+
+    /* ===== Domain filter chips (Related Assets picker) ===== */
+    .domain-chip {
+      display:inline-flex; align-items:center; padding:5px 13px;
+      border-radius:20px; font-size:0.83rem; border:1px solid var(--border-color);
+      cursor:pointer; transition:var(--transition); background:var(--bg-white); color:var(--text-secondary);
+    }
+    .domain-chip:hover, .domain-chip.active {
+      background:var(--sb-green); color:#fff; border-color:var(--sb-green);
+    }
   </style>
 </head>
 <body>
@@ -160,7 +170,7 @@
           <div class="form-row">
             <div class="form-group">
               <label>Term Name (EN) <span class="required">*</span></label>
-              <input type="text" class="form-control" placeholder="e.g. Net Revenue">
+              <input type="text" class="form-control" placeholder="e.g. Sales Metrics">
             </div>
             <div class="form-group">
               <label>&#20013;&#25991;&#21517;&#31216; (CN) <span class="required">*</span></label>
@@ -178,92 +188,32 @@
               </select>
             </div>
             <div class="form-group">
-              <label>Asset Type <span class="required">*</span></label>
+              <label>Category <span class="required">*</span></label>
               <select class="form-control">
-                <option value="">Select type...</option>
-                <option>Metrics (&#25351;&#26631;)</option>
-                <option>KPI</option>
-                <option>Business Term (&#19994;&#21153;&#26415;&#35821;)</option>
-                <option>Dimension (&#32500;&#24230;)</option>
+                <option value="">Select category...</option>
+                <option>Metrics &#65288;&#25351;&#26631;&#65289;</option>
+                <option>Business Term &#65288;&#19994;&#21153;&#26415;&#35821;&#65289;</option>
               </select>
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label>Business Definition (EN) <span class="required">*</span></label>
-              <textarea class="form-control" rows="3" placeholder="Describe the business meaning of this term..."></textarea>
+              <label>Asset Description (EN) <span class="required">*</span></label>
+              <textarea class="form-control" rows="3" placeholder="Describe this asset..."></textarea>
             </div>
             <div class="form-group">
-              <label>&#19994;&#21153;&#23450;&#20041; (CN)</label>
-              <textarea class="form-control" rows="3" placeholder="&#35831;&#36755;&#20837;&#19994;&#21153;&#23450;&#20041;..."></textarea>
+              <label>&#36164;&#20135;&#25551;&#36848; (CN)</label>
+              <textarea class="form-control" rows="3" placeholder="&#35831;&#36755;&#20837;&#36164;&#20135;&#25551;&#36848;..."></textarea>
             </div>
-          </div>
-        </div>
-
-        <!-- G2: Term Details -->
-        <div class="form-section type-section" id="sec-g-detail">
-          <h3>Term Details</h3>
-          <div class="form-row">
-            <div class="form-group">
-              <label>Acronym</label>
-              <input type="text" class="form-control" placeholder="e.g. AT, PSD, ADT">
-            </div>
-            <div class="form-group">
-              <label>Is KPI <span class="required">*</span></label>
-              <div class="radio-toggle" style="margin-top:6px;">
-                <label><input type="radio" name="is-kpi" value="yes"> Yes</label>
-                <label><input type="radio" name="is-kpi" value="no" checked> No</label>
-              </div>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label>Alternate Labels (EN)
-                <span style="font-size:0.78rem; color:var(--text-muted); font-weight:400;">&nbsp;&#8212; press Enter or comma to add</span>
-              </label>
-              <div class="tag-wrap" onclick="this.querySelector('.tag-field').focus()">
-                <input type="text" class="tag-field" id="alt-en-inp" placeholder="Add alternate label...">
-              </div>
-              <input type="hidden" id="alt-en-val">
-            </div>
-            <div class="form-group">
-              <label>&#22791;&#29992;&#21517;&#31216; (CN)
-                <span style="font-size:0.78rem; color:var(--text-muted); font-weight:400;">&nbsp;&#8212; &#25353;&#22238;&#36275;&#25110;&#36923;&#21495;&#28155;&#21152;</span>
-              </label>
-              <div class="tag-wrap" onclick="this.querySelector('.tag-field').focus()">
-                <input type="text" class="tag-field" id="alt-cn-inp" placeholder="&#28155;&#21152;&#22791;&#29992;&#21517;&#31216;...">
-              </div>
-              <input type="hidden" id="alt-cn-val">
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label>Related Cube / Report Name</label>
-              <input type="text" class="form-control" placeholder="e.g. Sales Cube, Transaction Report">
-            </div>
-            <div class="form-group">
-              <label>Unit</label>
-              <input type="text" class="form-control" placeholder="e.g. CNY, %, Transactions">
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Calculation Logic / Formula</label>
-            <textarea class="form-control" rows="3" placeholder="e.g. Gross Revenue &#8722; Discount &#8722; Return &#8722; Allowance"></textarea>
           </div>
         </div>
 
         <!-- G3: Ownership -->
         <div class="form-section type-section" id="sec-g-owner">
           <h3>Ownership</h3>
-          <div class="form-row">
-            <div class="form-group">
-              <label>Business Owner (Partner) <span class="required">*</span></label>
-              <input type="text" class="form-control" placeholder="Search employee name...">
-            </div>
-            <div class="form-group">
-              <label>Data Steward</label>
-              <input type="text" class="form-control" placeholder="Search employee name...">
-            </div>
+          <div class="form-group">
+            <label>Business Owner (Partner) <span class="required">*</span></label>
+            <input type="text" class="form-control" placeholder="Search employee name...">
           </div>
           <div class="form-group">
             <label>Owning Department <span class="required">*</span></label>
@@ -436,12 +386,8 @@
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label>Version <span class="required">*</span></label>
-              <input type="text" class="form-control" placeholder="e.g. v1.0">
-            </div>
-            <div class="form-group">
               <label>Effective Date</label>
-              <input type="date" class="form-control">
+              <input type="date" class="form-control" id="r-effective-date">
             </div>
           </div>
           <div class="form-row">
@@ -456,49 +402,51 @@
           </div>
         </div>
 
-        <!-- R2: Document Content & Upload -->
+        <!-- R2: Related Data Assets -->
         <div class="form-section type-section" id="sec-r-content">
-          <h3>Document Content</h3>
-          <div class="form-group" style="margin-bottom:20px;">
-            <label style="font-weight:600;">Upload Document File <span class="required">*</span></label>
-            <div class="upload-zone">
-              <div class="uz-icon">&#128196;</div>
-              <div>Drag &amp; drop your document here</div>
-              <div style="font-size:0.82rem; margin-top:4px;">Supports: .pdf, .docx, .pptx, .md (Max 50MB)</div>
-              <button type="button" class="btn btn-secondary" style="margin-top:12px; font-size:0.83rem;" onclick="showToast('File browser opened')">Browse Files</button>
-            </div>
+          <h3>Related Data Assets</h3>
+          <p style="font-size:0.86rem; color:var(--text-muted); margin-bottom:16px;">Select the data assets related to this document. Use the domain filter to narrow results.</p>
+
+          <!-- Domain filter chips -->
+          <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px;" id="r-domain-chips">
+            <span class="domain-chip active" onclick="filterRelatedAssets('all', this)">All</span>
+            <span class="domain-chip" onclick="filterRelatedAssets('Sales', this)">Sales</span>
+            <span class="domain-chip" onclick="filterRelatedAssets('Customer', this)">Customer</span>
+            <span class="domain-chip" onclick="filterRelatedAssets('Finance', this)">Finance</span>
+            <span class="domain-chip" onclick="filterRelatedAssets('Supply Chain', this)">Supply Chain</span>
+            <span class="domain-chip" onclick="filterRelatedAssets('Marketing', this)">Marketing</span>
+            <span class="domain-chip" onclick="filterRelatedAssets('External Data', this)">External Data</span>
+            <span class="domain-chip" onclick="filterRelatedAssets('HR', this)">HR</span>
+            <span class="domain-chip" onclick="filterRelatedAssets('Public', this)">Public</span>
           </div>
-          <div class="form-group" style="margin-bottom:20px;">
-            <label>Appendix / Supporting Attachments</label>
-            <div class="upload-zone">
-              <div class="uz-icon">&#128206;</div>
-              <div>Upload supporting files, screenshots, or data samples</div>
-              <div style="font-size:0.82rem; margin-top:4px;">Supports: .png, .jpg, .xlsx, .csv (Max 10MB each, up to 5 files)</div>
-              <button type="button" class="btn btn-secondary" style="margin-top:12px; font-size:0.83rem;" onclick="showToast('File browser opened')">Browse Files</button>
-            </div>
+
+          <!-- Search -->
+          <div class="search-bar" style="max-width:360px; margin-bottom:14px;">
+            <input type="text" id="r-asset-search" placeholder="Search assets..." oninput="relatedPage=1; filterRelatedAssets(null, null)">
+            <button type="button" onclick="filterRelatedAssets(null, null)">Search</button>
           </div>
-          <div class="form-group">
-            <label>Table of Contents (Optional)</label>
-            <textarea class="form-control" rows="5" placeholder="1. Background&#10;2. Methodology&#10;3. Application Scenarios&#10;4. System Operation&#10;5. Appendix"></textarea>
+
+          <!-- Asset list -->
+          <div id="r-asset-list" style="display:flex; flex-direction:column; gap:8px; padding-right:4px; margin-bottom:10px;">
+            <!-- filled by JS -->
           </div>
-          <div class="form-group">
-            <label>Related Data Assets</label>
-            <input type="text" class="form-control" placeholder="Link related dictionaries or glossaries, e.g. DWD_Order_Detail, Sales Metrics">
-          </div>
+
+          <!-- Pagination -->
+          <div id="r-asset-pagination" style="display:flex; align-items:center; gap:6px; margin-bottom:14px; flex-wrap:wrap;"></div>
+
+          <!-- Selected chips -->
+          <div id="r-selected-chips" style="display:flex; flex-wrap:wrap; gap:6px; min-height:30px;"></div>
+          <input type="hidden" id="r-related-val">
+
+          <div style="font-size:0.8rem; color:var(--text-muted); margin-top:8px;">Selected assets will be linked to this document after publishing.</div>
         </div>
 
         <!-- R3: Ownership -->
         <div class="form-section type-section" id="sec-r-owner">
           <h3>Ownership</h3>
-          <div class="form-row">
-            <div class="form-group">
-              <label>Document Owner <span class="required">*</span></label>
-              <input type="text" class="form-control" placeholder="Search employee name...">
-            </div>
-            <div class="form-group">
-              <label>Reviewer(s)</label>
-              <input type="text" class="form-control" placeholder="Names separated by commas">
-            </div>
+          <div class="form-group">
+            <label>Document Owner <span class="required">*</span></label>
+            <input type="text" class="form-control" placeholder="Search employee name...">
           </div>
           <div class="form-group">
             <label>Owning Department <span class="required">*</span></label>
@@ -556,23 +504,29 @@
         <!-- Approval Flow -->
         <div class="form-section always-section" id="sec-approval">
           <h3>Approval Flow Preview</h3>
+          <div style="margin-bottom:16px; padding:12px 16px; background:var(--bg-primary); border-radius:8px; border:1px solid var(--border-color);">
+            <label style="font-weight:600; font-size:0.88rem; margin-bottom:8px; display:block;">Creator Role</label>
+            <div class="radio-toggle">
+              <label><input type="radio" name="creator-role" value="user" checked onchange="updateApprovalFlow()"> &#26222;&#36890;&#29992;&#25143;</label>
+              <label><input type="radio" name="creator-role" value="data-office" onchange="updateApprovalFlow()"> Data Office</label>
+            </div>
+          </div>
           <div class="timeline">
-            <div class="timeline-item">
-              <div class="timeline-dot pending"></div>
+            <div class="timeline-item" id="tl-step-linemanager">
+              <div class="timeline-dot pending" id="tl-dot-linemanager"></div>
               <div class="timeline-content">
                 <div class="tl-header">
                   <span class="tl-name">Step 1: Line Manager Review</span>
-                  <span class="tag status-pending">Required</span>
+                  <span class="tag status-pending" id="tl-badge-linemanager">Required</span>
                 </div>
                 <div class="tl-role">Your direct manager reviews the asset registration request</div>
-                <div style="font-size:0.8rem; color:var(--text-muted); margin-top:3px;">Automatically skipped for M4+ employees</div>
               </div>
             </div>
             <div class="timeline-item">
               <div class="timeline-dot pending"></div>
               <div class="timeline-content">
                 <div class="tl-header">
-                  <span class="tl-name">Step 2: Data Office Review</span>
+                  <span class="tl-name" id="tl-step2-name">Step 2: Data Office Review</span>
                   <span class="tag status-pending">Required</span>
                 </div>
                 <div class="tl-role">Data Office reviews content quality, completeness and compliance</div>
@@ -582,10 +536,10 @@
               <div class="timeline-dot pending"></div>
               <div class="timeline-content">
                 <div class="tl-header">
-                  <span class="tl-name">Step 3: Auto Publish</span>
+                  <span class="tl-name" id="tl-step3-name">Step 3: Auto Publish</span>
                   <span class="tag status-draft">Auto</span>
                 </div>
-                <div class="tl-role">Asset is automatically published to the Data Asset Shelf upon final approval</div>
+                <div class="tl-role" id="tl-step3-role">Asset is automatically published to the Data Asset Shelf upon final approval</div>
               </div>
             </div>
           </div>
@@ -649,7 +603,7 @@
     }
 
     const TYPE_SECTIONS = {
-      glossary:    ['sec-g-basic','sec-g-detail','sec-g-owner'],
+      glossary:    ['sec-g-basic','sec-g-owner'],
       dictionary:  ['sec-d-basic','sec-d-tech','sec-d-owner'],
       document:    ['sec-r-basic','sec-r-content','sec-r-owner'],
     };
@@ -738,10 +692,41 @@
       });
     }
 
-    // Init all chip inputs
-    initChipInput('alt-en-inp', 'alt-en-val', null);
-    initChipInput('alt-cn-inp', 'alt-cn-val', null);
     initChipInput('label-inp', 'label-val', 'label-wrap');
+
+    function updateApprovalFlow() {
+      var role = document.querySelector('input[name="creator-role"]:checked');
+      if (!role) return;
+      var isDataOffice = role.value === 'data-office';
+      var step1 = document.getElementById('tl-step-linemanager');
+      var dot1  = document.getElementById('tl-dot-linemanager');
+      var badge1= document.getElementById('tl-badge-linemanager');
+      var step2name = document.getElementById('tl-step2-name');
+      var step3name = document.getElementById('tl-step3-name');
+      var step3role = document.getElementById('tl-step3-role');
+      var submitBtn = document.querySelector('#sec-actions button[type="submit"]');
+      if (isDataOffice) {
+        step1.style.opacity = '0.35';
+        dot1.style.background = 'var(--text-muted)';
+        badge1.textContent = 'Skipped';
+        badge1.className = 'tag tag-secondary';
+        badge1.style.background = '#e0e0e0'; badge1.style.color = '#777';
+        step2name.textContent = 'Step 1: Data Quality Check';
+        step3name.textContent = 'Step 2: Auto Publish';
+        step3role.textContent = 'Asset is immediately published upon creation by Data Office';
+        if (submitBtn) submitBtn.textContent = 'Create Asset';
+      } else {
+        step1.style.opacity = '';
+        dot1.style.background = '';
+        badge1.textContent = 'Required';
+        badge1.className = 'tag status-pending';
+        badge1.style.background = ''; badge1.style.color = '';
+        step2name.textContent = 'Step 2: Data Office Review';
+        step3name.textContent = 'Step 3: Auto Publish';
+        step3role.textContent = 'Asset is automatically published to the Data Asset Shelf upon final approval';
+        if (submitBtn) submitBtn.textContent = 'Submit for Approval';
+      }
+    }
 
     // ===== Checkbox dropdown =====
     function toggleChkDropdown(id) {
@@ -800,6 +785,129 @@
         document.querySelectorAll('.chk-panel.open').forEach(function(p){ p.classList.remove('open'); p.closest('.chk-dropdown').querySelector('.chk-trigger').classList.remove('open'); });
       }
     });
+
+    // ===== Effective Date default to today =====
+    (function() {
+      var d = document.getElementById('r-effective-date');
+      if (d) d.value = new Date().toISOString().slice(0,10);
+    })();
+
+    // ===== Related Data Assets picker =====
+    var RELATED_ASSETS = [
+      { name: 'Sales Metrics',                  type: 'Glossary',    typeTag: 'tag-green',  domain: 'Sales' },
+      { name: 'Sales Business Terms',            type: 'Glossary',    typeTag: 'tag-green',  domain: 'Sales' },
+      { name: 'Finance Metrics',                 type: 'Glossary',    typeTag: 'tag-green',  domain: 'Finance' },
+      { name: 'DWD_Order_Detail',                type: 'Dictionary',  typeTag: 'tag-blue',   domain: 'Sales' },
+      { name: 'DIM_Store_Master',                type: 'Dictionary',  typeTag: 'tag-blue',   domain: 'Supply Chain' },
+      { name: '天气信息数据',                     type: 'Dictionary',  typeTag: 'tag-blue',   domain: 'External Data' },
+      { name: '消费者标签数据',                   type: 'Dictionary',  typeTag: 'tag-blue',   domain: 'External Data' },
+      { name: 'Customer Segmentation Guide',     type: 'Ref Doc',     typeTag: 'tag-brown',  domain: 'Customer' },
+      { name: '竞品开闭店与销售数据（线上）',      type: 'Ref Doc',     typeTag: 'tag-brown',  domain: 'External Data' },
+      { name: '街区信息与流量数据',               type: 'Ref Doc',     typeTag: 'tag-brown',  domain: 'External Data' },
+      { name: '市场舆情监测数据',                 type: 'Ref Doc',     typeTag: 'tag-brown',  domain: 'External Data' },
+      { name: '星巴克中国数据治理政策',            type: 'Ref Doc',     typeTag: 'tag-brown',  domain: 'Public' },
+    ];
+    var selectedRelated = [];
+    var activeDomain = 'all';
+    var relatedPage = 1;
+    var RELATED_PAGE_SIZE = 6;
+
+    function filterRelatedAssets(domain, el) {
+      if (domain !== null) {
+        activeDomain = domain;
+        relatedPage = 1;
+        document.querySelectorAll('#r-domain-chips .domain-chip').forEach(function(c){ c.classList.remove('active'); });
+        if (el) el.classList.add('active');
+      }
+      var q = (document.getElementById('r-asset-search') ? document.getElementById('r-asset-search').value.toLowerCase() : '');
+      var list = document.getElementById('r-asset-list');
+      var pager = document.getElementById('r-asset-pagination');
+      if (!list) return;
+      list.innerHTML = '';
+      var filtered = RELATED_ASSETS.filter(function(a) {
+        var domainMatch = activeDomain === 'all' || a.domain === activeDomain;
+        var searchMatch = !q || a.name.toLowerCase().includes(q) || a.type.toLowerCase().includes(q) || a.domain.toLowerCase().includes(q);
+        return domainMatch && searchMatch;
+      });
+      if (filtered.length === 0) {
+        list.innerHTML = '<div style="color:var(--text-muted); font-size:0.87rem; padding:12px;">No matching assets found.</div>';
+        if (pager) pager.innerHTML = '';
+        return;
+      }
+      var totalPages = Math.ceil(filtered.length / RELATED_PAGE_SIZE);
+      if (relatedPage > totalPages) relatedPage = totalPages;
+      var start = (relatedPage - 1) * RELATED_PAGE_SIZE;
+      var pageItems = filtered.slice(start, start + RELATED_PAGE_SIZE);
+      pageItems.forEach(function(a) {
+        var isSelected = selectedRelated.includes(a.name);
+        var row = document.createElement('div');
+        row.style.cssText = 'display:flex; align-items:center; gap:10px; padding:10px 14px; border-radius:8px; border:1px solid ' + (isSelected ? 'var(--sb-green)' : 'var(--border-color)') + '; background:' + (isSelected ? 'rgba(0,112,74,0.05)' : '#fff') + '; cursor:pointer; transition:border-color 0.15s,background 0.15s;';
+        row.innerHTML = '<input type="checkbox" style="accent-color:var(--sb-green); width:15px; height:15px; flex-shrink:0;" ' + (isSelected ? 'checked' : '') + '>'
+          + '<span style="flex:1; font-size:0.88rem; font-weight:500;">' + a.name + '</span>'
+          + '<span class="tag ' + a.typeTag + '" style="font-size:0.75rem;">' + a.type + '</span>'
+          + '<span style="font-size:0.78rem; color:var(--text-muted);">' + a.domain + '</span>';
+        row.addEventListener('click', function() { toggleRelated(a.name); });
+        list.appendChild(row);
+      });
+      // Render pagination
+      if (pager) {
+        pager.innerHTML = '';
+        if (totalPages <= 1) return;
+        var countLabel = document.createElement('span');
+        countLabel.style.cssText = 'font-size:0.8rem; color:var(--text-muted); margin-right:4px;';
+        countLabel.textContent = filtered.length + ' results';
+        pager.appendChild(countLabel);
+        function mkBtn(label, page, disabled, active) {
+          var b = document.createElement('button');
+          b.type = 'button';
+          b.textContent = label;
+          b.style.cssText = 'padding:4px 10px; border-radius:5px; border:1px solid ' + (active ? 'var(--sb-green)' : 'var(--border-color)') + '; background:' + (active ? 'var(--sb-green)' : '#fff') + '; color:' + (active ? '#fff' : 'var(--text-primary)') + '; font-size:0.82rem; cursor:' + (disabled ? 'default' : 'pointer') + '; opacity:' + (disabled ? '0.4' : '1') + ';';
+          if (!disabled) b.addEventListener('click', function() { relatedPage = page; filterRelatedAssets(null, null); });
+          return b;
+        }
+        pager.appendChild(mkBtn('‹', relatedPage - 1, relatedPage === 1, false));
+        for (var p = 1; p <= totalPages; p++) {
+          pager.appendChild(mkBtn(p, p, false, p === relatedPage));
+        }
+        pager.appendChild(mkBtn('›', relatedPage + 1, relatedPage === totalPages, false));
+      }
+    }
+
+    function toggleRelated(name) {
+      var idx = selectedRelated.indexOf(name);
+      if (idx === -1) selectedRelated.push(name);
+      else selectedRelated.splice(idx, 1);
+      renderSelectedChips();
+      filterRelatedAssets(null, null);
+    }
+
+    function renderSelectedChips() {
+      var wrap = document.getElementById('r-selected-chips');
+      var hidden = document.getElementById('r-related-val');
+      if (!wrap) return;
+      wrap.innerHTML = selectedRelated.length
+        ? '<span style="font-size:0.8rem; color:var(--text-muted); align-self:center; margin-right:4px;">Selected:</span>' : '';
+      selectedRelated.forEach(function(name) {
+        var chip = document.createElement('span');
+        chip.className = 'chk-chip';
+        chip.innerHTML = name + ' <button type="button" title="Remove">&#10005;</button>';
+        chip.querySelector('button').addEventListener('click', function(e) {
+          e.stopPropagation();
+          toggleRelated(name);
+        });
+        wrap.appendChild(chip);
+      });
+      if (hidden) hidden.value = selectedRelated.join(',');
+    }
+
+    // Init the related assets list when document type section becomes visible
+    var origSelectType = selectType;
+    selectType = function(type) {
+      origSelectType(type);
+      if (type === 'document') {
+        filterRelatedAssets('all', document.querySelector('#r-domain-chips .domain-chip'));
+      }
+    };
   </script>
 </body>
 </html>

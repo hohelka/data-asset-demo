@@ -1,4 +1,4 @@
-数据治理政策detail页面修改点：
-1.数据治理政策的Effective Date是2025年12月1日。security level为L2。status为approved（删除final draft的描述）。
-2.Scope & Applicability部分，强调数据“星巴克中国数据中台获取、使用、分发数据产品”。加上“在星巴克中国信息应用源系统中存在原始与轻度聚合数据。此部分数据的获取与使用需要遵从源系统管理与公司信息安全保护政策条例：Starbucks Data Protection Standard – approved by Global Cybersecurity Services 2021的要求。”，也即数据治理政策不包含源系统数据的管理。
-3.Roles & Responsibilities部分，中英文名严格遵从《星巴克中国数据治理政策》文档里面第五章下面的称呼。涵盖5.1-5.4的角色跟管理职责。
+create asset的reference document资产上架页面修改：
+1. Basic Information不分，删除version，effective date默认选中当前日期。
+2. Document Content改成Related Data Assets，可以选择related的glossaries，data dictionary，reference document里面的具体资产。提供data domain的筛选器进行筛选（或者你来设计这个模块），能让用户能快速选中所要的资产。
+3.ownership部分，删除reviewer。
