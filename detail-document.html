@@ -313,8 +313,81 @@
             </div><!-- /.i18n-en -->
 
             <div class="i18n-cn">
-              <h2>客户分群指南</h2>
-              <p style="color:var(--text-muted); font-style:italic;">【中文版本待补充，请联系 Ming Zhang】</p>
+            <p>客户分群是个性化营销、会员计划优化和战略规划的基础能力。本指南汇总了星巴克中国各业务部门统一采用的客户分群方法论。</p>
+            <p>主要目标是建立一套统一框架，用于理解客户行为、价值分布和生命周期阶段，使跨职能团队能够在报表分析、营销活动定向和产品研发中使用一致的分群结果。</p>
+
+            <table>
+              <thead><tr><th>属性</th><th>内容</th></tr></thead>
+              <tbody>
+                <tr><td>适用范围</td><td>所有已注册星享俱乐部会员的星巴克中国零售客户</td></tr>
+                <tr><td>数据来源</td><td>CRM 系统、POS 交易数据、移动应用行为事件</td></tr>
+                <tr><td>更新周期</td><td>每月（第 1 个工作日）</td></tr>
+              </tbody>
+            </table>
+
+            <h2 id="sec-method-cn">分群方法论</h2>
+            <p>本模型采用增强版 <strong>RFM（近度、频度、货值）</strong>框架：</p>
+            <table>
+              <thead><tr><th>维度</th><th>定义</th><th>分值范围</th></tr></thead>
+              <tbody>
+                <tr><td><strong>近度（Recency）</strong></td><td>距最近一次消费的天数</td><td>1&#8211;5（5 = 最近）</td></tr>
+                <tr><td><strong>频度（Frequency）</strong></td><td>近 90 天内交易笔数</td><td>1&#8211;5（5 = 最频繁）</td></tr>
+                <tr><td><strong>货值（Monetary）</strong></td><td>近 90 天内消费总额</td><td>1&#8211;5（5 = 消费最高）</td></tr>
+              </tbody>
+            </table>
+
+            <h3>会员等级映射</h3>
+            <div class="tier-grid" contenteditable="false">
+              <div class="tier-card" style="background:var(--sb-dark-green);">
+                <div class="tier-icon">&#128142;</div>
+                <div class="tier-name">钻石级</div>
+                <div class="tier-score">RFM &#8805; 12</div>
+              </div>
+              <div class="tier-card" style="background:var(--sb-gold);">
+                <div class="tier-icon">&#11088;</div>
+                <div class="tier-name">黄金级</div>
+                <div class="tier-score">RFM 9&#8211;11</div>
+              </div>
+              <div class="tier-card" style="background:var(--sb-green);">
+                <div class="tier-icon">&#127775;</div>
+                <div class="tier-name">绿星级</div>
+                <div class="tier-score">RFM 5&#8211;8</div>
+              </div>
+              <div class="tier-card" style="background:#9e9e9e;">
+                <div class="tier-icon">&#9749;</div>
+                <div class="tier-name">新星级</div>
+                <div class="tier-score">RFM 3&#8211;4</div>
+              </div>
+            </div>
+
+            <h2 id="sec-scenarios-cn">应用场景</h2>
+            <div class="scenario-block" style="border-left-color:var(--sb-green); background:rgba(0,112,74,0.04);">
+              <strong style="color:var(--sb-green);">场景一：精准营销活动</strong>
+              <p style="margin:6px 0 0;">钻石级 / 黄金级会员用于高端新品发布及专属优惠活动；绿星级用于再激活营销活动。</p>
+            </div>
+            <div class="scenario-block" style="border-left-color:var(--sb-gold); background:rgba(203,162,88,0.05);">
+              <strong style="color:var(--sb-gold);">场景二：会员等级季度审核</strong>
+              <p style="margin:6px 0 0;">季度审核等级迁移规律，识别消费频次下滑的高风险钻石会员，及时发起挽留策略。</p>
+            </div>
+            <div class="scenario-block" style="border-left-color:var(--sb-brown); background:rgba(107,66,38,0.04);">
+              <strong style="color:var(--sb-brown);">场景三：门店选址规划</strong>
+              <p style="margin:6px 0 0;">按地域分析客户分群分布，为门店类型决策（尊享店 vs 标准店）提供数据支撑。</p>
+            </div>
+
+            <h2 id="sec-ops-cn">系统操作</h2>
+            <ol>
+              <li>登录星巴克分析门户 &#8594; 导航至<strong>客户洞察</strong>模块。</li>
+              <li>选择<strong>分群</strong>标签页 &#8594; 选择时间范围与地区筛选条件。</li>
+              <li>点击<strong>生成报告</strong>查看分群分布，可导出为 CSV 或 PDF 格式。</li>
+              <li>如需 API 访问，请使用接口 <code>/api/v2/customer/segments</code>，并携带您的数据令牌。</li>
+            </ol>
+
+            <h2 id="sec-change-cn">变更历史</h2>
+            <ul>
+              <li>v3.0（2026-04-18）：新增会员等级映射章节</li>
+              <li>v2.1（2025-12-01）：更新 RFM 评分阈值</li>
+              <li>v1.0（2025-06-15）：首次发布</li>
+            </ul>
             </div><!-- /.i18n-cn -->
 
           </div>
