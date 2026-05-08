@@ -1,4 +1,21 @@
-create asset的reference document资产上架页面修改：
-1. Basic Information不分，删除version，effective date默认选中当前日期。
-2. Document Content改成Related Data Assets，可以选择related的glossaries，data dictionary，reference document里面的具体资产。提供data domain的筛选器进行筛选（或者你来设计这个模块），能让用户能快速选中所要的资产。
-3.ownership部分，删除reviewer。
+请记住以下专有名词的中英文，在切换语言时对应的切换过来：
+glossaries 指标术语
+metadata 元数据
+governance team 数据治理团队
+data domain 主题域
+data office 数据治理办公室
+data college 数据学院
+
+
+
+不需要翻译成中文的内容：
+1.data domain下每个主题域的名称，如sales，finance
+2.数据字典这类型数据资产的名称
+3.数据资产详情页的内容，这部分是用户自己写的，他填的是什么就是什么不需要翻译
+4.当出现中英文同时存在的界面时，不需要再做翻译，比如申请数据使用弹出框，里面的external dta exchange下面就有中文，则不需要再次做翻译
+5.人名不需要切换成中文
+6.部门名称不需要切换成中文
+7.数据治理政策页面的中文，需要直接引用reference文件夹下的星巴克中国数据治理政策里面的内容
+
+
+将以上知识存成一个中英文切换的markdown文档，方便我使用的时候调用，未来如果我说一些专有名词的中英文的时候，也要加入这个md里面来，同时我之前提到的一些既定专有名词，也加到这个md里面
