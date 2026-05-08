@@ -149,42 +149,42 @@
 
       <!-- Page Header -->
       <div class="page-header">
-        <div class="breadcrumb"><a href="index.html">Home</a> <span>/</span> Data Assets</div>
-        <h1>Data Asset Shelf</h1>
+        <div class="breadcrumb"><a href="index.html" data-i18n="breadcrumb_home">Home</a> <span>/</span> <span data-i18n="breadcrumb_assets">Data Assets</span></div>
+        <h1 data-i18n="shelf_title">Data Asset Shelf</h1>
         <div class="flex gap-12" style="margin-left:auto;">
-          <button class="btn btn-secondary" onclick="openApplyModal()">Apply Asset Access</button>
-          <a href="apply-asset.html" class="btn btn-primary btn-create-asset">+ Create Asset</a>
+          <button class="btn btn-secondary" data-i18n="btn_apply_access" onclick="openApplyModal()">Apply Asset Access</button>
+          <a href="apply-asset.html" class="btn btn-primary btn-create-asset" data-i18n="btn_create_asset">+ Create Asset</a>
         </div>
       </div>
 
       <!-- Domain Chips -->
       <div class="flex gap-8 mb-20" style="flex-wrap:wrap;">
-        <span class="domain-chip active">All Domains</span>
-        <span class="domain-chip" onclick="toggleFilter(this)">Sales</span>
-        <span class="domain-chip" onclick="toggleFilter(this)">Customer</span>
-        <span class="domain-chip" onclick="toggleFilter(this)">Finance</span>
-        <span class="domain-chip" onclick="toggleFilter(this)">Supply Chain</span>
-        <span class="domain-chip" onclick="toggleFilter(this)">Marketing</span>
-        <span class="domain-chip" onclick="toggleFilter(this)">External Data</span>
-        <span class="domain-chip" onclick="toggleFilter(this)">HR</span>
-        <span class="domain-chip" onclick="toggleFilter(this)">Public</span>
+        <span class="domain-chip active" data-i18n="chip_all">All Domains</span>
+        <span class="domain-chip" data-i18n="chip_sales" onclick="toggleFilter(this)">Sales</span>
+        <span class="domain-chip" data-i18n="chip_customer" onclick="toggleFilter(this)">Customer</span>
+        <span class="domain-chip" data-i18n="chip_finance" onclick="toggleFilter(this)">Finance</span>
+        <span class="domain-chip" data-i18n="chip_supply" onclick="toggleFilter(this)">Supply Chain</span>
+        <span class="domain-chip" data-i18n="chip_marketing" onclick="toggleFilter(this)">Marketing</span>
+        <span class="domain-chip" data-i18n="chip_external" onclick="toggleFilter(this)">External Data</span>
+        <span class="domain-chip" data-i18n="chip_hr" onclick="toggleFilter(this)">HR</span>
+        <span class="domain-chip" data-i18n="chip_public" onclick="toggleFilter(this)">Public</span>
       </div>
 
       <!-- Search & View Toggle -->
       <div class="flex-between mb-20" style="flex-wrap:wrap; gap:12px;">
         <div class="search-bar" style="flex:1; max-width:480px;">
-          <input type="text" placeholder="Search assets by name, keyword..." onkeydown="if(event.key==='Enter')handleSearch(this)">
-          <button onclick="handleSearch(this.previousElementSibling)">Search</button>
+          <input type="text" placeholder="Search assets by name, keyword..." data-i18n-ph="search_assets_ph" onkeydown="if(event.key==='Enter')handleSearch(this)">
+            <button data-i18n="btn_search" onclick="handleSearch(this.previousElementSibling)">Search</button>
         </div>
         <div class="flex gap-12">
           <select class="form-control" style="width:auto; padding:8px 32px 8px 12px;">
-            <option>Sort: Latest</option>
-            <option>Sort: Name A-Z</option>
-            <option>Sort: Most Viewed</option>
+            <option data-i18n="sort_latest">Sort: Latest</option>
+            <option data-i18n="sort_az">Sort: Name A-Z</option>
+            <option data-i18n="sort_viewed">Sort: Most Viewed</option>
           </select>
           <div class="view-toggle">
-            <button class="active" onclick="switchView('grid',this)">▦ Grid</button>
-            <button onclick="switchView('list',this)">☰ List</button>
+            <button class="active" data-i18n="view_grid" onclick="switchView('grid',this)">▦ Grid</button>
+            <button data-i18n="view_list" onclick="switchView('list',this)">☰ List</button>
           </div>
         </div>
       </div>
@@ -194,16 +194,16 @@
         <!-- Filter Sidebar -->
         <aside class="filter-sidebar">
           <div class="filter-group">
-            <h4>Asset Category</h4>
-            <label class="filter-option"><input type="checkbox" checked> Glossaries / Terms</label>
-            <label class="filter-option"><input type="checkbox" checked> Data Dictionary</label>
-            <label class="filter-option"><input type="checkbox" checked> Reference Document</label>
+            <h4 data-i18n="filter_category">Asset Category</h4>
+            <label class="filter-option"><input type="checkbox" checked> <span data-i18n="filter_glossary">Glossaries / Terms</span></label>
+            <label class="filter-option"><input type="checkbox" checked> <span data-i18n="filter_dictionary">Data Dictionary</span></label>
+            <label class="filter-option"><input type="checkbox" checked> <span data-i18n="filter_ref_doc">Reference Document</span></label>
           </div>
           <div class="filter-group">
-            <h4>Security Level</h4>
-            <label class="filter-option"><input type="checkbox" checked> L1 - Public</label>
-            <label class="filter-option"><input type="checkbox" checked> L2 - Internal</label>
-            <label class="filter-option"><input type="checkbox"> L3 - Confidential</label>
+            <h4 data-i18n="filter_security">Security Level</h4>
+            <label class="filter-option"><input type="checkbox" checked> <span data-i18n="filter_l1">L1 - Public</span></label>
+            <label class="filter-option"><input type="checkbox" checked> <span data-i18n="filter_l2">L2 - Internal</span></label>
+            <label class="filter-option"><input type="checkbox"> <span data-i18n="filter_l3">L3 - Confidential</span></label>
           </div>
           <div class="filter-group">
             <h4>Data Owner Department</h4>
@@ -226,7 +226,7 @@
             <!-- Glossary Collection Card 1: Sales Metrics -->
             <div class="asset-card" onclick="location.href='detail-glossary.html'">
               <div class="ac-top">
-                <div class="ac-title">Sales Metrics</div>
+                <div class="ac-title" data-en="Sales Metrics" data-cn="销售指标">Sales Metrics</div>
                 <span style="cursor:pointer; color:var(--sb-gold); font-size:1.2rem;" title="Bookmark">★</span>
               </div>
               <div class="ac-tags">
@@ -234,7 +234,7 @@
                 <span class="tag tag-l3">L3 Confidential</span>
                 <span class="tag tag-brown">Sales</span>
               </div>
-              <div class="ac-desc">5 KPI indicators covering Net Revenue, Comparable Store Sales Growth, Average Ticket Size, Transaction Count, and Gross Revenue.</div>
+              <div class="ac-desc" data-en="5 KPI indicators covering Net Revenue, Comparable Store Sales Growth, Average Ticket Size, Transaction Count, and Gross Revenue." data-cn="5个销售KPI指标，涵盖净收入、可比门店销售增长、客单价、交易笔数和毛收入。">5 KPI indicators covering Net Revenue, Comparable Store Sales Growth, Average Ticket Size, Transaction Count, and Gross Revenue.</div>
               <div class="ac-footer">
                 <div class="ac-owner">
                   <span class="ac-owner-avatar">SC</span> Sarah Chen
@@ -254,7 +254,7 @@
                 <span class="tag tag-l2">L2 Internal</span>
                 <span class="tag tag-brown">Sales</span>
               </div>
-              <div class="ac-desc">Order detail table from data warehouse layer. Contains order ID, product info, amount, timestamp and store details.</div>
+              <div class="ac-desc" data-en="Order detail table from data warehouse layer. Contains order ID, product info, amount, timestamp and store details." data-cn="数据仓库层订单明细表，包含订单ID、产品信息、金额、时间戳和门店详情。">Order detail table from data warehouse layer. Contains order ID, product info, amount, timestamp and store details.</div>
               <div class="ac-footer">
                 <div class="ac-owner">
                   <span class="ac-owner-avatar">JL</span> James Li
@@ -266,7 +266,7 @@
             <!-- Asset Card 3 -->
             <div class="asset-card" onclick="location.href='detail-document.html'">
               <div class="ac-top">
-                <div class="ac-title">Customer Segmentation Guide</div>
+                <div class="ac-title" data-en="Customer Segmentation Guide" data-cn="客户分群指南">Customer Segmentation Guide</div>
                 <span style="cursor:pointer; color:var(--sb-gold); font-size:1.2rem;" title="Bookmark">☆</span>
               </div>
               <div class="ac-tags">
@@ -274,7 +274,7 @@
                 <span class="tag tag-l2">L2 Internal</span>
                 <span class="tag tag-green">Customer</span>
               </div>
-              <div class="ac-desc">Comprehensive guide on customer segmentation methodology, including RFM model application and loyalty tier definitions.</div>
+              <div class="ac-desc" data-en="Comprehensive guide on customer segmentation methodology, including RFM model application and loyalty tier definitions." data-cn="客户分群方法论综合指南，包含RFM模型应用与会员等级定义。">Comprehensive guide on customer segmentation methodology, including RFM model application and loyalty tier definitions.</div>
               <div class="ac-footer">
                 <div class="ac-owner">
                   <span class="ac-owner-avatar">MZ</span> Ming Zhang
@@ -286,7 +286,7 @@
             <!-- Glossary Collection Card 2: Finance Metrics -->
             <div class="asset-card" onclick="location.href='detail-glossary.html'">
               <div class="ac-top">
-                <div class="ac-title">Finance Metrics</div>
+                <div class="ac-title" data-en="Finance Metrics" data-cn="财务指标">Finance Metrics</div>
                 <span style="cursor:pointer; color:var(--sb-gold); font-size:1.2rem;" title="Bookmark">☆</span>
               </div>
               <div class="ac-tags">
@@ -294,7 +294,7 @@
                 <span class="tag tag-l3">L3 Confidential</span>
                 <span class="tag tag-gold">Finance</span>
               </div>
-              <div class="ac-desc">6 financial KPIs including Comparable Store Sales Growth, Operating Margin, EBITDA, CapEx Ratio, Free Cash Flow, and ROE.</div>
+              <div class="ac-desc" data-en="6 financial KPIs including Comparable Store Sales Growth, Operating Margin, EBITDA, CapEx Ratio, Free Cash Flow, and ROE." data-cn="6个财务KPI，包含可比门店销售增长、营业利润率、EBITDA、资本支出率、自由现金流和ROE。">6 financial KPIs including Comparable Store Sales Growth, Operating Margin, EBITDA, CapEx Ratio, Free Cash Flow, and ROE.</div>
               <div class="ac-footer">
                 <div class="ac-owner">
                   <span class="ac-owner-avatar">LW</span> Lily Wang
@@ -314,7 +314,7 @@
                 <span class="tag tag-l3">L3 Confidential</span>
                 <span class="tag tag-green">Supply Chain</span>
               </div>
-              <div class="ac-desc">Master dimension table for all store locations. Contains store ID, address, region, open date, format type and capacity.</div>
+              <div class="ac-desc" data-en="Master dimension table for all store locations. Contains store ID, address, region, open date, format type and capacity." data-cn="全门店主维度表，包含门店ID、地址、地区、开业日期、门店类型及容量。">Master dimension table for all store locations. Contains store ID, address, region, open date, format type and capacity.</div>
               <div class="ac-footer">
                 <div class="ac-owner">
                   <span class="ac-owner-avatar">DL</span> David Liu
@@ -326,7 +326,7 @@
             <!-- Glossary Collection Card 3: Sales Business Terms -->
             <div class="asset-card" onclick="location.href='detail-glossary.html'">
               <div class="ac-top">
-                <div class="ac-title">Sales Business Terms</div>
+                <div class="ac-title" data-en="Sales Business Terms" data-cn="销售业务术语">Sales Business Terms</div>
                 <span style="cursor:pointer; color:var(--sb-gold); font-size:1.2rem;" title="Bookmark">☆</span>
               </div>
               <div class="ac-tags">
@@ -334,7 +334,7 @@
                 <span class="tag tag-l2">L2 Internal</span>
                 <span class="tag tag-brown">Sales</span>
               </div>
-              <div class="ac-desc">8 business terms standardizing sales domain concepts: Discount Amount, Return Amount, Store Revenue Contribution, Promo Period, and more.</div>
+              <div class="ac-desc" data-en="8 business terms standardizing sales domain concepts: Discount Amount, Return Amount, Store Revenue Contribution, Promo Period, and more." data-cn="8个销售域业务术语规范集合，覆盖折扣金额、退货金额、门店收入贡献率、促销期等。">8 business terms standardizing sales domain concepts: Discount Amount, Return Amount, Store Revenue Contribution, Promo Period, and more.</div>
               <div class="ac-footer">
                 <div class="ac-owner">
                   <span class="ac-owner-avatar">SC</span> Sarah Chen
@@ -346,7 +346,7 @@
             <!-- External Data Card 1 -->
             <div class="asset-card" onclick="location.href='detail-document.html'">
               <div class="ac-top">
-                <div class="ac-title">竞品开闭店与销售数据（线上）</div>
+                <div class="ac-title" data-en="Competitor Online Sales Data" data-cn="竞品开闭店与销售数据（线上）">竞品开闭店与销售数据（线上）</div>
                 <span style="cursor:pointer; color:var(--sb-gold); font-size:1.2rem;" title="Bookmark">☆</span>
               </div>
               <div class="ac-tags">
@@ -354,7 +354,7 @@
                 <span class="tag tag-l2">L2 Internal</span>
                 <span class="tag tag-gold">External Data</span>
               </div>
-              <div class="ac-desc">线上渠道竞品门店开闭信息与销售数据，覆盖主要竞品品牌的线上销售趋势与市场份额变化。</div>
+              <div class="ac-desc" data-en="Competitor store opening/closing and online sales data, covering major brand sales trends and market share changes online." data-cn="线上渠道竞品门店开闭信息与销售数据，覆盖主要竞品品牌的线上销售趋势与市场份额变化。">线上渠道竞品门店开闭信息与销售数据，覆盖主要竞品品牌的线上销售趋势与市场份额变化。</div>
               <div class="ac-footer">
                 <div class="ac-owner">
                   <span class="ac-owner-avatar">GH</span> Grace He
@@ -366,7 +366,7 @@
             <!-- External Data Card 2 -->
             <div class="asset-card" onclick="location.href='detail-dictionary.html'">
               <div class="ac-top">
-                <div class="ac-title">天气信息数据</div>
+                <div class="ac-title" data-en="Weather Data" data-cn="天气信息数据">天气信息数据</div>
                 <span style="cursor:pointer; color:var(--sb-gold); font-size:1.2rem;" title="Bookmark">☆</span>
               </div>
               <div class="ac-tags">
@@ -374,7 +374,7 @@
                 <span class="tag tag-l2">L2 Internal</span>
                 <span class="tag tag-gold">External Data</span>
               </div>
-              <div class="ac-desc">城市级别天气数据，包含温度、降水、风力等指标，用于分析天气对门店销量的影响。</div>
+              <div class="ac-desc" data-en="City-level weather data including temperature, precipitation, and wind metrics, used to analyze weather impact on store sales." data-cn="城市级别天气数据，包含温度、降水、风力等指标，用于分析天气对门店销量的影响。">城市级别天气数据，包含温度、降水、风力等指标，用于分析天气对门店销量的影响。</div>
               <div class="ac-footer">
                 <div class="ac-owner">
                   <span class="ac-owner-avatar">TZ</span> Tony Zhang
@@ -386,7 +386,7 @@
             <!-- External Data Card 3 -->
             <div class="asset-card" onclick="location.href='detail-document.html'">
               <div class="ac-top">
-                <div class="ac-title">街区信息与流量数据</div>
+                <div class="ac-title" data-en="Block &amp; Foot Traffic Data" data-cn="街区信息与流量数据">街区信息与流量数据</div>
                 <span style="cursor:pointer; color:var(--sb-gold); font-size:1.2rem;" title="Bookmark">☆</span>
               </div>
               <div class="ac-tags">
@@ -394,7 +394,7 @@
                 <span class="tag tag-l3">L3 Confidential</span>
                 <span class="tag tag-gold">External Data</span>
               </div>
-              <div class="ac-desc">第三方街区人口特征、客流热力数据，用于门店选址分析与商圈评估。</div>
+              <div class="ac-desc" data-en="Third-party block demographics and foot traffic heat data, for store location analysis and business district evaluation." data-cn="第三方街区人口特征、客流热力数据，用于门店选址分析与商圈评估。">第三方街区人口特征、客流热力数据，用于门店选址分析与商圈评估。</div>
               <div class="ac-footer">
                 <div class="ac-owner">
                   <span class="ac-owner-avatar">GH</span> Grace He
@@ -406,7 +406,7 @@
             <!-- External Data Card 4 -->
             <div class="asset-card" onclick="location.href='detail-dictionary.html'">
               <div class="ac-top">
-                <div class="ac-title">消费者标签数据</div>
+                <div class="ac-title" data-en="Consumer Tag Data" data-cn="消费者标签数据">消费者标签数据</div>
                 <span style="cursor:pointer; color:var(--sb-gold); font-size:1.2rem;" title="Bookmark">☆</span>
               </div>
               <div class="ac-tags">
@@ -414,7 +414,7 @@
                 <span class="tag tag-l3">L3 Confidential</span>
                 <span class="tag tag-gold">External Data</span>
               </div>
-              <div class="ac-desc">第三方消费者画像标签，包含消费偏好、生活方式、品牌倾向等维度，用于精准营销。</div>
+              <div class="ac-desc" data-en="Third-party consumer profile tags including spending preferences, lifestyle, and brand affinity, for precision marketing." data-cn="第三方消费者画像标签，包含消费偏好、生活方式、品牌倒向等维度，用于精准营销。">第三方消费者画像标签，包含消费偏好、生活方式、品牌倒向等维度，用于精准营销。</div>
               <div class="ac-footer">
                 <div class="ac-owner">
                   <span class="ac-owner-avatar">TZ</span> Tony Zhang
@@ -426,7 +426,7 @@
             <!-- External Data Card 5 -->
             <div class="asset-card" onclick="location.href='detail-document.html'">
               <div class="ac-top">
-                <div class="ac-title">市场舆情监测数据</div>
+                <div class="ac-title" data-en="Market Sentiment Data" data-cn="市场舆情监测数据">市场舆情监测数据</div>
                 <span style="cursor:pointer; color:var(--sb-gold); font-size:1.2rem;" title="Bookmark">☆</span>
               </div>
               <div class="ac-tags">
@@ -434,7 +434,7 @@
                 <span class="tag tag-l2">L2 Internal</span>
                 <span class="tag tag-gold">External Data</span>
               </div>
-              <div class="ac-desc">社交媒体与新闻舆情监测，覆盖品牌口碑、热点事件、消费者情感分析等。</div>
+              <div class="ac-desc" data-en="Social media and news sentiment monitoring, covering brand reputation, hot events, and consumer sentiment analysis." data-cn="社交媒体与新闻舆情监测，覆盖品牌口碑、热点事件、消费者情感分析等。">社交媒体与新闻舆情监测，覆盖品牌口碑、热点事件、消费者情感分析等。</div>
               <div class="ac-footer">
                 <div class="ac-owner">
                   <span class="ac-owner-avatar">GH</span> Grace He
@@ -446,7 +446,7 @@
             <!-- Public Domain Card -->
             <div class="asset-card" onclick="location.href='detail-policy.html'">
               <div class="ac-top">
-                <div class="ac-title">星巴克中国数据治理政策</div>
+                <div class="ac-title" data-en="Starbucks China Data Governance Policy" data-cn="星巴克中国数据治理政策">星巴克中国数据治理政策</div>
                 <span style="cursor:pointer; color:var(--sb-gold); font-size:1.2rem;" title="Bookmark">★</span>
               </div>
               <div class="ac-tags">
@@ -454,7 +454,7 @@
                 <span class="tag tag-l2">L2 Internal</span>
                 <span class="tag tag-green">Public</span>
               </div>
-              <div class="ac-desc">星巴克中国数据中台数据产品权限获取与数据安全分类政策，规范数据资产全生命周期的安全管理与访问控制。</div>
+              <div class="ac-desc" data-en="Starbucks China data platform access and data security classification policy, governing the full data asset lifecycle." data-cn="星巴克中国数据中台数据产品权限获取与数据安全分类政策，规范数据资产全生命周期的安全管理与访问控制。">星巴克中国数据中台数据产品权限获取与数据安全分类政策，规范数据资产全生命周期的安全管理与访问控制。</div>
               <div class="ac-footer">
                 <div class="ac-owner">
                   <span class="ac-owner-avatar">DO</span> Data Office
@@ -471,12 +471,12 @@
             <div class="asset-list-item" onclick="location.href='detail-glossary.html'" style="align-items:center; padding:12px 18px;">
               <div style="flex:1; min-width:0;">
                 <div style="display:flex; align-items:center; gap:7px; flex-wrap:wrap; margin-bottom:3px;">
-                  <span style="font-weight:700; font-size:0.93rem; color:var(--text-primary);">Sales Metrics</span>
+                  <span style="font-weight:700; font-size:0.93rem; color:var(--text-primary);" data-en="Sales Metrics" data-cn="销售指标">Sales Metrics</span>
                   <span class="tag tag-l3" style="font-size:0.72rem;">L3</span>
                   <span class="tag tag-green" style="font-size:0.72rem;">Glossary</span>
                   <span class="tag tag-brown" style="font-size:0.72rem;">Sales</span>
                 </div>
-                <div style="font-size:0.81rem; color:var(--text-muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">5 KPI indicators covering Net Revenue, Comparable Store Sales Growth, Average Ticket Size, Transaction Count, and Gross Revenue.</div>
+                <div style="font-size:0.81rem; color:var(--text-muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" data-en="5 KPI indicators covering Net Revenue, Comparable Store Sales Growth, Average Ticket Size, Transaction Count, and Gross Revenue." data-cn="5个销售KPI指标，涵盖净收入、可比门店销售增长、客单价、交易笔数和毛收入。">5 KPI indicators covering Net Revenue, Comparable Store Sales Growth, Average Ticket Size, Transaction Count, and Gross Revenue.</div>
               </div>
               <div style="flex-shrink:0; display:flex; align-items:center; gap:6px; margin-left:20px; white-space:nowrap;">
                 <span class="ac-owner-avatar">SC</span>
@@ -493,7 +493,7 @@
                   <span class="tag tag-blue" style="font-size:0.72rem;">Dictionary</span>
                   <span class="tag tag-brown" style="font-size:0.72rem;">Sales</span>
                 </div>
-                <div style="font-size:0.81rem; color:var(--text-muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Order detail table from data warehouse layer. Contains order ID, product info, amount, timestamp and store details.</div>
+                <div style="font-size:0.81rem; color:var(--text-muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" data-en="Order detail table from data warehouse layer. Contains order ID, product info, amount, timestamp and store details." data-cn="数据仓库层订单明细表，包含订单ID、产品信息、金额、时间戳和门店详情。">Order detail table from data warehouse layer. Contains order ID, product info, amount, timestamp and store details.</div>
               </div>
               <div style="flex-shrink:0; display:flex; align-items:center; gap:6px; margin-left:20px; white-space:nowrap;">
                 <span class="ac-owner-avatar">JL</span>
@@ -505,12 +505,12 @@
             <div class="asset-list-item" onclick="location.href='detail-document.html'" style="align-items:center; padding:12px 18px;">
               <div style="flex:1; min-width:0;">
                 <div style="display:flex; align-items:center; gap:7px; flex-wrap:wrap; margin-bottom:3px;">
-                  <span style="font-weight:700; font-size:0.93rem; color:var(--text-primary);">Customer Segmentation Guide</span>
+                  <span style="font-weight:700; font-size:0.93rem; color:var(--text-primary);" data-en="Customer Segmentation Guide" data-cn="客户分群指南">Customer Segmentation Guide</span>
                   <span class="tag tag-l2" style="font-size:0.72rem;">L2</span>
                   <span class="tag tag-brown" style="font-size:0.72rem;">Ref Doc</span>
                   <span class="tag tag-green" style="font-size:0.72rem;">Customer</span>
                 </div>
-                <div style="font-size:0.81rem; color:var(--text-muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Comprehensive guide on customer segmentation methodology, including RFM model application and loyalty tier definitions.</div>
+                <div style="font-size:0.81rem; color:var(--text-muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" data-en="Comprehensive guide on customer segmentation methodology, including RFM model application and loyalty tier definitions." data-cn="客户分群方法论综合指南，包含RFM模型应用与会员等级定义。">Comprehensive guide on customer segmentation methodology, including RFM model application and loyalty tier definitions.</div>
               </div>
               <div style="flex-shrink:0; display:flex; align-items:center; gap:6px; margin-left:20px; white-space:nowrap;">
                 <span class="ac-owner-avatar">MZ</span>
@@ -522,12 +522,12 @@
             <div class="asset-list-item" onclick="location.href='detail-glossary.html'" style="align-items:center; padding:12px 18px;">
               <div style="flex:1; min-width:0;">
                 <div style="display:flex; align-items:center; gap:7px; flex-wrap:wrap; margin-bottom:3px;">
-                  <span style="font-weight:700; font-size:0.93rem; color:var(--text-primary);">Finance Metrics</span>
+                  <span style="font-weight:700; font-size:0.93rem; color:var(--text-primary);" data-en="Finance Metrics" data-cn="财务指标">Finance Metrics</span>
                   <span class="tag tag-l3" style="font-size:0.72rem;">L3</span>
                   <span class="tag tag-green" style="font-size:0.72rem;">Glossary</span>
                   <span class="tag tag-gold" style="font-size:0.72rem;">Finance</span>
                 </div>
-                <div style="font-size:0.81rem; color:var(--text-muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">6 financial KPIs including Comparable Store Sales Growth, Operating Margin, EBITDA, CapEx Ratio, Free Cash Flow, and ROE.</div>
+                <div style="font-size:0.81rem; color:var(--text-muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" data-en="6 financial KPIs including Comparable Store Sales Growth, Operating Margin, EBITDA, CapEx Ratio, Free Cash Flow, and ROE." data-cn="6个财务KPI，包含可比门店销售增长、营业利润率、EBITDA、资本支出率、自由现金流和ROE。">6 financial KPIs including Comparable Store Sales Growth, Operating Margin, EBITDA, CapEx Ratio, Free Cash Flow, and ROE.</div>
               </div>
               <div style="flex-shrink:0; display:flex; align-items:center; gap:6px; margin-left:20px; white-space:nowrap;">
                 <span class="ac-owner-avatar">LW</span>
@@ -544,7 +544,7 @@
                   <span class="tag tag-blue" style="font-size:0.72rem;">Dictionary</span>
                   <span class="tag tag-green" style="font-size:0.72rem;">Supply Chain</span>
                 </div>
-                <div style="font-size:0.81rem; color:var(--text-muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Master dimension table for all store locations. Contains store ID, address, region, open date, format type and capacity.</div>
+                <div style="font-size:0.81rem; color:var(--text-muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" data-en="Master dimension table for all store locations. Contains store ID, address, region, open date, format type and capacity." data-cn="全门店主维度表，包含门店ID、地址、地区、开业日期、门店类型及容量。">Master dimension table for all store locations. Contains store ID, address, region, open date, format type and capacity.</div>
               </div>
               <div style="flex-shrink:0; display:flex; align-items:center; gap:6px; margin-left:20px; white-space:nowrap;">
                 <span class="ac-owner-avatar">DL</span>
@@ -556,12 +556,12 @@
             <div class="asset-list-item" onclick="location.href='detail-glossary.html'" style="align-items:center; padding:12px 18px;">
               <div style="flex:1; min-width:0;">
                 <div style="display:flex; align-items:center; gap:7px; flex-wrap:wrap; margin-bottom:3px;">
-                  <span style="font-weight:700; font-size:0.93rem; color:var(--text-primary);">Sales Business Terms</span>
+                  <span style="font-weight:700; font-size:0.93rem; color:var(--text-primary);" data-en="Sales Business Terms" data-cn="销售业务术语">Sales Business Terms</span>
                   <span class="tag tag-l2" style="font-size:0.72rem;">L2</span>
                   <span class="tag tag-green" style="font-size:0.72rem;">Glossary</span>
                   <span class="tag tag-brown" style="font-size:0.72rem;">Sales</span>
                 </div>
-                <div style="font-size:0.81rem; color:var(--text-muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">8 business terms standardizing sales domain concepts: Discount Amount, Return Amount, Store Revenue Contribution, Promo Period, and more.</div>
+                <div style="font-size:0.81rem; color:var(--text-muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" data-en="8 business terms standardizing sales domain concepts: Discount Amount, Return Amount, Store Revenue Contribution, Promo Period, and more." data-cn="8个销售域业务术语规范集合，覆盖折扣金额、退货金额、门店收入贡献率、促销期等。">8 business terms standardizing sales domain concepts: Discount Amount, Return Amount, Store Revenue Contribution, Promo Period, and more.</div>
               </div>
               <div style="flex-shrink:0; display:flex; align-items:center; gap:6px; margin-left:20px; white-space:nowrap;">
                 <span class="ac-owner-avatar">SC</span>
@@ -573,12 +573,12 @@
             <div class="asset-list-item" onclick="location.href='detail-document.html'" style="align-items:center; padding:12px 18px;">
               <div style="flex:1; min-width:0;">
                 <div style="display:flex; align-items:center; gap:7px; flex-wrap:wrap; margin-bottom:3px;">
-                  <span style="font-weight:700; font-size:0.93rem; color:var(--text-primary);">竞品开闭店与销售数据（线上）</span>
+                  <span style="font-weight:700; font-size:0.93rem; color:var(--text-primary);" data-en="Competitor Online Sales Data" data-cn="竞品开闭店与销售数据（线上）">竞品开闭店与销售数据（线上）</span>
                   <span class="tag tag-l2" style="font-size:0.72rem;">L2</span>
                   <span class="tag tag-brown" style="font-size:0.72rem;">Ref Doc</span>
                   <span class="tag tag-gold" style="font-size:0.72rem;">External Data</span>
                 </div>
-                <div style="font-size:0.81rem; color:var(--text-muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">线上渠道竞品门店开闭信息与销售数据，覆盖主要竞品品牌的线上销售趋势与市场份额变化。</div>
+                <div style="font-size:0.81rem; color:var(--text-muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" data-en="Competitor store opening/closing and online sales data, covering major brand sales trends and market share changes online." data-cn="线上渠道竞品门店开闭信息与销售数据，覆盖主要竞品品牌的线上销售趋势与市场份额变化。">线上渠道竞品门店开闭信息与销售数据，覆盖主要竞品品牌的线上销售趋势与市场份额变化。</div>
               </div>
               <div style="flex-shrink:0; display:flex; align-items:center; gap:6px; margin-left:20px; white-space:nowrap;">
                 <span class="ac-owner-avatar">GH</span>
@@ -590,12 +590,12 @@
             <div class="asset-list-item" onclick="location.href='detail-dictionary.html'" style="align-items:center; padding:12px 18px;">
               <div style="flex:1; min-width:0;">
                 <div style="display:flex; align-items:center; gap:7px; flex-wrap:wrap; margin-bottom:3px;">
-                  <span style="font-weight:700; font-size:0.93rem; color:var(--text-primary);">天气信息数据</span>
+                  <span style="font-weight:700; font-size:0.93rem; color:var(--text-primary);" data-en="Weather Data" data-cn="天气信息数据">天气信息数据</span>
                   <span class="tag tag-l2" style="font-size:0.72rem;">L2</span>
                   <span class="tag tag-blue" style="font-size:0.72rem;">Dictionary</span>
                   <span class="tag tag-gold" style="font-size:0.72rem;">External Data</span>
                 </div>
-                <div style="font-size:0.81rem; color:var(--text-muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">城市级别天气数据，包含温度、降水、风力等指标，用于分析天气对门店销量的影响。</div>
+                <div style="font-size:0.81rem; color:var(--text-muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" data-en="City-level weather data including temperature, precipitation, and wind metrics, used to analyze weather impact on store sales." data-cn="城市级别天气数据，包含温度、降水、风力等指标，用于分析天气对门店销量的影响。">城市级别天气数据，包含温度、降水、风力等指标，用于分析天气对门店销量的影响。</div>
               </div>
               <div style="flex-shrink:0; display:flex; align-items:center; gap:6px; margin-left:20px; white-space:nowrap;">
                 <span class="ac-owner-avatar">TZ</span>
@@ -607,12 +607,12 @@
             <div class="asset-list-item" onclick="location.href='detail-document.html'" style="align-items:center; padding:12px 18px;">
               <div style="flex:1; min-width:0;">
                 <div style="display:flex; align-items:center; gap:7px; flex-wrap:wrap; margin-bottom:3px;">
-                  <span style="font-weight:700; font-size:0.93rem; color:var(--text-primary);">街区信息与流量数据</span>
+                  <span style="font-weight:700; font-size:0.93rem; color:var(--text-primary);" data-en="Block &amp; Foot Traffic Data" data-cn="街区信息与流量数据">街区信息与流量数据</span>
                   <span class="tag tag-l3" style="font-size:0.72rem;">L3</span>
                   <span class="tag tag-brown" style="font-size:0.72rem;">Ref Doc</span>
                   <span class="tag tag-gold" style="font-size:0.72rem;">External Data</span>
                 </div>
-                <div style="font-size:0.81rem; color:var(--text-muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">第三方街区人口特征、客流热力数据，用于门店选址分析与商圈评估。</div>
+                <div style="font-size:0.81rem; color:var(--text-muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" data-en="Third-party block demographics and foot traffic heat data, for store location analysis and business district evaluation." data-cn="第三方街区人口特征、客流热力数据，用于门店选址分析与商圈评估。">第三方街区人口特征、客流热力数据，用于门店选址分析与商圈评估。</div>
               </div>
               <div style="flex-shrink:0; display:flex; align-items:center; gap:6px; margin-left:20px; white-space:nowrap;">
                 <span class="ac-owner-avatar">GH</span>
@@ -624,12 +624,12 @@
             <div class="asset-list-item" onclick="location.href='detail-dictionary.html'" style="align-items:center; padding:12px 18px;">
               <div style="flex:1; min-width:0;">
                 <div style="display:flex; align-items:center; gap:7px; flex-wrap:wrap; margin-bottom:3px;">
-                  <span style="font-weight:700; font-size:0.93rem; color:var(--text-primary);">消费者标签数据</span>
+                  <span style="font-weight:700; font-size:0.93rem; color:var(--text-primary);" data-en="Consumer Tag Data" data-cn="消费者标签数据">消费者标签数据</span>
                   <span class="tag tag-l3" style="font-size:0.72rem;">L3</span>
                   <span class="tag tag-blue" style="font-size:0.72rem;">Dictionary</span>
                   <span class="tag tag-gold" style="font-size:0.72rem;">External Data</span>
                 </div>
-                <div style="font-size:0.81rem; color:var(--text-muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">第三方消费者画像标签，包含消费偏好、生活方式、品牌倾向等维度，用于精准营销。</div>
+                <div style="font-size:0.81rem; color:var(--text-muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" data-en="Third-party consumer profile tags including spending preferences, lifestyle, and brand affinity, for precision marketing." data-cn="第三方消费者画像标签，包含消费偏好、生活方式、品牌倒向等维度，用于精准营销。">第三方消费者画像标签，包含消费偏好、生活方式、品牌倒向等维度，用于精准营销。</div>
               </div>
               <div style="flex-shrink:0; display:flex; align-items:center; gap:6px; margin-left:20px; white-space:nowrap;">
                 <span class="ac-owner-avatar">TZ</span>
@@ -641,12 +641,12 @@
             <div class="asset-list-item" onclick="location.href='detail-document.html'" style="align-items:center; padding:12px 18px;">
               <div style="flex:1; min-width:0;">
                 <div style="display:flex; align-items:center; gap:7px; flex-wrap:wrap; margin-bottom:3px;">
-                  <span style="font-weight:700; font-size:0.93rem; color:var(--text-primary);">市场舆情监测数据</span>
+                  <span style="font-weight:700; font-size:0.93rem; color:var(--text-primary);" data-en="Market Sentiment Data" data-cn="市场舆情监测数据">市场舆情监测数据</span>
                   <span class="tag tag-l2" style="font-size:0.72rem;">L2</span>
                   <span class="tag tag-brown" style="font-size:0.72rem;">Ref Doc</span>
                   <span class="tag tag-gold" style="font-size:0.72rem;">External Data</span>
                 </div>
-                <div style="font-size:0.81rem; color:var(--text-muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">社交媒体与新闻舆情监测，覆盖品牌口碑、热点事件、消费者情感分析等。</div>
+                <div style="font-size:0.81rem; color:var(--text-muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" data-en="Social media and news sentiment monitoring, covering brand reputation, hot events, and consumer sentiment analysis." data-cn="社交媒体与新闻舆情监测，覆盖品牌口碑、热点事件、消费者情感分析等。">社交媒体与新闻舆情监测，覆盖品牌口碑、热点事件、消费者情感分析等。</div>
               </div>
               <div style="flex-shrink:0; display:flex; align-items:center; gap:6px; margin-left:20px; white-space:nowrap;">
                 <span class="ac-owner-avatar">GH</span>
@@ -658,12 +658,12 @@
             <div class="asset-list-item" onclick="location.href='detail-policy.html'" style="align-items:center; padding:12px 18px;">
               <div style="flex:1; min-width:0;">
                 <div style="display:flex; align-items:center; gap:7px; flex-wrap:wrap; margin-bottom:3px;">
-                  <span style="font-weight:700; font-size:0.93rem; color:var(--text-primary);">星巴克中国数据治理政策</span>
+                  <span style="font-weight:700; font-size:0.93rem; color:var(--text-primary);" data-en="Starbucks China Data Governance Policy" data-cn="星巴克中国数据治理政策">星巴克中国数据治理政策</span>
                   <span class="tag tag-l2" style="font-size:0.72rem;">L2</span>
                   <span class="tag tag-brown" style="font-size:0.72rem;">Ref Doc</span>
                   <span class="tag tag-green" style="font-size:0.72rem;">Public</span>
                 </div>
-                <div style="font-size:0.81rem; color:var(--text-muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">星巴克中国数据中台数据产品权限获取与数据安全分类政策，规范数据资产全生命周期的安全管理与访问控制。</div>
+                <div style="font-size:0.81rem; color:var(--text-muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" data-en="Starbucks China data platform access and data security classification policy, governing the full data asset lifecycle." data-cn="星巴克中国数据中台数据产品权限获取与数据安全分类政策，规范数据资产全生命周期的安全管理与访问控制。">星巴克中国数据中台数据产品权限获取与数据安全分类政策，规范数据资产全生命周期的安全管理与访问控制。</div>
               </div>
               <div style="flex-shrink:0; display:flex; align-items:center; gap:6px; margin-left:20px; white-space:nowrap;">
                 <span class="ac-owner-avatar">DO</span>

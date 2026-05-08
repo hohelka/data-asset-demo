@@ -1037,6 +1037,11 @@ textarea.form-control {
 .fw-600 { font-weight: 600; }
 .hidden { display: none; }
 
+/* -- Language Toggle Blocks -- */
+/* .i18n-cn blocks are hidden by default (EN is default language).
+   JS applyLang() overrides display via inline style. */
+.i18n-cn { display: none; }
+
 /* -- Responsive -- */
 @media (max-width: 1024px) {
   .grid-4 { grid-template-columns: repeat(2, 1fr); }

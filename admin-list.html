@@ -50,45 +50,45 @@
 
       <!-- Page Header -->
       <div class="page-header">
-        <div class="breadcrumb"><a href="index.html">Home</a> <span>/</span> Admin</div>
-        <h1>Data Asset Management</h1>
+        <div class="breadcrumb"><a href="index.html" data-i18n="breadcrumb_home">Home</a> <span>/</span> <span data-i18n="admin_bc">Admin</span></div>
+        <h1 data-i18n="admin_title">Data Asset Management</h1>
         <div style="margin-left:auto; display:flex; gap:10px;">
-          <a href="apply-asset.html" class="btn btn-primary">+ Create Asset</a>
-          <button class="btn btn-secondary" onclick="showToast('Exported to CSV')">↓ Export</button>
+          <a href="apply-asset.html" class="btn btn-primary" data-i18n="btn_create_asset">+ Create Asset</a>
+          <button class="btn btn-secondary" data-i18n="btn_export" onclick="showToast('Exported to CSV')">↓ Export</button>
         </div>
       </div>
 
       <!-- Admin Sub-Navigation -->
       <div class="admin-tabs">
-        <a class="admin-tab active" href="admin-list.html">Asset List</a>
-        <a class="admin-tab" href="admin-edit.html">Edit Asset</a>
-        <a class="admin-tab" href="admin-history.html">Change History</a>
-        <a class="admin-tab" href="admin-config.html">Homepage Config</a>
-        <a class="admin-tab" href="admin-access.html">Access Records</a>
+        <a class="admin-tab active" href="admin-list.html" data-i18n="admin_tab_list">Asset List</a>
+        <a class="admin-tab" href="admin-edit.html" data-i18n="admin_tab_edit">Edit Asset</a>
+        <a class="admin-tab" href="admin-history.html" data-i18n="admin_tab_history">Change History</a>
+        <a class="admin-tab" href="admin-config.html" data-i18n="admin_tab_config">Homepage Config</a>
+        <a class="admin-tab" href="admin-access.html" data-i18n="admin_tab_access">Access Records</a>
       </div>
 
       <!-- Filters Row -->
       <div class="flex-between mb-20" style="flex-wrap:wrap; gap:12px;">
         <div class="search-bar" style="flex:1; max-width:400px;">
-          <input type="text" placeholder="Search assets..." onkeydown="if(event.key==='Enter')handleSearch(this)">
+          <input type="text" placeholder="Search assets..." data-i18n-ph="search_assets_ph" onkeydown="if(event.key==='Enter')handleSearch(this)">
           <button onclick="handleSearch(this.previousElementSibling)">Search</button>
         </div>
         <div class="flex gap-8">
           <select class="form-control" style="width:auto; padding:8px 32px 8px 12px;">
-            <option>All Categories</option>
+            <option data-i18n="all_categories">All Categories</option>
             <option>Glossary</option>
             <option>Dictionary</option>
             <option>Reference Doc</option>
           </select>
           <select class="form-control" style="width:auto; padding:8px 32px 8px 12px;">
-            <option>All Status</option>
+            <option data-i18n="all_status">All Status</option>
             <option>Published</option>
             <option>Draft</option>
             <option>Pending Review</option>
             <option>Archived</option>
           </select>
           <select class="form-control" style="width:auto; padding:8px 32px 8px 12px;">
-            <option>All Domains</option>
+            <option data-i18n="all_domains">All Domains</option>
             <option>Sales</option>
             <option>Customer</option>
             <option>Finance</option>
@@ -105,19 +105,19 @@
       <div class="grid-4 mb-20">
         <div class="stat-card" style="padding:14px;">
           <div class="stat-number" style="font-size:1.5rem;">1,247</div>
-          <div class="stat-label">Total Assets</div>
+          <div class="stat-label" data-i18n="admin_total">Total Assets</div>
         </div>
         <div class="stat-card" style="padding:14px;">
           <div class="stat-number" style="font-size:1.5rem; color:var(--sb-success);">1,089</div>
-          <div class="stat-label">Published</div>
+          <div class="stat-label" data-i18n="admin_published">Published</div>
         </div>
         <div class="stat-card" style="padding:14px;">
           <div class="stat-number" style="font-size:1.5rem; color:var(--sb-warning);">42</div>
-          <div class="stat-label">Pending Review</div>
+          <div class="stat-label" data-i18n="admin_pending">Pending Review</div>
         </div>
         <div class="stat-card" style="padding:14px;">
           <div class="stat-number" style="font-size:1.5rem; color:var(--text-muted);">116</div>
-          <div class="stat-label">Draft / Archived</div>
+          <div class="stat-label" data-i18n="admin_draft">Draft / Archived</div>
         </div>
       </div>
 
@@ -128,15 +128,15 @@
             <thead>
               <tr>
                 <th><input type="checkbox" style="accent-color:var(--sb-green);"></th>
-                <th>Asset Name</th>
-                <th>Category</th>
-                <th>Domain</th>
-                <th>Security</th>
-                <th>Status</th>
-                <th>Version</th>
-                <th>Owner</th>
-                <th>Last Updated</th>
-                <th>Actions</th>
+                <th data-i18n="th_asset_name">Asset Name</th>
+                <th data-i18n="th_category">Category</th>
+                <th data-i18n="th_domain">Domain</th>
+                <th data-i18n="th_security">Security</th>
+                <th data-i18n="th_status">Status</th>
+                <th data-i18n="th_version">Version</th>
+                <th data-i18n="th_owner">Owner</th>
+                <th data-i18n="th_last_updated2">Last Updated</th>
+                <th data-i18n="th_actions">Actions</th>
               </tr>
             </thead>
             <tbody>

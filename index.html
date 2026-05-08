@@ -15,11 +15,11 @@
       <!-- Hero Banner -->
       <div class="detail-hero" style="margin-bottom:28px; background: linear-gradient(135deg, #1E3932 0%, #00704A 60%, #CBA258 100%);">
         <div style="max-width:640px;">
-          <h1 style="font-size:1.8rem; margin-bottom:6px;">Welcome to Data Asset Hub</h1>
-          <p style="opacity:0.9; font-size:1rem; margin-bottom:20px;">Your single source of truth for enterprise data assets. Discover, request, and share data with confidence.</p>
+          <h1 style="font-size:1.8rem; margin-bottom:6px;" data-i18n="hero_title">Welcome to Data Asset Hub</h1>
+          <p style="opacity:0.9; font-size:1rem; margin-bottom:20px;" data-i18n="hero_subtitle">Your single source of truth for enterprise data assets. Discover, request, and share data with confidence.</p>
           <div class="search-bar" style="max-width:480px; background:#fff;">
-            <input type="text" placeholder="Search data assets, glossaries, dictionaries..." onkeydown="if(event.key==='Enter')handleSearch(this)">
-            <button onclick="handleSearch(this.previousElementSibling)">Search</button>
+            <input type="text" placeholder="Search data assets, glossaries, dictionaries..." data-i18n-ph="search_ph" onkeydown="if(event.key==='Enter')handleSearch(this)">
+            <button data-i18n="btn_search" onclick="handleSearch(this.previousElementSibling)">Search</button>
           </div>
         </div>
       </div>
@@ -27,32 +27,32 @@
       <!-- Quick Access -->
       <div class="card mb-24">
         <div class="card-header">
-          <h3>Quick Access</h3>
+          <h3 data-i18n="quick_access">Quick Access</h3>
         </div>
         <div class="feature-icon-grid" style="grid-template-columns:repeat(6,1fr);">
           <a href="shelf.html?type=glossary" class="feature-icon-card">
             <div class="fi-icon" style="background:var(--sb-light-green); color:var(--sb-green);">📊</div>
-            <div class="fi-label">Metadata<br><small style="color:var(--text-muted)">Glossaries & KPIs</small></div>
+            <div class="fi-label"><span data-i18n="qa_metadata">Metadata</span><br><small style="color:var(--text-muted)" data-i18n="qa_metadata_sub">Glossaries & KPIs</small></div>
           </a>
           <a href="shelf.html?domain=external" class="feature-icon-card">
             <div class="fi-icon" style="background:#FFF3DC; color:var(--sb-gold);">🌐</div>
-            <div class="fi-label">External Data<br><small style="color:var(--text-muted)">3rd Party Sources</small></div>
+            <div class="fi-label"><span data-i18n="qa_external">External Data</span><br><small style="color:var(--text-muted)" data-i18n="qa_external_sub">3rd Party Sources</small></div>
           </a>
           <a href="#" class="feature-icon-card">
             <div class="fi-icon" style="background:#E3F2FD; color:#1565C0;">🏢</div>
-            <div class="fi-label">Data Office<br><small style="color:var(--text-muted)">Governance Team</small></div>
+            <div class="fi-label"><span data-i18n="qa_office">Data Office</span><br><small style="color:var(--text-muted)" data-i18n="qa_office_sub">Governance Team</small></div>
           </a>
           <a href="#" class="feature-icon-card">
             <div class="fi-icon" style="background:#F0E6DD; color:var(--sb-brown);">📖</div>
-            <div class="fi-label">User Guide<br><small style="color:var(--text-muted)">How-to Docs</small></div>
+            <div class="fi-label"><span data-i18n="qa_guide">User Guide</span><br><small style="color:var(--text-muted)" data-i18n="qa_guide_sub">How-to Docs</small></div>
           </a>
           <a href="#" class="feature-icon-card">
             <div class="fi-icon" style="background:#E8F5E9; color:var(--sb-dark-green);">🎓</div>
-            <div class="fi-label">Data College<br><small style="color:var(--text-muted)">Training & Learning</small></div>
+            <div class="fi-label"><span data-i18n="qa_college">Data College</span><br><small style="color:var(--text-muted)" data-i18n="qa_college_sub">Training & Learning</small></div>
           </a>
           <a href="apply-data.html" class="feature-icon-card">
             <div class="fi-icon" style="background:#FCE4EC; color:#C62828;">📝</div>
-            <div class="fi-label">Apply for Usage<br><small style="color:var(--text-muted)">Request Data Access</small></div>
+            <div class="fi-label"><span data-i18n="qa_apply">Apply for Usage</span><br><small style="color:var(--text-muted)" data-i18n="qa_apply_sub">Request Data Access</small></div>
           </a>
         </div>
       </div>
@@ -63,64 +63,64 @@
         <!-- Metadata Platform Matrix -->
         <div class="card">
           <div class="card-header">
-            <h3>Metadata Matrix</h3>
-            <span class="tag tag-green">Live</span>
+            <h3 data-i18n="metadata_matrix">Metadata Matrix</h3>
+            <span class="tag tag-green" data-i18n="tag_live">Live</span>
           </div>
           <div class="matrix-container" style="box-shadow:none;">
             <table class="matrix-table">
               <thead>
                 <tr>
                   <th></th>
-                  <th>Glossaries</th>
-                  <th>Dictionary</th>
-                  <th>Ref Doc</th>
+                  <th data-i18n="col_glossaries">Glossaries</th>
+                  <th data-i18n="col_dictionary">Dictionary</th>
+                  <th data-i18n="col_ref_doc">Ref Doc</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <th>Sales</th>
+                  <th data-i18n="row_sales">Sales</th>
                   <td><span class="matrix-cell ac" onclick="location.href='shelf.html?domain=sales&type=glossary'">AC</span></td>
                   <td><span class="matrix-cell ac" onclick="location.href='shelf.html?domain=sales&type=dictionary'">AC</span></td>
                   <td><span class="matrix-cell id">ID</span></td>
                 </tr>
                 <tr>
-                  <th>Customer</th>
+                  <th data-i18n="row_customer">Customer</th>
                   <td><span class="matrix-cell ac" onclick="location.href='shelf.html?domain=customer&type=glossary'">AC</span></td>
                   <td><span class="matrix-cell id">ID</span></td>
                   <td><span class="matrix-cell ac" onclick="location.href='shelf.html?domain=customer&type=document'">AC</span></td>
                 </tr>
                 <tr>
-                  <th>Supply Chain</th>
+                  <th data-i18n="row_supply_chain">Supply Chain</th>
                   <td><span class="matrix-cell id">ID</span></td>
                   <td><span class="matrix-cell ac" onclick="location.href='shelf.html?domain=supply&type=dictionary'">AC</span></td>
                   <td><span class="matrix-cell nc">NC</span></td>
                 </tr>
                 <tr>
-                  <th>Finance</th>
+                  <th data-i18n="row_finance">Finance</th>
                   <td><span class="matrix-cell ac" onclick="location.href='shelf.html?domain=finance&type=glossary'">AC</span></td>
                   <td><span class="matrix-cell ac" onclick="location.href='shelf.html?domain=finance&type=dictionary'">AC</span></td>
                   <td><span class="matrix-cell ac" onclick="location.href='shelf.html?domain=finance&type=document'">AC</span></td>
                 </tr>
                 <tr>
-                  <th>Marketing</th>
+                  <th data-i18n="row_marketing">Marketing</th>
                   <td><span class="matrix-cell ac" onclick="location.href='shelf.html?domain=marketing&type=glossary'">AC</span></td>
                   <td><span class="matrix-cell nc">NC</span></td>
                   <td><span class="matrix-cell id">ID</span></td>
                 </tr>
                 <tr>
-                  <th>External Data</th>
+                  <th data-i18n="row_external">External Data</th>
                   <td><span class="matrix-cell ac" onclick="location.href='shelf.html?domain=external&type=glossary'">AC</span></td>
                   <td><span class="matrix-cell ac" onclick="location.href='shelf.html?domain=external&type=dictionary'">AC</span></td>
                   <td><span class="matrix-cell ac" onclick="location.href='shelf.html?domain=external&type=document'">AC</span></td>
                 </tr>
                 <tr>
-                  <th>HR</th>
+                  <th data-i18n="row_hr">HR</th>
                   <td><span class="matrix-cell nc">NC</span></td>
                   <td><span class="matrix-cell id">ID</span></td>
                   <td><span class="matrix-cell nc">NC</span></td>
                 </tr>
                 <tr>
-                  <th>Public</th>
+                  <th data-i18n="row_public">Public</th>
                   <td><span class="matrix-cell ac" onclick="location.href='shelf.html?domain=public&type=glossary'">AC</span></td>
                   <td><span class="matrix-cell nc">NC</span></td>
                   <td><span class="matrix-cell ac" onclick="location.href='shelf.html?domain=public&type=document'">AC</span></td>
@@ -129,9 +129,9 @@
             </table>
           </div>
           <div style="margin-top:12px; font-size:0.8rem; color:var(--text-muted); display:flex; gap:16px;">
-            <span><span class="matrix-cell ac" style="width:24px;height:24px;font-size:0.65rem;">AC</span> Active</span>
-            <span><span class="matrix-cell id" style="width:24px;height:24px;font-size:0.65rem;">ID</span> In Development</span>
-            <span><span class="matrix-cell nc" style="width:24px;height:24px;font-size:0.65rem;">NC</span> No Content</span>
+            <span><span class="matrix-cell ac" style="width:24px;height:24px;font-size:0.65rem;">AC</span> <span data-i18n="legend_active">Active</span></span>
+            <span><span class="matrix-cell id" style="width:24px;height:24px;font-size:0.65rem;">ID</span> <span data-i18n="legend_indev">In Development</span></span>
+            <span><span class="matrix-cell nc" style="width:24px;height:24px;font-size:0.65rem;">NC</span> <span data-i18n="legend_nc">No Content</span></span>
           </div>
         </div>
 
@@ -139,44 +139,44 @@
         <div>
           <div class="card" style="margin-bottom:20px;">
             <div class="card-header">
-              <h3>Data Governance Policies</h3>
+              <h3 data-i18n="governance_policies">Data Governance Policies</h3>
             </div>
             <div style="display:flex; flex-direction:column; gap:10px;">
               <a href="#" class="flex-between" style="padding:10px 14px; border-radius:6px; border:1px solid var(--border-color); color:var(--text-primary);">
-                <span>📋 Data Classification Standard</span>
-                <span class="tag tag-green">Active</span>
+                <span data-i18n="policy_classification">📋 Data Classification Standard</span>
+                <span class="tag tag-green" data-i18n="tag_active">Active</span>
               </a>
               <a href="#" class="flex-between" style="padding:10px 14px; border-radius:6px; border:1px solid var(--border-color); color:var(--text-primary);">
-                <span>🔒 Data Access Policy v2.3</span>
-                <span class="tag tag-green">Active</span>
+                <span data-i18n="policy_access">🔒 Data Access Policy v2.3</span>
+                <span class="tag tag-green" data-i18n="tag_active">Active</span>
               </a>
               <a href="#" class="flex-between" style="padding:10px 14px; border-radius:6px; border:1px solid var(--border-color); color:var(--text-primary);">
-                <span>🔄 Data Lifecycle Management</span>
-                <span class="tag tag-gold">Under Review</span>
+                <span data-i18n="policy_lifecycle">🔄 Data Lifecycle Management</span>
+                <span class="tag tag-gold" data-i18n="tag_under_review">Under Review</span>
               </a>
               <a href="#" class="flex-between" style="padding:10px 14px; border-radius:6px; border:1px solid var(--border-color); color:var(--text-primary);">
-                <span>📐 Data Quality Framework</span>
-                <span class="tag tag-green">Active</span>
+                <span data-i18n="policy_quality">📐 Data Quality Framework</span>
+                <span class="tag tag-green" data-i18n="tag_active">Active</span>
               </a>
             </div>
           </div>
 
           <div class="card">
             <div class="card-header">
-              <h3>Useful Links</h3>
+              <h3 data-i18n="useful_links">Useful Links</h3>
             </div>
             <div style="display:flex; flex-direction:column; gap:8px;">
               <a href="#" style="display:flex; align-items:center; gap:8px; color:var(--text-primary); font-size:0.9rem;">
-                <span style="color:var(--sb-green);">→</span> How to Request Data Access
+                <span data-i18n="link_request">→ How to Request Data Access</span>
               </a>
               <a href="#" style="display:flex; align-items:center; gap:8px; color:var(--text-primary); font-size:0.9rem;">
-                <span style="color:var(--sb-green);">→</span> Data Asset Onboarding Guide
+                <span data-i18n="link_onboard">→ Data Asset Onboarding Guide</span>
               </a>
               <a href="#" style="display:flex; align-items:center; gap:8px; color:var(--text-primary); font-size:0.9rem;">
-                <span style="color:var(--sb-green);">→</span> FAQ - Data Classification Levels
+                <span data-i18n="link_faq">→ FAQ - Data Classification Levels</span>
               </a>
               <a href="#" style="display:flex; align-items:center; gap:8px; color:var(--text-primary); font-size:0.9rem;">
-                <span style="color:var(--sb-green);">→</span> Contact Data Office Team
+                <span data-i18n="link_contact">→ Contact Data Office Team</span>
               </a>
             </div>
           </div>
@@ -186,25 +186,25 @@
       <!-- Recently Published Assets -->
       <div class="card mb-24">
         <div class="card-header">
-          <h3>Recently Published Assets</h3>
-          <a href="shelf.html" class="btn btn-sm btn-secondary">View All →</a>
+          <h3 data-i18n="recently_published">Recently Published Assets</h3>
+          <a href="shelf.html" class="btn btn-sm btn-secondary" data-i18n="btn_view_all">View All →</a>
         </div>
         <table class="data-table">
           <thead>
             <tr>
-              <th>Asset Name</th>
-              <th>Category</th>
-              <th>Subject Area</th>
-              <th>Security Level</th>
-              <th>Owner</th>
-              <th>Published</th>
+              <th data-i18n="th_asset_name">Asset Name</th>
+              <th data-i18n="th_category">Category</th>
+              <th data-i18n="th_subject_area">Subject Area</th>
+              <th data-i18n="th_security">Security Level</th>
+              <th data-i18n="th_owner">Owner</th>
+              <th data-i18n="th_published">Published</th>
             </tr>
           </thead>
           <tbody>
             <tr style="cursor:pointer" onclick="location.href='detail-glossary.html'">
-              <td><strong>Sales Metrics</strong></td>
+              <td><strong data-en="Sales Metrics" data-cn="销售指标">Sales Metrics</strong></td>
               <td><span class="tag tag-green">Glossary</span></td>
-              <td>Sales</td>
+              <td data-i18n="row_sales">Sales</td>
               <td><span class="tag tag-l3">L3 Confidential</span></td>
               <td>Sarah Chen</td>
               <td>2026-04-20</td>
@@ -212,23 +212,23 @@
             <tr style="cursor:pointer" onclick="location.href='detail-dictionary.html'">
               <td><strong>DWD_Order_Detail</strong></td>
               <td><span class="tag tag-blue">Dictionary</span></td>
-              <td>Sales</td>
+              <td data-i18n="row_sales">Sales</td>
               <td><span class="tag tag-l2">L2 Internal</span></td>
               <td>James Li</td>
               <td>2026-04-19</td>
             </tr>
             <tr style="cursor:pointer" onclick="location.href='detail-document.html'">
-              <td><strong>Customer Segmentation Guide</strong></td>
+              <td><strong data-en="Customer Segmentation Guide" data-cn="客户分群指南">Customer Segmentation Guide</strong></td>
               <td><span class="tag tag-brown">Ref Doc</span></td>
-              <td>Customer</td>
+              <td data-i18n="row_customer">Customer</td>
               <td><span class="tag tag-l2">L2 Internal</span></td>
               <td>Ming Zhang</td>
               <td>2026-04-18</td>
             </tr>
             <tr style="cursor:pointer" onclick="location.href='detail-glossary.html'">
-              <td><strong>Finance Metrics</strong></td>
+              <td><strong data-en="Finance Metrics" data-cn="财务指标">Finance Metrics</strong></td>
               <td><span class="tag tag-green">Glossary</span></td>
-              <td>Finance</td>
+              <td data-i18n="row_finance">Finance</td>
               <td><span class="tag tag-l3">L3 Confidential</span></td>
               <td>Lily Wang</td>
               <td>2026-04-17</td>
@@ -236,7 +236,7 @@
             <tr style="cursor:pointer" onclick="location.href='detail-dictionary.html'">
               <td><strong>DIM_Store_Master</strong></td>
               <td><span class="tag tag-blue">Dictionary</span></td>
-              <td>Supply Chain</td>
+              <td data-i18n="row_supply_chain">Supply Chain</td>
               <td><span class="tag tag-l3">L3 Confidential</span></td>
               <td>David Liu</td>
               <td>2026-04-16</td>
@@ -248,25 +248,25 @@
       <!-- Data Security Levels Guide -->
       <div class="card mb-24">
         <div class="card-header">
-          <h3>Data Security Classification</h3>
-          <a href="detail-policy.html" class="btn btn-sm btn-secondary">Learn more about our Data Governance Policy →</a>
+          <h3 data-i18n="security_classification">Data Security Classification</h3>
+          <a href="detail-policy.html" class="btn btn-sm btn-secondary" data-i18n="sec_learn_more">Learn more about our Data Governance Policy →</a>
         </div>
         <div class="grid-4">
           <div style="padding:16px; border-radius:8px; border:2px solid var(--sb-green); background:rgba(0,112,74,0.03);">
-            <div style="font-weight:700; color:var(--sb-green); margin-bottom:6px;">L1 - Public</div>
-            <div style="font-size:0.85rem; color:var(--text-secondary);">Open data. Can be shared internally and externally. No restrictions.</div>
+            <div style="font-weight:700; color:var(--sb-green); margin-bottom:6px;" data-i18n="l1_name">L1 - Public</div>
+            <div style="font-size:0.85rem; color:var(--text-secondary);" data-i18n="l1_desc">Open data. Can be shared internally and externally. No restrictions.</div>
           </div>
           <div style="padding:16px; border-radius:8px; border:2px solid #1565C0; background:rgba(21,101,192,0.03);">
-            <div style="font-weight:700; color:#1565C0; margin-bottom:6px;">L2 - Internal</div>
-            <div style="font-size:0.85rem; color:var(--text-secondary);">Internal data. Default access for all employees. Especially data dictionaries.</div>
+            <div style="font-weight:700; color:#1565C0; margin-bottom:6px;" data-i18n="l2_name">L2 - Internal</div>
+            <div style="font-size:0.85rem; color:var(--text-secondary);" data-i18n="l2_desc">Internal data. Default access for all employees. Especially data dictionaries.</div>
           </div>
           <div style="padding:16px; border-radius:8px; border:2px solid var(--sb-gold); background:rgba(203,162,88,0.03);">
-            <div style="font-weight:700; color:var(--sb-gold); margin-bottom:6px;">L3 - Confidential</div>
-            <div style="font-size:0.85rem; color:var(--text-secondary);">Restricted data. Requires Data Owner approval to access details.</div>
+            <div style="font-weight:700; color:var(--sb-gold); margin-bottom:6px;" data-i18n="l3_name">L3 - Confidential</div>
+            <div style="font-size:0.85rem; color:var(--text-secondary);" data-i18n="l3_desc">Restricted data. Requires Data Owner approval to access details.</div>
           </div>
           <div style="padding:16px; border-radius:8px; border:2px solid var(--sb-error); background:rgba(211,47,47,0.03);">
-            <div style="font-weight:700; color:var(--sb-error); margin-bottom:6px;">L4 - Private</div>
-            <div style="font-size:0.85rem; color:var(--text-secondary);">Highly sensitive (PII). Not allowed on this platform.</div>
+            <div style="font-weight:700; color:var(--sb-error); margin-bottom:6px;" data-i18n="l4_name">L4 - Private</div>
+            <div style="font-size:0.85rem; color:var(--text-secondary);" data-i18n="l4_desc">Highly sensitive (PII). Not allowed on this platform.</div>
           </div>
         </div>
       </div>

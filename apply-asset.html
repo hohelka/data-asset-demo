@@ -127,32 +127,32 @@
       <!-- Page Header -->
       <div class="page-header">
         <div class="breadcrumb">
-          <a href="index.html">Home</a> <span>/</span>
-          <a href="shelf.html">Data Assets</a> <span>/</span>
-          Create Data Asset
+          <a href="index.html" data-i18n="breadcrumb_home">Home</a> <span>/</span>
+          <a href="shelf.html" data-i18n="breadcrumb_assets">Data Assets</a> <span>/</span>
+          <span data-i18n="create_asset_bc">Create Data Asset</span>
         </div>
-        <h1>Create Data Asset</h1>
+        <h1 data-i18n="create_asset_title">Create Data Asset</h1>
       </div>
 
       <!-- Step 1: Asset Type Selection -->
       <div class="form-section">
-        <h3>Step 1 &#8212; Select Asset Type <span class="required">*</span></h3>
-        <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:16px;">Choose the type of data asset you want to register. The form fields below will adapt accordingly.</p>
+        <h3 data-i18n="step1_title">Step 1 &#8212; Select Asset Type <span class="required">*</span></h3>
+        <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:16px;" data-i18n="step1_desc">Choose the type of data asset you want to register. The form fields below will adapt accordingly.</p>
         <div class="type-grid">
           <div class="type-card" id="tc-glossary" onclick="selectType('glossary')">
             <div class="tc-icon">&#128218;</div>
-            <div class="tc-title">Glossary / Term</div>
-            <div class="tc-desc">Business metrics, KPI definitions, domain terms and acronyms.</div>
+            <div class="tc-title" data-i18n="tc_glossary_title">Glossary / Term</div>
+            <div class="tc-desc" data-i18n="tc_glossary_desc">Business metrics, KPI definitions, domain terms and acronyms.</div>
           </div>
           <div class="type-card" id="tc-dictionary" onclick="selectType('dictionary')">
             <div class="tc-icon">&#128202;</div>
-            <div class="tc-title">Data Dictionary</div>
-            <div class="tc-desc">Database table/view metadata, field schema definitions and data lineage.</div>
+            <div class="tc-title" data-i18n="tc_dictionary_title">Data Dictionary</div>
+            <div class="tc-desc" data-i18n="tc_dictionary_desc">Database table/view metadata, field schema definitions and data lineage.</div>
           </div>
           <div class="type-card" id="tc-document" onclick="selectType('document')">
             <div class="tc-icon">&#128196;</div>
-            <div class="tc-title">Reference Document</div>
-            <div class="tc-desc">Guides, policies, manuals, SOPs and analysis reports.</div>
+            <div class="tc-title" data-i18n="tc_document_title">Reference Document</div>
+            <div class="tc-desc" data-i18n="tc_document_desc">Guides, policies, manuals, SOPs and analysis reports.</div>
           </div>
         </div>
         <div id="type-prompt" style="display:none;" class="type-prompt">
@@ -548,8 +548,8 @@
         <!-- Submit actions -->
         <div class="always-section" id="sec-actions" style="display:none; justify-content:flex-end; gap:12px; margin-top:4px; padding:0 0 20px;">
           <button type="button" class="btn btn-cancel" onclick="showToast('Cancelled')">Cancel</button>
-          <button type="button" class="btn btn-secondary" onclick="showToast('Saved as draft')">Save Draft</button>
-          <button type="submit" class="btn btn-primary btn-lg">Submit for Approval</button>
+          <button type="button" class="btn btn-secondary" onclick="showToast('Saved as draft')" data-i18n="btn_save_draft">Save Draft</button>
+          <button type="submit" class="btn btn-primary btn-lg" data-i18n="btn_submit">Submit for Approval</button>
         </div>
 
       </form>

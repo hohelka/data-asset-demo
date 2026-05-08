@@ -117,9 +117,9 @@
       <!-- Page header -->
       <div class="page-header" style="flex-wrap:wrap; row-gap:8px;">
         <div class="breadcrumb">
-          <a href="index.html">Home</a> <span>/</span>
-          <a href="shelf.html">Data Assets</a> <span>/</span>
-          Customer Segmentation Guide
+          <a href="index.html" data-i18n="breadcrumb_home">Home</a> <span>/</span>
+          <a href="shelf.html" data-i18n="breadcrumb_assets">Data Assets</a> <span>/</span>
+          <span data-i18n="doc_bc">Customer Segmentation Guide</span>
         </div>
         <div style="display:flex; gap:8px; align-items:center; margin-left:auto; flex-wrap:wrap;">
           <!-- Demo role switcher -->
@@ -128,9 +128,9 @@
             <option value="owner" selected>Asset Owner</option>
             <option value="office">Data Office</option>
           </select>
-          <button class="btn btn-secondary" onclick="history.back()">&#8592; Back</button>
-          <button class="btn btn-secondary" id="btn-bookmark" onclick="showToast('Added to bookmarks')">&#9734; Bookmark</button>
-          <button class="btn btn-secondary" id="btn-download" onclick="showToast('Download started')">&#8595; Download</button>
+          <button class="btn btn-secondary" data-i18n="btn_back" onclick="history.back()">&#8592; Back</button>
+          <button class="btn btn-secondary" id="btn-bookmark" data-i18n="btn_bookmark" onclick="showToast('Added to bookmarks')">&#9734; Bookmark</button>
+          <button class="btn btn-secondary" id="btn-download" data-i18n="btn_download" onclick="showToast('Download started')">&#8595; Download</button>
           <button class="btn btn-secondary" id="btn-edit" onclick="enterEdit()">&#9998; Edit</button>
           <button class="btn btn-secondary" id="btn-cancel" style="display:none;" onclick="cancelEdit()">&#10005; Cancel</button>
           <button class="btn btn-secondary" id="btn-draft" style="display:none;" onclick="saveDraft()">&#128190; Save Draft</button>
@@ -141,7 +141,7 @@
       <!-- Document hero / title bar -->
       <div class="detail-hero">
         <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px; flex-wrap:wrap;">
-          <h1 style="margin:0;">Customer Segmentation Guide</h1>
+          <h1 style="margin:0;" data-en="Customer Segmentation Guide" data-cn="客户分群指南">Customer Segmentation Guide</h1>
           <span class="tag tag-brown" style="font-size:0.85rem; background:rgba(255,255,255,0.2); color:#fff; border:none;">Reference Document</span>
           <span class="tag tag-l2" style="font-size:0.85rem; background:rgba(255,255,255,0.2); color:#fff; border:none;">L2 Internal</span>
           <span id="draft-badge" class="draft-badge">&#9679; Draft</span>
@@ -190,18 +190,18 @@
         <aside class="doc-sidebar">
           <!-- Document metadata -->
           <div class="card" style="margin-bottom:16px;">
-            <div style="font-size:0.84rem; font-weight:700; color:var(--sb-dark-green); margin-bottom:10px;">Document Info</div>
-            <div class="doc-meta-row"><span class="doc-meta-label">Owner</span><span class="doc-meta-value">Ming Zhang</span></div>
-            <div class="doc-meta-row"><span class="doc-meta-label">Reviewers</span><span class="doc-meta-value">Lisa He, Kevin Wu</span></div>
-            <div class="doc-meta-row"><span class="doc-meta-label">Domain</span><span class="doc-meta-value">Customer</span></div>
-            <div class="doc-meta-row"><span class="doc-meta-label">Security</span><span class="doc-meta-value"><span class="tag tag-l2" style="font-size:0.76rem;">L2 Internal</span></span></div>
-            <div class="doc-meta-row"><span class="doc-meta-label">Published</span><span class="doc-meta-value" id="sb-pub-date">2026-04-18</span></div>
-            <div class="doc-meta-row"><span class="doc-meta-label">Version</span><span class="doc-meta-value" id="sb-ver">v3.0</span></div>
+            <div style="font-size:0.84rem; font-weight:700; color:var(--sb-dark-green); margin-bottom:10px;" data-i18n="doc_document_info">Document Info</div>
+            <div class="doc-meta-row"><span class="doc-meta-label" data-i18n="doc_meta_owner">Owner</span><span class="doc-meta-value">Ming Zhang</span></div>
+            <div class="doc-meta-row"><span class="doc-meta-label" data-i18n="doc_meta_reviewers">Reviewers</span><span class="doc-meta-value">Lisa He, Kevin Wu</span></div>
+            <div class="doc-meta-row"><span class="doc-meta-label" data-i18n="doc_meta_domain">Domain</span><span class="doc-meta-value">Customer</span></div>
+            <div class="doc-meta-row"><span class="doc-meta-label" data-i18n="doc_meta_security">Security</span><span class="doc-meta-value"><span class="tag tag-l2" style="font-size:0.76rem;">L2 Internal</span></span></div>
+            <div class="doc-meta-row"><span class="doc-meta-label" data-i18n="doc_meta_published">Published</span><span class="doc-meta-value" id="sb-pub-date">2026-04-18</span></div>
+            <div class="doc-meta-row"><span class="doc-meta-label" data-i18n="doc_meta_version">Version</span><span class="doc-meta-value" id="sb-ver">v3.0</span></div>
           </div>
 
           <!-- Outline (auto-built from h2/h3 in doc body) -->
           <div class="card" style="margin-bottom:16px;">
-            <div style="font-size:0.84rem; font-weight:700; color:var(--sb-dark-green); margin-bottom:10px;">Outline</div>
+            <div style="font-size:0.84rem; font-weight:700; color:var(--sb-dark-green); margin-bottom:10px;" data-i18n="doc_outline">Outline</div>
             <nav id="outline-nav" style="display:flex; flex-direction:column; gap:2px;">
               <!-- built by JS -->
             </nav>
@@ -209,7 +209,7 @@
 
           <!-- Attachments -->
           <div class="card">
-            <div style="font-size:0.84rem; font-weight:700; color:var(--sb-dark-green); margin-bottom:10px;">Attachments</div>
+            <div style="font-size:0.84rem; font-weight:700; color:var(--sb-dark-green); margin-bottom:10px;" data-i18n="doc_attachments">Attachments</div>
             <div id="att-list">
               <div class="att-item" data-id="att-1">
                 <span style="font-size:1rem;">&#128202;</span>
@@ -234,7 +234,7 @@
         <div style="background:var(--bg-white); border-radius:var(--border-radius); box-shadow:var(--shadow-card); padding:28px 32px;">
           <div id="doc-body" class="doc-body" contenteditable="false" spellcheck="false" oninput="rebuildOutline()">
 
-            <h2 id="sec-bg">Background</h2>
+            <div class="i18n-en">
             <p>Customer segmentation is a foundational capability for personalized marketing, loyalty program optimization, and strategic planning. This guide consolidates the customer segmentation methodology used across all business units at Starbucks China.</p>
             <p>The primary goal is to provide a unified framework for understanding customer behavior, value distribution, and lifecycle stages, enabling cross-functional teams to leverage consistent segments in reporting, campaign targeting, and product development.</p>
 
@@ -310,6 +310,12 @@
               <li>v2.1 (2025-12-01): Updated RFM scoring thresholds</li>
               <li>v1.0 (2025-06-15): Initial release</li>
             </ul>
+            </div><!-- /.i18n-en -->
+
+            <div class="i18n-cn">
+              <h2>客户分群指南</h2>
+              <p style="color:var(--text-muted); font-style:italic;">【中文版本待补充，请联系 Ming Zhang】</p>
+            </div><!-- /.i18n-cn -->
 
           </div>
         </div>

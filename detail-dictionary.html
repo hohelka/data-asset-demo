@@ -24,15 +24,15 @@
       <!-- Breadcrumb & Actions -->
       <div class="page-header">
         <div class="breadcrumb">
-          <a href="index.html">Home</a> <span>/</span>
-          <a href="shelf.html">Data Assets</a> <span>/</span>
-          Data Dictionary Detail
+          <a href="index.html" data-i18n="breadcrumb_home">Home</a> <span>/</span>
+          <a href="shelf.html" data-i18n="breadcrumb_assets">Data Assets</a> <span>/</span>
+          <span data-i18n="dict_bc">Data Dictionary Detail</span>
         </div>
         <div style="display:flex; gap:10px; margin-left:auto;">
-          <button class="btn btn-secondary" onclick="history.back()">← Back</button>
-          <button class="btn btn-secondary" onclick="showToast('Added to bookmarks')">☆ Bookmark</button>
-          <a href="apply-data.html?type=midplatform&table=dwd_order_detail&domain=Sales" class="btn btn-secondary">🔑 Apply Data Access</a>
-          <button class="btn btn-primary" onclick="showToast('Download started')">↓ Download</button>
+          <button class="btn btn-secondary" data-i18n="btn_back" onclick="history.back()">← Back</button>
+          <button class="btn btn-secondary" data-i18n="btn_bookmark" onclick="showToast('Added to bookmarks')">☆ Bookmark</button>
+          <a href="apply-data.html?type=midplatform&table=dwd_order_detail&domain=Sales" class="btn btn-secondary" data-i18n="btn_apply_data_access">🔑 Apply Data Access</a>
+          <button class="btn btn-primary" data-i18n="btn_download" onclick="showToast('Download started')">↓ Download</button>
         </div>
       </div>
 
@@ -41,7 +41,7 @@
         <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px;">
           <h1 style="margin:0;">DWD_Order_Detail</h1>
           <span class="tag tag-blue" style="font-size:0.85rem;">Data Dictionary</span>
-          <span class="conn-check pass">✔ Connection Test Passed</span>
+          <span class="conn-check pass" data-i18n="dict_conn_pass">✔ Connection Test Passed</span>
         </div>
         <div class="detail-meta">
           <span>📂 Subject Area: <strong>Sales</strong></span>
@@ -54,26 +54,25 @@
 
       <!-- Tabs -->
       <div class="tabs">
-        <div class="tab-item active" data-tab="tab-schema">Schema / Fields</div>
-        <div class="tab-item" data-tab="tab-overview">Overview</div>
-        <div class="tab-item" data-tab="tab-related">Related Assets</div>
+        <div class="tab-item active" data-i18n="tab_schema" data-tab="tab-schema">Schema / Fields</div>
+        <div class="tab-item" data-i18n="tab_overview" data-tab="tab-overview">Overview</div>
+        <div class="tab-item" data-i18n="tab_related" data-tab="tab-related">Related Assets</div>
       </div>
 
       <!-- Tab: Schema -->
       <div id="tab-schema" class="tab-content active">
         <div class="detail-section">
-          <h2>Table Schema — DWD_Order_Detail</h2>
+            <h2 data-i18n="dict_schema_title">Table Schema — DWD_Order_Detail</h2>
           <div style="overflow-x:auto;">
             <table class="data-table">
               <thead>
                 <tr>
-                  <th>#</th>
-                  <th>Field Name</th>
-                  <th>Data Type</th>
-                  <th>Description (EN)</th>
-                  <th>Description (CN)</th>
-                  <th>Nullable</th>
-                  <th>Last Updated</th>
+                  <th data-i18n="th_field_name">Field Name</th>
+                  <th data-i18n="th_data_type">Data Type</th>
+                  <th data-i18n="th_desc_en">Description (EN)</th>
+                  <th data-i18n="th_desc_cn">Description (CN)</th>
+                  <th data-i18n="th_nullable">Nullable</th>
+                  <th data-i18n="th_last_updated">Last Updated</th>
                 </tr>
               </thead>
               <tbody>
@@ -214,7 +213,7 @@
         <div class="detail-section">
           <h2>Table Information</h2>
           <div class="detail-row">
-            <div class="detail-label">Database</div>
+            <div class="detail-label" data-i18n="dl_database">Database</div>
             <div class="detail-value">data_warehouse</div>
           </div>
           <div class="detail-row">
@@ -222,12 +221,12 @@
             <div class="detail-value">dwd</div>
           </div>
           <div class="detail-row">
-            <div class="detail-label">Table Name</div>
+            <div class="detail-label" data-i18n="dl_table_name">Table Name</div>
             <div class="detail-value">dwd_order_detail</div>
           </div>
           <div class="detail-row">
-            <div class="detail-label">Table Type</div>
-            <div class="detail-value">Partitioned Table (by transaction_date)</div>
+            <div class="detail-label" data-i18n="dl_table_type">Table Type</div>
+            <div class="detail-value" data-i18n="dl_partitioned">Partitioned Table (by transaction_date)</div>
           </div>
           <div class="detail-row">
             <div class="detail-label">Storage Format</div>
@@ -238,20 +237,20 @@
             <div class="detail-value">~12,800,000</div>
           </div>
           <div class="detail-row">
-            <div class="detail-label">Data Retention</div>
-            <div class="detail-value">3 Years Rolling</div>
+            <div class="detail-label" data-i18n="dl_retention">Data Retention</div>
+            <div class="detail-value" data-i18n="dl_retention_val">3 Years Rolling</div>
           </div>
           <div class="detail-row">
-            <div class="detail-label">Refresh Frequency</div>
-            <div class="detail-value">Daily (T+1), 06:00 AM CST</div>
+            <div class="detail-label" data-i18n="dl_refresh">Refresh Frequency</div>
+            <div class="detail-value" data-i18n="dl_refresh_val">Daily (T+1), 06:00 AM CST</div>
           </div>
           <div class="detail-row">
             <div class="detail-label">Primary Key</div>
             <div class="detail-value">order_id</div>
           </div>
           <div class="detail-row">
-            <div class="detail-label">Connection Status</div>
-            <div class="detail-value"><span class="conn-check pass">✔ Test Passed</span> Last checked: 2026-04-22 09:15</div>
+            <div class="detail-label" data-i18n="dl_conn_status">Connection Status</div>
+            <div class="detail-value"><span class="conn-check pass" data-i18n="dl_conn_ok">✔ Test Passed</span> Last checked: 2026-04-22 09:15</div>
           </div>
         </div>
       </div>
@@ -259,7 +258,7 @@
       <!-- Tab: Related Assets -->
       <div id="tab-related" class="tab-content">
         <div class="detail-section">
-          <h2>Related Assets</h2>
+          <h2 data-i18n="sec_related">Related Assets</h2>
           <div class="grid-3">
             <div class="asset-card" onclick="location.href='detail-glossary.html'">
               <div class="ac-title">Sales Metrics</div>

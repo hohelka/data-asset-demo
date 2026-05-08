@@ -91,32 +91,32 @@
       <!-- Breadcrumb & Actions -->
       <div class="page-header">
         <div class="breadcrumb">
-          <a href="index.html">Home</a> <span>/</span>
-          <a href="shelf.html">Data Assets</a> <span>/</span>
-          <a href="detail-glossary.html">Sales Metrics Glossary</a> <span>/</span>
-          Net Revenue
+          <a href="index.html" data-i18n="breadcrumb_home">Home</a> <span>/</span>
+          <a href="shelf.html" data-i18n="breadcrumb_assets">Data Assets</a> <span>/</span>
+          <a href="detail-glossary.html" data-i18n="gi_bc_glossary">Sales Metrics Glossary</a> <span>/</span>
+          <span data-en="Net Revenue" data-cn="净收入">Net Revenue</span>
         </div>
         <div style="display:flex; gap:10px; margin-left:auto;">
-          <button class="btn btn-secondary" onclick="history.back()">← Back</button>
-          <button class="btn btn-secondary" onclick="showToast('Added to bookmarks')">☆ Bookmark</button>
-          <button class="btn btn-primary" onclick="showToast('Download started')">↓ Download</button>
+          <button class="btn btn-secondary" data-i18n="btn_back" onclick="history.back()">← Back</button>
+          <button class="btn btn-secondary" data-i18n="btn_bookmark" onclick="showToast('Added to bookmarks')">☆ Bookmark</button>
+          <button class="btn btn-primary" data-i18n="btn_download" onclick="showToast('Download started')">↓ Download</button>
         </div>
       </div>
 
       <!-- Hero -->
       <div class="detail-hero">
         <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px; flex-wrap:wrap;">
-          <h1 style="margin:0;">Net Revenue</h1>
+          <h1 style="margin:0;" data-en="Net Revenue" data-cn="净收入">Net Revenue</h1>
           <span class="tag tag-green" style="font-size:0.85rem;">KPI</span>
           <span class="tag" style="background:rgba(255,255,255,0.2); color:#fff;">净收入</span>
           <span class="tag" style="background:rgba(255,255,255,0.15); color:#fff;">L1 Public</span>
         </div>
         <div class="detail-meta">
-          <span>📂 Glossary: <strong>Sales Metrics</strong></span>
-          <span>👤 Business Owner: <strong>Sarah Chen</strong></span>
-          <span>🔧 Tech Owner: <strong>James Li</strong></span>
-          <span>📅 Last Updated: <strong>2026-04-20</strong></span>
-          <span>🔖 Version: <strong>v2.1</strong></span>
+          <span data-en="📂 Glossary: Sales Metrics" data-cn="📂 术语表：销售指标">📂 Glossary: <strong>Sales Metrics</strong></span>
+          <span data-en="👤 Business Owner: Sarah Chen" data-cn="👤 业务负责人： Sarah Chen">👤 Business Owner: <strong>Sarah Chen</strong></span>
+          <span data-en="🔧 Tech Owner: James Li" data-cn="🔧 技术负责人： James Li">🔧 Tech Owner: <strong>James Li</strong></span>
+          <span data-en="📅 Last Updated: 2026-04-20" data-cn="📅 最后更新： 2026-04-20">📅 Last Updated: <strong>2026-04-20</strong></span>
+          <span data-en="🔖 Version: v2.1" data-cn="🔖 版本： v2.1">🔖 Version: <strong>v2.1</strong></span>
         </div>
       </div>
 
@@ -126,39 +126,39 @@
       <div class="attr-section">
         <div class="attr-section-header biz">
           <div class="icon">📋</div>
-          Business Attributes
+          <span data-i18n="gi_biz_attributes">Business Attributes</span>
         </div>
         <table class="attr-table">
           <tr>
-            <td>English Name</td>
+            <td data-i18n="gi_english_name">English Name</td>
             <td>Net Revenue</td>
           </tr>
           <tr>
-            <td>Chinese Name</td>
+            <td data-i18n="gi_chinese_name">Chinese Name</td>
             <td>净收入</td>
           </tr>
           <tr>
-            <td>Definition (EN)</td>
+            <td data-i18n="gi_def_en">Definition (EN)</td>
             <td>Total revenue generated from sales of beverages, food, and merchandise, after deducting discounts, promotional allowances, and product returns. This metric reflects the actual income received by the company from customer transactions.</td>
           </tr>
           <tr>
-            <td>Definition (CN)</td>
+            <td data-i18n="gi_def_cn">Definition (CN)</td>
             <td>饮料、食品和商品销售产生的总收入，扣除折扣、促销津贴和退货后的净额。该指标反映了公司从客户交易中获得的实际收入。</td>
           </tr>
           <tr>
-            <td>Type</td>
+            <td data-i18n="gi_type">Type</td>
             <td><span class="tag tag-green">KPI — Financial Metric</span></td>
           </tr>
           <tr>
-            <td>Subject Area</td>
+            <td data-i18n="gi_subject">Subject Area</td>
             <td>Sales</td>
           </tr>
           <tr>
-            <td>Is KPI</td>
-            <td><span style="color:var(--sb-green); font-weight:600;">✔ Yes</span> — Reported in quarterly earnings calls and annual reports</td>
+            <td data-i18n="gi_is_kpi">Is KPI</td>
+            <td><span style="color:var(--sb-green); font-weight:600;" data-en="✔ Yes" data-cn="✔ 是">✔ Yes</span> — Reported in quarterly earnings calls and annual reports</td>
           </tr>
           <tr>
-            <td>Business Formula</td>
+            <td data-i18n="gi_formula">Business Formula</td>
             <td>
               <div class="code-block">
                 <span class="code-keyword">Net Revenue</span> = Gross Revenue − Discount Amount − Return Amount − Allowance Amount
@@ -166,11 +166,11 @@
             </td>
           </tr>
           <tr>
-            <td>Unit</td>
+            <td data-i18n="gi_unit">Unit</td>
             <td>CNY (Chinese Yuan, 元)</td>
           </tr>
           <tr>
-            <td>Related KPIs</td>
+            <td data-i18n="gi_related_kpis">Related KPIs</td>
             <td>
               <span class="tag tag-green" style="cursor:pointer;" onclick="showToast('Navigating...')">Gross Revenue</span>
               <span class="tag tag-green" style="cursor:pointer; margin-left:4px;" onclick="showToast('Navigating...')">Comp Store Sales Growth</span>
@@ -184,15 +184,15 @@
       <div class="attr-section">
         <div class="attr-section-header mgmt">
           <div class="icon">🗂️</div>
-          Management Attributes
+          <span data-i18n="gi_mgmt_attributes">Management Attributes</span>
         </div>
         <table class="attr-table">
           <tr>
-            <td>Security Level</td>
+            <td data-i18n="gi_security_level">Security Level</td>
             <td><span class="tag tag-l1">L1 - Public</span> — Can be shared internally and externally</td>
           </tr>
           <tr>
-            <td>Business Owner</td>
+            <td data-i18n="gi_biz_owner">Business Owner</td>
             <td>
               <div class="owner-card">
                 <div class="av-lg" style="background:var(--sb-light-green); color:var(--sb-dark-green);">SC</div>
@@ -204,7 +204,7 @@
             </td>
           </tr>
           <tr>
-            <td>Data Steward</td>
+            <td data-i18n="gi_data_steward">Data Steward</td>
             <td>
               <div class="owner-card">
                 <div class="av-lg" style="background:var(--sb-light-green); color:var(--sb-dark-green);">AW</div>
@@ -238,11 +238,11 @@
       <div class="attr-section">
         <div class="attr-section-header tech">
           <div class="icon">⚙️</div>
-          Technical Attributes
+          <span data-i18n="gi_tech_attributes">Technical Attributes</span>
         </div>
         <table class="attr-table">
           <tr>
-            <td>Tech Owner</td>
+            <td data-i18n="gi_tech_owner">Tech Owner</td>
             <td>
               <div class="owner-card">
                 <div class="av-lg" style="background:#E3F2FD; color:#1565C0;">JL</div>
@@ -254,11 +254,11 @@
             </td>
           </tr>
           <tr>
-            <td>Source System</td>
+            <td data-i18n="gi_source_system">Source System</td>
             <td>POS Transaction System → ODS Layer → DWD Layer (sbux_cdm)</td>
           </tr>
           <tr>
-            <td>Underlying Table</td>
+            <td data-i18n="gi_source_table">Underlying Table</td>
             <td>
               <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
                 <code style="background:var(--bg-primary); padding:3px 8px; border-radius:4px; font-size:0.88rem; color:#1565C0;">sbux_cdm.dwd_order_detail</code>

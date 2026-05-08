@@ -73,38 +73,38 @@
       <!-- Breadcrumb & Actions -->
       <div class="page-header">
         <div class="breadcrumb">
-          <a href="index.html">Home</a> <span>/</span>
-          <a href="shelf.html">Data Assets</a> <span>/</span>
-          Sales Metrics Glossary
+          <a href="index.html" data-i18n="breadcrumb_home">Home</a> <span>/</span>
+          <a href="shelf.html" data-i18n="breadcrumb_assets">Data Assets</a> <span>/</span>
+          <span data-i18n="glos_bc">Sales Metrics Glossary</span>
         </div>
         <div style="display:flex; gap:10px; margin-left:auto;">
-          <button class="btn btn-secondary" onclick="history.back()">← Back</button>
-          <button class="btn btn-secondary" onclick="showToast('Added to bookmarks')">☆ Bookmark</button>
-          <button class="btn btn-primary" onclick="showToast('Download started')">↓ Download</button>
+          <button class="btn btn-secondary" data-i18n="btn_back" onclick="history.back()">← Back</button>
+          <button class="btn btn-secondary" data-i18n="btn_bookmark" onclick="showToast('Added to bookmarks')">☆ Bookmark</button>
+          <button class="btn btn-primary" data-i18n="btn_download" onclick="showToast('Download started')">↓ Download</button>
         </div>
       </div>
 
       <!-- Collection Hero -->
       <div class="detail-hero">
         <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px;">
-          <h1 style="margin:0;">Sales Metrics Glossary</h1>
+          <h1 style="margin:0;" data-en="Sales Metrics Glossary" data-cn="销售指标术语表">Sales Metrics Glossary</h1>
           <span class="tag tag-green" style="font-size:0.85rem;">Glossary</span>
-          <span class="tag" style="background:rgba(255,255,255,0.2); color:#fff;">18 Metrics</span>
+          <span class="tag" style="background:rgba(255,255,255,0.2); color:#fff;" data-i18n="glos_count">18 Metrics</span>
         </div>
         <div class="detail-meta">
-          <span>📂 Subject Area: <strong>Sales</strong></span>
-          <span>🔒 Security: <strong>L3 - Confidential</strong></span>
-          <span>👤 Business Owner: <strong>Sarah Chen</strong></span>
-          <span>🔧 Tech Owner: <strong>James Li</strong></span>
-          <span>📅 Published: <strong>2026-04-20</strong></span>
-          <span>🔖 Version: <strong>v2.1</strong></span>
+          <span data-i18n="glos_subject">📂 Subject Area:</span> <strong>Sales</strong>
+          <span data-i18n="glos_security">🔒 Security:</span> <strong>L3 - Confidential</strong>
+          <span data-i18n="glos_biz_owner">👤 Business Owner:</span> <strong>Sarah Chen</strong>
+          <span data-i18n="glos_tech_owner">🔧 Tech Owner:</span> <strong>James Li</strong>
+          <span data-i18n="glos_published">📅 Published:</span> <strong>2026-04-20</strong>
+          <span data-i18n="glos_version">🔖 Version:</span> <strong>v2.1</strong>
         </div>
       </div>
 
       <!-- Tabs -->
       <div class="tabs">
-        <div class="tab-item active" data-tab="tab-terms">Metrics</div>
-        <div class="tab-item" data-tab="tab-related">Related Assets</div>
+        <div class="tab-item active" data-i18n="tab_metrics" data-tab="tab-terms">Metrics</div>
+        <div class="tab-item" data-i18n="tab_related" data-tab="tab-related">Related Assets</div>
       </div>
 
       <!-- Tab: Metrics -->
@@ -123,12 +123,12 @@
           <table class="glossary-table" id="termsTable">
             <thead>
               <tr>
-                <th style="width:200px;">Metric Name</th>
-                <th style="width:260px;">Business Definition</th>
-                <th style="width:220px;">Calculation Logic</th>
-                <th style="width:110px;">Business Owner</th>
-                <th style="width:100px;">Security</th>
-                <th style="width:70px; text-align:center;">More</th>
+                <th style="width:200px;" data-i18n="th_metric_name">Metric Name</th>
+                <th style="width:260px;" data-i18n="th_biz_def">Business Definition</th>
+                <th style="width:220px;" data-i18n="th_calc_logic">Calculation Logic</th>
+                <th style="width:110px;" data-i18n="th_biz_owner2">Business Owner</th>
+                <th style="width:100px;" data-i18n="th_security">Security</th>
+                <th style="width:70px; text-align:center;" data-i18n="th_more">More</th>
               </tr>
             </thead>
             <tbody id="termsBody">
@@ -200,13 +200,13 @@
           </table>
         </div>
 
-        <div style="margin-top:12px; font-size:0.85rem; color:var(--text-muted);">Showing 8 of 18 metrics. <a href="#" onclick="showToast('Loading all metrics...');return false;" style="color:var(--sb-green);">View all →</a></div>
+        <div style="margin-top:12px; font-size:0.85rem; color:var(--text-muted);"><span data-i18n="metrics_showing">Showing 8 of 18 metrics.</span> <a href="#" onclick="showToast('Loading all metrics...');return false;" style="color:var(--sb-green);" data-i18n="metrics_view_all">View all →</a></div>
       </div>
 
       <!-- Tab: Related Assets -->
       <div id="tab-related" class="tab-content">
         <div class="detail-section">
-          <h2>Related Assets</h2>
+          <h2 data-i18n="sec_related">Related Assets</h2>
           <div class="grid-3">
             <div class="asset-card" onclick="location.href='detail-dictionary.html'">
               <div class="ac-title">DWD_Order_Detail</div>
@@ -214,7 +214,7 @@
                 <span class="tag tag-blue">Dictionary</span>
                 <span class="tag tag-l2">L2</span>
               </div>
-              <div class="ac-desc" style="margin-top:8px;">Source table for revenue and transaction calculations</div>
+              <div class="ac-desc" style="margin-top:8px;" data-en="Source table for revenue and transaction calculations" data-cn="收入与交易计算的来源表">Source table for revenue and transaction calculations</div>
             </div>
             <div class="asset-card" onclick="location.href='detail-dictionary.html'">
               <div class="ac-title">DIM_Store_Master</div>
@@ -222,15 +222,15 @@
                 <span class="tag tag-blue">Dictionary</span>
                 <span class="tag tag-l3">L3</span>
               </div>
-              <div class="ac-desc" style="margin-top:8px;">Store dimension for store-level revenue analysis</div>
+              <div class="ac-desc" style="margin-top:8px;" data-en="Store dimension for store-level revenue analysis" data-cn="用于门店级收入分析的门店维度表">Store dimension for store-level revenue analysis</div>
             </div>
             <div class="asset-card" onclick="location.href='detail-document.html'">
-              <div class="ac-title">Customer Segmentation Guide</div>
+              <div class="ac-title" data-en="Customer Segmentation Guide" data-cn="客户分群指南">Customer Segmentation Guide</div>
               <div class="ac-tags" style="margin-top:8px;">
                 <span class="tag tag-brown">Ref Doc</span>
                 <span class="tag tag-l2">L2</span>
               </div>
-              <div class="ac-desc" style="margin-top:8px;">Uses Average Ticket Size as an input metric</div>
+              <div class="ac-desc" style="margin-top:8px;" data-en="Uses Average Ticket Size as an input metric" data-cn="使用客单价作为输入指标">Uses Average Ticket Size as an input metric</div>
             </div>
           </div>
         </div>
