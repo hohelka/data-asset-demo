@@ -772,7 +772,8 @@ textarea.form-control {
   gap: 6px;
 }
 
-.asset-card .ac-owner-avatar {
+.asset-card .ac-owner-avatar,
+.asset-list-item .ac-owner-avatar {
   width: 22px;
   height: 22px;
   border-radius: 50%;
